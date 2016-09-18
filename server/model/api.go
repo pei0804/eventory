@@ -3,12 +3,13 @@ package model
 import (
 	"encoding/json"
 	"errors"
-	"eventory/define"
-	"eventory/formater"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/tikasan/eventory/server/define"
+	"github.com/tikasan/eventory/server/formater"
 )
 
 func NewInserter(rawurl string, rawapi int) *Inserter {

@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"os"
 
-	"eventory/db"
-	"eventory/define"
-	"eventory/formater"
-	"eventory/model"
+	"github.com/tikasan/eventory/server/db"
+	"github.com/tikasan/eventory/server/define"
+	"github.com/tikasan/eventory/server/formater"
+	"github.com/tikasan/eventory/server/model"
 
 	"time"
 

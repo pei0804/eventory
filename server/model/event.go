@@ -2,9 +2,10 @@ package model
 
 import (
 	"database/sql"
-	"eventory/formater"
 	"fmt"
 	"os"
+
+	"github.com/tikasan/eventory/server/formater"
 )
 
 func Insert(db *sql.DB, Events []Event) error {
