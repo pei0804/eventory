@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EventInfoTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventInfoTableViewCell" rowHeight="243" id="3Ab-l4-3E7" customClass="EventInfoTableViewCell" customModule="Eventory" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="243"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Ab-l4-3E7" id="bQh-gt-dvd">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="242"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                        <rect key="frame" x="182" y="175" width="120" height="40"/>
+                        <color key="backgroundColor" red="0.90196078431372551" green="0.49411764705882355" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="Qex-8L-0ix"/>
+                            <constraint firstAttribute="height" constant="40" id="mCp-ZL-xQs"/>
+                        </constraints>
+                        <state key="normal" title="キープ">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="keepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="lm2-Lr-Soi"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="イベント名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dV-tG6">
+                        <rect key="frame" x="18" y="18" width="284" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="説明" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3k-Kt-AeU">
+                        <rect key="frame" x="18" y="58" width="284" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="住所" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
+                        <rect key="frame" x="18" y="113" width="284" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開催日時" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
+                        <rect key="frame" x="18" y="119" width="284" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                        <rect key="frame" x="18" y="175" width="120" height="40"/>
+                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="Vml-GK-KO4"/>
+                            <constraint firstAttribute="width" constant="120" id="eC1-VW-lEW"/>
+                        </constraints>
+                        <state key="normal" title="興味なし">
+                            <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="noKeepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="NTy-3E-oA1"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="nFL-i8-oGF" firstAttribute="top" secondItem="L3k-Kt-AeU" secondAttribute="bottom" constant="30" id="0i9-lc-NRw"/>
+                    <constraint firstItem="sT6-dV-tG6" firstAttribute="top" secondItem="bQh-gt-dvd" secondAttribute="topMargin" constant="10" id="6KL-Lo-vT1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="sT6-dV-tG6" secondAttribute="trailing" constant="10" id="7Ip-bD-HP6"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ksn-pI-snp" secondAttribute="bottom" constant="20" id="8De-GQ-MY2"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="ZwK-om-ic5" secondAttribute="bottom" constant="20" id="9sp-Sz-bJj"/>
+                    <constraint firstItem="sT6-dV-tG6" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leadingMargin" constant="10" id="AcR-i5-XBq"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="L3k-Kt-AeU" secondAttribute="trailing" constant="10" id="DiG-9c-PuX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="YYL-g8-zg8" secondAttribute="trailing" constant="10" id="FUT-DR-R4l"/>
+                    <constraint firstItem="YYL-g8-zg8" firstAttribute="top" secondItem="sT6-dV-tG6" secondAttribute="bottom" constant="80" id="Gsf-OF-Ldn"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ksn-pI-snp" secondAttribute="trailing" constant="10" id="HNH-4w-dgi"/>
+                    <constraint firstItem="L3k-Kt-AeU" firstAttribute="top" secondItem="bQh-gt-dvd" secondAttribute="topMargin" constant="50" id="JSZ-5h-fxp"/>
+                    <constraint firstItem="nFL-i8-oGF" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leadingMargin" constant="10" id="eqa-O5-2L0"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="nFL-i8-oGF" secondAttribute="trailing" constant="10" id="h54-5k-pYh"/>
+                    <constraint firstItem="L3k-Kt-AeU" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leadingMargin" constant="10" id="myo-li-ptw"/>
+                    <constraint firstItem="ZwK-om-ic5" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leadingMargin" constant="10" id="vnG-cx-CzP"/>
+                    <constraint firstItem="YYL-g8-zg8" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leadingMargin" constant="10" id="xVf-Wc-J0b"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addressLbl" destination="nFL-i8-oGF" id="wXI-vs-y65"/>
+                <outlet property="dateLbl" destination="YYL-g8-zg8" id="8jB-Lx-RbL"/>
+                <outlet property="descLbl" destination="L3k-Kt-AeU" id="V3M-ca-JAa"/>
+                <outlet property="keepBtn" destination="ksn-pI-snp" id="264-VS-YZe"/>
+                <outlet property="noKeepBtn" destination="ZwK-om-ic5" id="rZm-sH-yr3"/>
+                <outlet property="titileLbl" destination="sT6-dV-tG6" id="Yi7-lJ-nyQ"/>
+            </connections>
+            <point key="canvasLocation" x="250" y="370.5"/>
+        </tableViewCell>
+    </objects>
+</document>
