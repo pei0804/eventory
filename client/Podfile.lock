@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (3.4.1)
+  - ObjectMapper (1.4.0)
+  - Realm (1.0.2):
+    - Realm/Headers (= 1.0.2)
+  - Realm/Headers (1.0.2)
+  - RealmSwift (1.0.2):
+    - Realm (= 1.0.2)
+  - SwiftTask (5.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - ObjectMapper
+  - RealmSwift
+  - SwiftTask
+
+SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
+  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
+  RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
+  SwiftTask: 7fcd92f8ac16876e82c0e4ced0cea7e028456b6b
+
+COCOAPODS: 0.39.0
