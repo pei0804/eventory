@@ -1,24 +1,29 @@
 PODS:
-  - Alamofire (3.4.1)
-  - ObjectMapper (1.4.0)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - RealmSwift (1.0.2):
-    - Realm (= 1.0.2)
+  - Alamofire (3.5.0)
+  - DZNEmptyDataSet (1.8.1)
+  - ObjectMapper (0.19)
+  - Realm (1.1.0):
+    - Realm/Headers (= 1.1.0)
+  - Realm/Headers (1.1.0)
+  - RealmSwift (1.1.0):
+    - Realm (= 1.1.0)
   - SwiftTask (5.0.0)
 
 DEPENDENCIES:
-  - Alamofire
-  - ObjectMapper
+  - Alamofire (~> 3.0)
+  - DZNEmptyDataSet
+  - ObjectMapper (~> 0.17)
   - RealmSwift
   - SwiftTask
 
 SPEC CHECKSUMS:
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  ObjectMapper: a07ad0462c5adf014adc0f89ef04c29b626e855e
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
+  Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  ObjectMapper: a88114e5df20f055da63029f25cbc01014847c91
+  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
+  RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
   SwiftTask: 7fcd92f8ac16876e82c0e4ced0cea7e028456b6b
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 4705d04c9cd7172c5ac2684482e1975860b27067
+
+COCOAPODS: 1.0.1
