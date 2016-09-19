@@ -41,7 +41,11 @@ class KeepEventViewController: BaseViewController, SFSafariViewControllerDelegat
         
         super.didReceiveMemoryWarning()
     }
-
+    
+    override func refresh(completed: (() -> Void)? = nil) {
+        eventSummarys = EventManager.sharedInstance.getKeepEventAll()
+        completed?()
+    }
 }
 
 // MARK: - UITableViewDataSource

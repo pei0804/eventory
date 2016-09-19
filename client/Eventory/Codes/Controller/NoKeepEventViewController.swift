@@ -41,6 +41,11 @@ class NoKeepEventViewController: BaseViewController, SFSafariViewControllerDeleg
         
         super.didReceiveMemoryWarning()
     }
+    
+    override func refresh(completed: (() -> Void)? = nil) {
+        eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
+        completed?()
+    }
 }
 
 

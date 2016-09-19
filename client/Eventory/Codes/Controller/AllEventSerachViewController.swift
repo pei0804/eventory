@@ -42,6 +42,10 @@ class AllEventSerachViewController: BaseViewController, SFSafariViewControllerDe
         super.didReceiveMemoryWarning()
     }
     
+    override func refresh(completed: (() -> Void)? = nil) {
+        eventSummarys = EventManager.sharedInstance.getNewEventAll()
+        completed?()
+    }
 }
 
 extension AllEventSerachViewController: UITableViewDataSource {

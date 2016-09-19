@@ -52,7 +52,13 @@ class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegat
         
         super.didReceiveMemoryWarning()
     }
+    
+    override func refresh(completed: (() -> Void)? = nil) {
+        eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
+        completed?()
+    }
 }
+
 
 
 // MARK: - UITableViewDataSource

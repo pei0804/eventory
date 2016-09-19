@@ -40,18 +40,19 @@ class BaseViewController: UIViewController {
     }
     
     
-    // TODO: 非同期との調整必要あり
-    @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
-        
-        sleep(1)
-        self.refresh(refreshControl.endRefreshing())
+    func handleRefresh() {
     }
     
-    func refresh(completion: ()) {
-        
+    @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
+        self.handleRefresh()
+        self.refresh() {
+            refreshControl.endRefreshing()
+        }
+    }
+    
+    func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            EventManager.sharedInstance.fetchNewEvent()
-            completion
+            completed?()
         }
     }
     
