@@ -35,6 +35,13 @@ class RegisterPlaceViewController: UIViewController {
             places = EventManager.sharedInstance.placesInitializer()
         }
     }
+    
+    override func viewWillDisappear(animated:Bool) {
+        
+        super.viewWillDisappear(animated)
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

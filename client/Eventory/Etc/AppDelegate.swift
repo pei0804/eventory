@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var newEvent: Int = 0 {
-        willSet(newEvent) {
+        didSet(newEvent) {
             if newEvent <= 0 {
                 if let tabBarController = self.window?.rootViewController as? UITabBarController {
                     tabBarController.tabBar.items![2].badgeValue = nil
