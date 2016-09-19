@@ -43,8 +43,11 @@ class AllEventSerachViewController: BaseViewController, SFSafariViewControllerDe
     }
     
     override func refresh(completed: (() -> Void)? = nil) {
-        eventSummarys = EventManager.sharedInstance.getNewEventAll()
-        completed?()
+        dispatch_async(dispatch_get_main_queue()) {
+            EventManager.sharedInstance.getNewEventAll()
+            self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
+            completed?()
+        }
     }
 }
 

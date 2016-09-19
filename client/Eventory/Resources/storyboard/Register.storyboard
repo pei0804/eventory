@@ -125,10 +125,10 @@
             </objects>
             <point key="canvasLocation" x="766" y="503"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation View Controller-->
         <scene sceneID="Dhn-N2-j3M">
             <objects>
-                <navigationController storyboardIdentifier="signUp" id="QQ0-Fe-zgk" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="signUp" id="QQ0-Fe-zgk" customClass="BaseNavigationViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B2o-fu-5C2">

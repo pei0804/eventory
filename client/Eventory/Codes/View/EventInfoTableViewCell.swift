@@ -58,7 +58,7 @@ class EventInfoTableViewCell: UITableViewCell {
             self.keepBtn.setTitle("キープ◯", forState: .Normal)
             self.noKeepBtn.setTitle("興味なし", forState: .Normal)
         }
-        else {
+        else if eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
             self.noKeepBtn.setTitle("興味なし×", forState: .Normal)
             self.keepBtn.setTitle("キープ", forState: .Normal)
         }
