@@ -12,13 +12,12 @@ class MainMenuTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.selectedIndex = 2
     }
     
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        self.selectedIndex = 2
     }
     
     override func didReceiveMemoryWarning() {

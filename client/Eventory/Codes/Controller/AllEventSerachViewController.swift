@@ -42,6 +42,10 @@ class AllEventSerachViewController: BaseViewController, SFSafariViewControllerDe
         super.didReceiveMemoryWarning()
     }
     
+    override func refresh(completed: (() -> Void)? = nil) {
+        eventSummarys = EventManager.sharedInstance.getNewEventAll()
+        completed?()
+    }
 }
 
 extension AllEventSerachViewController: UITableViewDataSource {
@@ -80,9 +84,21 @@ extension AllEventSerachViewController: UITableViewDataSource {
 extension AllEventSerachViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
-        let _url:NSURL = NSURL(string: eventSummarys![indexPath.row].url)!
-        let _brow = SFSafariViewController(URL: _url, entersReaderIfAvailable: false)
-        _brow.delegate = self
-        presentViewController(_brow, animated: true, completion: nil)
+        
+        guard let eventSummarys = eventSummarys else {
+            return
+        }
+        let url: String = eventSummarys[indexPath.row].url
+        if !url.lowercaseString.hasPrefix("http://") && !url.lowercaseString.hasPrefix("https://") {
+            let alert: UIAlertController = UIAlertController(title: "不正なリンクを検出しました", message: "このイベントに設定されているリンクに問題がありました。", preferredStyle: .Alert)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            return
+        }
+        let brow = SFSafariViewController(URL: NSURL(string: url)!, entersReaderIfAvailable: false)
+        brow.delegate = self
+        presentViewController(brow, animated: true, completion: nil)
     }
 }
