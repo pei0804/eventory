@@ -209,10 +209,10 @@
             </objects>
             <point key="canvasLocation" x="-622" y="1143"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation View Controller-->
         <scene sceneID="lz4-F6-rvk">
             <objects>
-                <navigationController id="bMd-GZ-yAT" sceneMemberID="viewController">
+                <navigationController id="bMd-GZ-yAT" customClass="BaseNavigationViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" systemItem="featured" id="feK-KI-O0g"/>
                     <nil key="simulatedBottomBarMetrics"/>

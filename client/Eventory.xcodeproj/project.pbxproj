@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1AA5CA808D9AC10369BD40E7 /* Pods_Eventory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D25F59ABE0DDD0848DB69A1F /* Pods_Eventory.framework */; };
 		6C1DAFF81D8EBB9F00044A41 /* MainMenuTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DAFF71D8EBB9F00044A41 /* MainMenuTabBarController.swift */; };
+		6C1DAFFA1D8FB7C800044A41 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DAFF91D8FB7C800044A41 /* Color.swift */; };
+		6C1DB0081D8FC1F300044A41 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */; };
 		6C2BCA461D6A8A19005D16DA /* NoKeepEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */; };
 		6C2BCA481D6A926E005D16DA /* MaterialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2BCA471D6A926E005D16DA /* MaterialButton.swift */; };
 		6C3026D31D698E7C00D73A90 /* ViewFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */; };
@@ -40,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		6C1DAFF71D8EBB9F00044A41 /* MainMenuTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuTabBarController.swift; sourceTree = "<group>"; };
+		6C1DAFF91D8FB7C800044A41 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoKeepEventViewController.swift; sourceTree = "<group>"; };
 		6C2BCA471D6A926E005D16DA /* MaterialButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialButton.swift; sourceTree = "<group>"; };
 		6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormatter.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				6CD322CE1D83FBDA004B0851 /* SettingViewController.swift */,
 				6C6A26FE1D8E571D00F479CA /* AllEventSerachViewController.swift */,
 				6C6A27001D8E614D00F479CA /* BaseViewController.swift */,
+				6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 				6CA95B0C1D6729BF00983152 /* AppDelegate.swift */,
 				6CA95B1F1D672B9700983152 /* SwiftyJSON.swift */,
 				6CD322C61D7EAB1B004B0851 /* Define.swift */,
+				6C1DAFF91D8FB7C800044A41 /* Color.swift */,
 			);
 			path = Etc;
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 				6CA95B311D67480A00983152 /* EventManager.swift in Sources */,
 				6C1DAFF81D8EBB9F00044A41 /* MainMenuTabBarController.swift in Sources */,
 				6C2BCA461D6A8A19005D16DA /* NoKeepEventViewController.swift in Sources */,
+				6C1DB0081D8FC1F300044A41 /* BaseNavigationViewController.swift in Sources */,
 				6C4E1F1B1D7D3AAE00A2BE13 /* RegisterPlaceViewController.swift in Sources */,
 				6C3026D51D69A13400D73A90 /* KeepEventViewController.swift in Sources */,
 				6CD322C91D7EAFCF004B0851 /* CheckListTableViewCell.swift in Sources */,
@@ -365,6 +372,7 @@
 				6CA95B2D1D67303400983152 /* EventInfoTableViewCell.swift in Sources */,
 				6C6A26FF1D8E571D00F479CA /* AllEventSerachViewController.swift in Sources */,
 				6C2BCA481D6A926E005D16DA /* MaterialButton.swift in Sources */,
+				6C1DAFFA1D8FB7C800044A41 /* Color.swift in Sources */,
 				6CA95B0D1D6729BF00983152 /* AppDelegate.swift in Sources */,
 				6CA95B201D672B9700983152 /* Event.swift in Sources */,
 				6C3026D31D698E7C00D73A90 /* ViewFormatter.swift in Sources */,

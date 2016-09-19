@@ -12,7 +12,7 @@ import SafariServices
 class NoKeepEventViewController: BaseViewController, SFSafariViewControllerDelegate {
 
     var eventSummarys: [EventSummary]? {
-        willSet {
+        didSet {
             self.tableView.reloadData()
         }
     }
@@ -43,8 +43,11 @@ class NoKeepEventViewController: BaseViewController, SFSafariViewControllerDeleg
     }
     
     override func refresh(completed: (() -> Void)? = nil) {
-        eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
-        completed?()
+        dispatch_async(dispatch_get_main_queue()) {
+            EventManager.sharedInstance.getNewEventAll()
+            self.eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
+            completed?()
+        }
     }
 }
 
