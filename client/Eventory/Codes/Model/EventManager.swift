@@ -90,9 +90,9 @@ class EventManager {
             eventSummary.title = event.title
             //eventSummary.desc = event.desc
             eventSummary.url = event.url
-            eventSummary.limit = event.limit
-            eventSummary.accepted = event.accepted
-            eventSummary.waitlisted = event.waitlisted
+            //eventSummary.limit = event.limit
+            //eventSummary.accepted = event.accepted
+            //eventSummary.waitlisted = event.waitlisted
             eventSummary.address = event.address
             eventSummary.place = event.place
             eventSummary.stratAt = event.stratAt
