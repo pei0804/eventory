@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        EventManager.sharedInstance.eventInitializer()
+        EventManager.sharedInstance.getNewEventAll()
         self.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
 
         

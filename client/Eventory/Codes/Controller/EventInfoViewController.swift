@@ -32,7 +32,7 @@ class EventInfoViewController: BaseViewController {
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
         // TODO: パス確認用（削除必須）
-        // print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
+         print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
     }
     
     override func viewWillAppear(animated:Bool) {

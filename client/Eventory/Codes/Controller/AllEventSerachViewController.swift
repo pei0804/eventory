@@ -12,7 +12,7 @@ import SafariServices
 class AllEventSerachViewController: BaseViewController {
     
     var eventSummarys: [EventSummary]? {
-        willSet {
+        didSet {
             self.tableView.reloadData()
         }
     }
