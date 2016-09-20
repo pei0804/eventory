@@ -41,9 +41,9 @@ type EventJson struct {
 	Title      string `json:"title"`
 	//Desc       string `json:"desc"`
 	Url        string `json:"url"`
-	Limit      int    `json:"limit"`
-	Accepted   int    `json:"accepted"`
-	Waitlisted int    `json:"waitlisted"`
+	//Limit      int    `json:"limit"`
+	//Accepted   int    `json:"accepted"`
+	//Waitlisted int    `json:"waitlisted"`
 	Address    string `json:"address"`
 	Place      string `json:"place"`
 	StratAt    string `json:"strat_at"`

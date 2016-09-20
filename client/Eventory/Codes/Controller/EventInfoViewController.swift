@@ -32,8 +32,6 @@ class EventInfoViewController: BaseViewController {
         tableView.dataSource = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
-        // TODO: パス確認用（削除必須）
-        print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
     }
     
     override func viewWillAppear(animated:Bool) {
@@ -62,7 +60,7 @@ class EventInfoViewController: BaseViewController {
             let task = [EventManager.sharedInstance.fetchNewEvent()]
             
             Task.all(task).success { _ in
-                self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
+                self.eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
                 completed?()
                 }.failure { _ in
                     // TODOなんかする
@@ -103,7 +101,7 @@ extension EventInfoViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 250
+        return 180
     }
 }
 

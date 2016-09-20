@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftTask
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,18 +33,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        // TODO: パス確認用（削除必須）
+        print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
         self.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
         
+        // TODO ここらへんどうにかしたい
         if UserRegister.sharedInstance.getUserSettingGenres().isEmpty || UserRegister.sharedInstance.getUserSettingPlaces().isEmpty {
             let storyboard = UIStoryboard(name: "Register", bundle: nil)
             let initialViewController = storyboard.instantiateViewControllerWithIdentifier("signUp")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
-            self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                }.failure { _ in
+                    // TODOなんかする
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
+                    self.window?.rootViewController = initialViewController
+                    self.window?.makeKeyAndVisible()
+            }
+            
+            
         }
         return true
     }
@@ -64,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
     }
-
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
