@@ -11,4 +11,5 @@ pod 'ObjectMapper', '~> 0.17'
 pod 'RealmSwift'
 pod 'SwiftTask'
 pod 'DZNEmptyDataSet'
+pod 'Firebase/Messaging'
 end

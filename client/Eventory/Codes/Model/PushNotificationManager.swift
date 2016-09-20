@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class PushNotificationManager {
     
@@ -24,13 +25,10 @@ class PushNotificationManager {
     // TODO:　プッシュ通知の実装
     func registerRemote() {
         let application = UIApplication.sharedApplication()
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        let notificationSettings = UIUserNotificationSettings(
+            forTypes: [.Badge, .Sound, .Alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
-        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         application.registerForRemoteNotifications()
-    }
-    
-    func registerLocal() {
-        
+        FIRApp.configure()
     }
 }

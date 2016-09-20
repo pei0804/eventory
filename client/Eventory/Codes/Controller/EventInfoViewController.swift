@@ -8,9 +8,8 @@
 
 import UIKit
 import SafariServices
-import SwiftTask
 
-class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegate {
+class EventInfoViewController: BaseViewController {
     
     var eventSummarys: [EventSummary]? {
         didSet {
@@ -25,6 +24,8 @@ class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegat
         
         self.scrollView = tableView
         self.addRefreshControl()
+        
+        self.tableView.emptyDataSetSource = self
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -100,7 +101,7 @@ extension EventInfoViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension EventInfoViewController: UITableViewDelegate {
+extension EventInfoViewController: UITableViewDelegate, SFSafariViewControllerDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         
