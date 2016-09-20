@@ -35,10 +35,10 @@ class EventManager {
         var firstFlg: Bool = false
         for genre in genres {
             if !firstFlg {
-                selectGenre += "AND (title CONTAINS[c] '\(genre)' OR desc CONTAINS[c] '\(genre)'"
+                selectGenre += "AND (title CONTAINS[c] '\(genre)' "
                 firstFlg = true
             }
-            selectGenre += "OR title CONTAINS[c] '\(genre)' OR desc CONTAINS[c] '\(genre)' "
+            selectGenre += "OR title CONTAINS[c] '\(genre)' "
         }
         // 0は許容していないがバグ回避のためチェック
         if genres.count != 0 {
@@ -88,7 +88,7 @@ class EventManager {
             eventSummary.id = event.id
             eventSummary.eventId = event.eventId
             eventSummary.title = event.title
-            eventSummary.desc = event.desc
+            //eventSummary.desc = event.desc
             eventSummary.url = event.url
             eventSummary.limit = event.limit
             eventSummary.accepted = event.accepted
@@ -171,14 +171,14 @@ class EventManager {
                                     "id":event.id,
                                     "eventId": event.eventId,
                                     "title" : event.title,
-                                    "desc" : event.desc,
+                                    //"desc" : event.desc,
                                     "url" : event.url,
-                                    "limit" : event.limit,
-                                    "accepted" : event.accepted,
-                                    "waitlisted" : event.waitlisted,
+                                    //"limit" : event.limit,
+                                    //"accepted" : event.accepted,
+                                    //"waitlisted" : event.waitlisted,
                                     "address" : event.address,
                                     "place" : event.place,
-                                    "startAt" : event.stratAt,
+                                    "stratAt" : event.stratAt,
                                     "endAt" : event.endAt
                                 ],
                                 update: true)

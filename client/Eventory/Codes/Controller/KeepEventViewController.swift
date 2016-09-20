@@ -90,7 +90,7 @@ extension KeepEventViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 250
+        return 180
     }
 }
 

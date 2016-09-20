@@ -61,7 +61,7 @@ class EventSummary {
         
         self.eventId        = event.eventId
         self.title          = event.title
-        self.desc           = event.desc
+        //self.desc           = event.desc
         self.url            = event.url
         self.limit          = event.limit
         self.waitlisted     = event.waitlisted

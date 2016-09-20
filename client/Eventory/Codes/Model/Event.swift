@@ -21,19 +21,19 @@ class Event: Object, Mappable {
     dynamic var title: String = ""
     
     // 説明文
-    dynamic var desc: String = ""
+    //dynamic var desc: String = ""
     
     // URL
     dynamic var url: String = ""
     
     // 定員
-    dynamic var limit: Int = 0
+    //dynamic var limit: Int = 0
     
     // 現在の参加者数 connpassにはない
-    dynamic var accepted: Int  = 0
+    //dynamic var accepted: Int  = 0
     
     // キャンセル待ち
-    dynamic var waitlisted: Int = 0
+    //dynamic var waitlisted: Int = 0
     
     // 開催住所
     dynamic var address: String = ""
@@ -65,11 +65,11 @@ class Event: Object, Mappable {
         id              <- map["id"]
         eventId         <- map["event_id"]
         title           <- map["title"]
-        desc            <- map["desc"]
+        //desc            <- map["desc"]
         url             <- map["url"]
-        limit           <- map["limit"]
-        accepted        <- map["accepted"]
-        waitlisted      <- map["waitlisted"]
+        //limit           <- map["limit"]
+        //accepted        <- map["accepted"]
+        //waitlisted      <- map["waitlisted"]
         address         <- map["address"]
         place           <- map["place"]
         stratAt         <- (map["strat_at"], CustomDateFormatTransform())

@@ -12,7 +12,6 @@ class EventInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        descLbl.sizeToFit()
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -24,7 +23,6 @@ class EventInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLbl: UILabel!
     
     @IBOutlet weak var addressLbl: UILabel!
-    @IBOutlet weak var descLbl: UILabel!
     @IBOutlet weak var titileLbl: UILabel!
     
     var id: Int = 0
@@ -73,7 +71,7 @@ class EventInfoTableViewCell: UITableViewCell {
         self.indexPath = indexPath
         
         titileLbl.text = eventSummary.title
-        descLbl.text = eventSummary.desc
+        //descLbl.text = eventSummary.desc
         addressLbl.text = eventSummary.address != "" ? eventSummary.address : "未定"
         eventSummary.eventDate = ViewFormaatter.sharedInstance.setEventDate(eventSummary)
         dateLbl.text = eventSummary.eventDate
