@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>104890656153-mn0gnvrq72ketodd8i40mmshavtlcsk6.apps.googleusercontent.com</string>
+	<string>104890656153-fubk40d4nd596ivkfhg7su89kvhu5k4s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.104890656153-mn0gnvrq72ketodd8i40mmshavtlcsk6</string>
+	<string>com.googleusercontent.apps.104890656153-fubk40d4nd596ivkfhg7su89kvhu5k4s</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDmvL_MuvWR45-s04VBXjNvDaeWQ6FbOVY</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.chikamory.eventory</string>
+	<string>com.chikamory.Eventory</string>
 	<key>PROJECT_ID</key>
 	<string>eventory-8a068</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:104890656153:ios:dac6729f4ae27a1f</string>
+	<string>1:104890656153:ios:9f2def5d32e78e63</string>
 	<key>DATABASE_URL</key>
 	<string>https://eventory-8a068.firebaseio.com</string>
 </dict>
