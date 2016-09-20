@@ -15,14 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var newEvent: Int = 0 {
-        didSet(newEvent) {
-            if newEvent <= 0 {
+        didSet {
+            // TODO 最初の時点ではどこのことを指しているかがわからない。
+            if newEvent > 0 {
                 if let tabBarController = self.window?.rootViewController as? UITabBarController {
-                    tabBarController.tabBar.items![2].badgeValue = nil
+                    tabBarController.tabBar.items![2].badgeValue = "New"
                 }
             } else {
                 if let tabBarController = self.window?.rootViewController as? UITabBarController {
-                    tabBarController.tabBar.items![2].badgeValue = "New"
+                    tabBarController.tabBar.items![2].badgeValue = nil
                 }
             }
         }
