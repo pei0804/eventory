@@ -10,14 +10,26 @@ import UIKit
 
 class MainMenuTabBarController: UITabBarController {
     
+    
+    let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selectedIndex = 2
-    }
-    
-    override func viewWillAppear(animated:Bool) {
+        self.tabBar.tintColor = Colors.mainColor
         
-        super.viewWillAppear(animated)
+        guard let items = self.tabBar.items else {
+            return
+        }
+        
+        if items.count != tabBarImages.count {
+            fatalError("assets tabbarmenu not match count")
+        }
+        
+        for (i,item) in items.enumerate() {
+            item.image = UIImage(named: "\(tabBarImages[i])_off.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+            item.selectedImage = UIImage(named: "\(tabBarImages[i])_on.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        }
     }
     
     override func didReceiveMemoryWarning() {

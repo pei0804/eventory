@@ -10,11 +10,11 @@
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EventInfoTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventInfoTableViewCell" rowHeight="243" id="3Ab-l4-3E7" customClass="EventInfoTableViewCell" customModule="Eventory" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="243"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Ab-l4-3E7" id="bQh-gt-dvd">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="3Ab-l4-3E7" id="bQh-gt-dvd">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="242"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
                         <rect key="frame" x="182" y="182" width="120" height="40"/>
                         <color key="backgroundColor" red="0.90196078431372551" green="0.49411764705882355" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -29,7 +29,7 @@
                             <action selector="keepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="lm2-Lr-Soi"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="イベント名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dV-tG6">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="イベント名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dV-tG6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
                         <color key="backgroundColor" red="0.63872195512820507" green="0.63216279390412733" blue="0.6258636373560964" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -40,7 +40,7 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="説明" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3k-Kt-AeU">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="説明" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3k-Kt-AeU">
                         <rect key="frame" x="18" y="59" width="284" height="52"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="284" id="I0G-QH-jTQ"/>
@@ -50,7 +50,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="開催日時" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="開催日時" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
                         <rect key="frame" x="18" y="150" width="284" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="284" id="QWr-zC-rSI"/>
@@ -60,7 +60,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
                         <rect key="frame" x="18" y="182" width="120" height="40"/>
                         <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -74,7 +74,7 @@
                             <action selector="noKeepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="NTy-3E-oA1"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="住所" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="住所" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
                         <rect key="frame" x="18" y="125" width="284" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="284" id="Tyu-9F-Yf5"/>
