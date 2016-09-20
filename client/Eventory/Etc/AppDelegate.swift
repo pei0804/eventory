@@ -15,14 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var newEvent: Int = 0 {
-        didSet(newEvent) {
-            if newEvent <= 0 {
+        didSet {
+            // TODO 最初の時点ではどこのことを指しているかがわからない。
+            if newEvent > 0 {
                 if let tabBarController = self.window?.rootViewController as? UITabBarController {
-                    tabBarController.tabBar.items![2].badgeValue = nil
+                    tabBarController.tabBar.items![2].badgeValue = "New"
                 }
             } else {
                 if let tabBarController = self.window?.rootViewController as? UITabBarController {
-                    tabBarController.tabBar.items![2].badgeValue = "New"
+                    tabBarController.tabBar.items![2].badgeValue = nil
                 }
             }
         }
@@ -31,9 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        EventManager.sharedInstance.getNewEventAll()
         self.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
-
         
         if UserRegister.sharedInstance.getUserSettingGenres().isEmpty || UserRegister.sharedInstance.getUserSettingPlaces().isEmpty {
             let storyboard = UIStoryboard(name: "Register", bundle: nil)
