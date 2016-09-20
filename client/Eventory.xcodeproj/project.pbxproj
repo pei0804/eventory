@@ -32,6 +32,7 @@
 		6CA95B331D6749EC00983152 /* EventSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B321D6749EC00983152 /* EventSummary.swift */; };
 		6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */; };
 		6CC5C15F1D90BB9B00683EBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15E1D90BB9B00683EBB /* Images.xcassets */; };
+		6CC5C1611D90F7C200683EBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C1601D90F7C200683EBB /* GoogleService-Info.plist */; };
 		6CD322C71D7EAB1B004B0851 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C61D7EAB1B004B0851 /* Define.swift */; };
 		6CD322C91D7EAFCF004B0851 /* CheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */; };
 		6CD322CD1D83F056004B0851 /* UserRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322CC1D83F056004B0851 /* UserRegister.swift */; };
@@ -69,6 +70,7 @@
 		6CA95B321D6749EC00983152 /* EventSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSummary.swift; sourceTree = "<group>"; };
 		6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		6CC5C15E1D90BB9B00683EBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6CC5C1601D90F7C200683EBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6CD322C61D7EAB1B004B0851 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
 		6CD322CC1D83F056004B0851 /* UserRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegister.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		6CA95B251D672CEF00983152 /* Etc */ = {
 			isa = PBXGroup;
 			children = (
+				6CC5C1601D90F7C200683EBB /* GoogleService-Info.plist */,
 				6CA95B0C1D6729BF00983152 /* AppDelegate.swift */,
 				6CA95B1F1D672B9700983152 /* SwiftyJSON.swift */,
 				6CD322C61D7EAB1B004B0851 /* Define.swift */,
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CA95B2B1D672FDA00983152 /* EventInfoTableViewCell.xib in Resources */,
+				6CC5C1611D90F7C200683EBB /* GoogleService-Info.plist in Resources */,
 				6CA95B171D6729BF00983152 /* LaunchScreen.storyboard in Resources */,
 				6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */,
 				6CA95B121D6729BF00983152 /* Main.storyboard in Resources */,
