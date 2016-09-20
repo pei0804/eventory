@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import SwiftTask
 
 class NoKeepEventViewController: BaseViewController {
 
@@ -46,9 +47,16 @@ class NoKeepEventViewController: BaseViewController {
     
     override func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            EventManager.sharedInstance.getNewEventAll()
-            self.eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
-            completed?()
+            
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                self.eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
+                completed?()
+                }.failure { _ in
+                // TODOなんかする
+                completed?()
+            }
         }
     }
 }

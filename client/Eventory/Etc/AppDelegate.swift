@@ -31,9 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        EventManager.sharedInstance.getNewEventAll()
         self.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
-
         
         if UserRegister.sharedInstance.getUserSettingGenres().isEmpty || UserRegister.sharedInstance.getUserSettingPlaces().isEmpty {
             let storyboard = UIStoryboard(name: "Register", bundle: nil)

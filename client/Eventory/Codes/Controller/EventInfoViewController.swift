@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import SwiftTask
 
 class EventInfoViewController: BaseViewController {
     
@@ -32,7 +33,7 @@ class EventInfoViewController: BaseViewController {
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
         // TODO: パス確認用（削除必須）
-         print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
+        print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
     }
     
     override func viewWillAppear(animated:Bool) {
@@ -57,9 +58,16 @@ class EventInfoViewController: BaseViewController {
     
     override func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            EventManager.sharedInstance.getNewEventAll()
-            self.eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
-            completed?()
+            
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
+                completed?()
+                }.failure { _ in
+                    // TODOなんかする
+                    completed?()
+            }
         }
     }
 }

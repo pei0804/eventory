@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTask
 
 class RegisterPlaceViewController: UIViewController {
     
@@ -42,7 +43,7 @@ class RegisterPlaceViewController: UIViewController {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -71,9 +72,23 @@ class RegisterPlaceViewController: UIViewController {
         if settingStatus {
             navigationController?.popToRootViewControllerAnimated(true)
         } else {
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
-            self.presentViewController(vc, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                let task = [EventManager.sharedInstance.fetchNewEvent()]
+                
+                Task.all(task).success { _ in
+                    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
+                    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
+                    self.presentViewController(vc, animated: true, completion: nil)
+                    }.failure { _ in
+                        // TODOなんかする
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
+                        self.presentViewController(vc, animated: true, completion: nil)
+                }
+            }
         }
     }
 }

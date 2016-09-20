@@ -8,9 +8,10 @@
 
 import UIKit
 import SafariServices
+import SwiftTask
 
 class KeepEventViewController: BaseViewController {
-
+    
     var eventSummarys: [EventSummary]? {
         didSet {
             self.tableView.reloadData()
@@ -46,9 +47,16 @@ class KeepEventViewController: BaseViewController {
     
     override func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            EventManager.sharedInstance.getNewEventAll()
-            self.eventSummarys = EventManager.sharedInstance.getKeepEventAll()
-            completed?()
+            
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                self.eventSummarys = EventManager.sharedInstance.getKeepEventAll()
+                completed?()
+                }.failure { _ in
+                    // TODOなんかする
+                completed?()
+            }
         }
     }
 }
