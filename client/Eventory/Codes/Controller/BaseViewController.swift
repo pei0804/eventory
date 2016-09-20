@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
 
 class BaseViewController: UIViewController {
     
@@ -56,4 +57,17 @@ class BaseViewController: UIViewController {
         }
     }
     
+}
+
+extension BaseViewController: DZNEmptyDataSetSource {
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "条件に合致する情報がありません"
+        let attribs = [
+            NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
+            NSForegroundColorAttributeName: UIColor.darkGrayColor()
+        ]
+        
+        return NSAttributedString(string: text, attributes: attribs)
+    }
 }

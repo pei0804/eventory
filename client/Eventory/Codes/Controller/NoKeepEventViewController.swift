@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class NoKeepEventViewController: BaseViewController, SFSafariViewControllerDelegate {
+class NoKeepEventViewController: BaseViewController {
 
     var eventSummarys: [EventSummary]? {
         didSet {
@@ -24,6 +24,8 @@ class NoKeepEventViewController: BaseViewController, SFSafariViewControllerDeleg
         
         self.scrollView = tableView
         self.addRefreshControl()
+        
+        self.tableView.emptyDataSetSource = self
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -87,7 +89,7 @@ extension NoKeepEventViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension NoKeepEventViewController: UITableViewDelegate {
+extension NoKeepEventViewController: UITableViewDelegate, SFSafariViewControllerDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         

@@ -8,10 +8,8 @@
 
 import UIKit
 import SafariServices
-import SwiftTask
-import DZNEmptyDataSet
 
-class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegate {
+class EventInfoViewController: BaseViewController {
     
     var eventSummarys: [EventSummary]? {
         didSet {
@@ -27,10 +25,10 @@ class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegat
         self.scrollView = tableView
         self.addRefreshControl()
         
+        self.tableView.emptyDataSetSource = self
+        
         tableView.delegate = self
         tableView.dataSource = self
-        
-        self.tableView.emptyDataSetSource = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
         // TODO: パス確認用（削除必須）
@@ -103,7 +101,7 @@ extension EventInfoViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension EventInfoViewController: UITableViewDelegate {
+extension EventInfoViewController: UITableViewDelegate, SFSafariViewControllerDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         
@@ -122,19 +120,5 @@ extension EventInfoViewController: UITableViewDelegate {
         let brow = SFSafariViewController(URL: NSURL(string: url)!, entersReaderIfAvailable: false)
         brow.delegate = self
         presentViewController(brow, animated: true, completion: nil)
-    }
-}
-
-
-extension EventInfoViewController: DZNEmptyDataSetSource {
-    
-    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "条件に合致する情報がありません"
-        let attribs = [
-            NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
-            NSForegroundColorAttributeName: UIColor.darkGrayColor()
-        ]
-        
-        return NSAttributedString(string: text, attributes: attribs)
     }
 }
