@@ -62,7 +62,7 @@ func ScanEventsJson(rs *sql.Rows) ([]EventJson, error) {
 		if err = rs.Scan(
 			&s.EventId,
 			&s.Title,
-			&s.Desc,
+			//&s.Desc,
 			&s.Url,
 			&s.Limit,
 			&s.Accepted,
