@@ -63,9 +63,9 @@ class EventSummary {
         self.title          = event.title
         //self.desc           = event.desc
         self.url            = event.url
-        self.limit          = event.limit
-        self.waitlisted     = event.waitlisted
-        self.accepted       = event.accepted
+        //self.limit          = event.limit
+        //self.waitlisted     = event.waitlisted
+        //self.accepted       = event.accepted
         self.address        = event.address
         self.place          = event.place
         self.stratAt        = event.stratAt
