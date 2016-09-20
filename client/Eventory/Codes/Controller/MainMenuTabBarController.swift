@@ -10,7 +10,6 @@ import UIKit
 
 class MainMenuTabBarController: UITabBarController {
     
-    
     let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]
     
     override func viewDidLoad() {

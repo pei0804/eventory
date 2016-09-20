@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 import SwiftTask
+import DZNEmptyDataSet
 
 class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegate {
     
@@ -28,6 +29,8 @@ class EventInfoViewController: BaseViewController, SFSafariViewControllerDelegat
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.tableView.emptyDataSetSource = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
         // TODO: パス確認用（削除必須）
@@ -119,5 +122,19 @@ extension EventInfoViewController: UITableViewDelegate {
         let brow = SFSafariViewController(URL: NSURL(string: url)!, entersReaderIfAvailable: false)
         brow.delegate = self
         presentViewController(brow, animated: true, completion: nil)
+    }
+}
+
+
+extension EventInfoViewController: DZNEmptyDataSetSource {
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "条件に合致する情報がありません"
+        let attribs = [
+            NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
+            NSForegroundColorAttributeName: UIColor.darkGrayColor()
+        ]
+        
+        return NSAttributedString(string: text, attributes: attribs)
     }
 }
