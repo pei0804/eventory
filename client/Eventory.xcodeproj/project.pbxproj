@@ -22,7 +22,6 @@
 		6C6A27011D8E614D00F479CA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6A27001D8E614D00F479CA /* BaseViewController.swift */; };
 		6CA95B0D1D6729BF00983152 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B0C1D6729BF00983152 /* AppDelegate.swift */; };
 		6CA95B121D6729BF00983152 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CA95B101D6729BF00983152 /* Main.storyboard */; };
-		6CA95B141D6729BF00983152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CA95B131D6729BF00983152 /* Assets.xcassets */; };
 		6CA95B171D6729BF00983152 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CA95B151D6729BF00983152 /* LaunchScreen.storyboard */; };
 		6CA95B201D672B9700983152 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B1E1D672B9700983152 /* Event.swift */; };
 		6CA95B211D672B9700983152 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B1F1D672B9700983152 /* SwiftyJSON.swift */; };
@@ -31,6 +30,8 @@
 		6CA95B2F1D67306C00983152 /* EventInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B2E1D67306C00983152 /* EventInfoViewController.swift */; };
 		6CA95B311D67480A00983152 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B301D67480A00983152 /* EventManager.swift */; };
 		6CA95B331D6749EC00983152 /* EventSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B321D6749EC00983152 /* EventSummary.swift */; };
+		6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */; };
+		6CC5C15F1D90BB9B00683EBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15E1D90BB9B00683EBB /* Images.xcassets */; };
 		6CD322C71D7EAB1B004B0851 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C61D7EAB1B004B0851 /* Define.swift */; };
 		6CD322C91D7EAFCF004B0851 /* CheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */; };
 		6CD322CD1D83F056004B0851 /* UserRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322CC1D83F056004B0851 /* UserRegister.swift */; };
@@ -57,7 +58,6 @@
 		6CA95B091D6729BF00983152 /* Eventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CA95B0C1D6729BF00983152 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CA95B111D6729BF00983152 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6CA95B131D6729BF00983152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CA95B161D6729BF00983152 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6CA95B181D6729BF00983152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CA95B1E1D672B9700983152 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -67,6 +67,8 @@
 		6CA95B2E1D67306C00983152 /* EventInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoViewController.swift; sourceTree = "<group>"; };
 		6CA95B301D67480A00983152 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		6CA95B321D6749EC00983152 /* EventSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSummary.swift; sourceTree = "<group>"; };
+		6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
+		6CC5C15E1D90BB9B00683EBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6CD322C61D7EAB1B004B0851 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
 		6CD322CC1D83F056004B0851 /* UserRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegister.swift; sourceTree = "<group>"; };
@@ -214,7 +216,8 @@
 			children = (
 				6CA95B261D672D4500983152 /* storyboard */,
 				6CA95B291D672DD200983152 /* xibs */,
-				6CA95B131D6729BF00983152 /* Assets.xcassets */,
+				6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */,
+				6CC5C15E1D90BB9B00683EBB /* Images.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -296,8 +299,9 @@
 			files = (
 				6CA95B2B1D672FDA00983152 /* EventInfoTableViewCell.xib in Resources */,
 				6CA95B171D6729BF00983152 /* LaunchScreen.storyboard in Resources */,
-				6CA95B141D6729BF00983152 /* Assets.xcassets in Resources */,
+				6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */,
 				6CA95B121D6729BF00983152 /* Main.storyboard in Resources */,
+				6CC5C15F1D90BB9B00683EBB /* Images.xcassets in Resources */,
 				6C4E1F171D7D39BB00A2BE13 /* CheckListTableViewCell.xib in Resources */,
 				6C4E1F151D7D36A600A2BE13 /* Register.storyboard in Resources */,
 			);
@@ -412,6 +416,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -457,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

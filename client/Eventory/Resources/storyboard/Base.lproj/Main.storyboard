@@ -28,7 +28,7 @@
             </objects>
             <point key="canvasLocation" x="-198" y="337"/>
         </scene>
-        <!--Keep Event View Controller-->
+        <!--興味あり-->
         <scene sceneID="Cpn-TX-9nF">
             <objects>
                 <viewController id="us4-E5-Ejl" customClass="KeepEventViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
@@ -69,7 +69,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="topRated" id="xN4-ay-Gra"/>
+                    <tabBarItem key="tabBarItem" title="興味あり" id="xN4-ay-Gra"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="Lqt-9T-IJq" id="NYE-UG-oZT"/>
@@ -79,7 +79,7 @@
             </objects>
             <point key="canvasLocation" x="245" y="-298"/>
         </scene>
-        <!--Event Info View Controller-->
+        <!--新着情報-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="EventInfoViewController" id="BYZ-38-t0r" customClass="EventInfoViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
@@ -128,7 +128,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="QGd-mg-mM1"/>
+                    <tabBarItem key="tabBarItem" title="新着情報" id="QGd-mg-mM1"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="fd3-22-8xQ" id="VxS-FH-10c"/>
@@ -138,7 +138,7 @@
             </objects>
             <point key="canvasLocation" x="245" y="337"/>
         </scene>
-        <!--All Event Serach View Controller-->
+        <!--探す-->
         <scene sceneID="uIw-LO-fEa">
             <objects>
                 <viewController id="Tzn-YE-dOg" customClass="AllEventSerachViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
@@ -199,7 +199,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="search" id="pri-v8-3Mw"/>
+                    <tabBarItem key="tabBarItem" title="探す" id="pri-v8-3Mw"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="P1B-JG-HkB" id="dXk-2C-SEg"/>
@@ -209,12 +209,12 @@
             </objects>
             <point key="canvasLocation" x="-622" y="1143"/>
         </scene>
-        <!--Base Navigation View Controller-->
+        <!--設定-->
         <scene sceneID="lz4-F6-rvk">
             <objects>
                 <navigationController id="bMd-GZ-yAT" customClass="BaseNavigationViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <tabBarItem key="tabBarItem" systemItem="featured" id="feK-KI-O0g"/>
+                    <tabBarItem key="tabBarItem" title="設定" id="feK-KI-O0g"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BaO-L6-MZG">
@@ -229,7 +229,7 @@
             </objects>
             <point key="canvasLocation" x="-198" y="1143"/>
         </scene>
-        <!--No Keep Event View Controller-->
+        <!--興味なし-->
         <scene sceneID="WB8-hO-oVJ">
             <objects>
                 <viewController id="Vzb-yQ-Dox" customClass="NoKeepEventViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
@@ -270,7 +270,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="MlG-Do-CYb"/>
+                    <tabBarItem key="tabBarItem" title="興味なし" id="MlG-Do-CYb"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="qIf-n0-UdU" id="M2s-x8-1Ra"/>
