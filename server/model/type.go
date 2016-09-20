@@ -39,7 +39,7 @@ type EventJson struct {
 	EventId    string `json:"event_id"`
 	ApiId      int
 	Title      string `json:"title"`
-	Desc       string `json:"desc"`
+	//Desc       string `json:"desc"`
 	Url        string `json:"url"`
 	Limit      int    `json:"limit"`
 	Accepted   int    `json:"accepted"`

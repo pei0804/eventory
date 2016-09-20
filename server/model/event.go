@@ -63,7 +63,7 @@ func EventAll(db *sql.DB) ([]Event, error) {
 }
 
 func EventAllNew(db *sql.DB) ([]EventJson, error) {
-	rows, err := db.Query(`select eventId, title, description, url, limitCount, waitlisted, accepted, address ,place, startAt, endAt, id from m_event where endAt > now();`)
+	rows, err := db.Query(`select eventId, title, url, limitCount, waitlisted, accepted, address ,place, startAt, endAt, id from m_event where endAt > now();`)
 	if err != nil {
 		return nil, err
 	}

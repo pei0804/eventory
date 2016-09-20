@@ -9,7 +9,6 @@ import (
 
 	"github.com/tikasan/eventory/server/db"
 	"github.com/tikasan/eventory/server/define"
-	"github.com/tikasan/eventory/server/formater"
 	"github.com/tikasan/eventory/server/model"
 
 	"time"
@@ -123,9 +122,9 @@ func main() {
 	http.HandleFunc("/api/smt/events", func(w http.ResponseWriter, r *http.Request) {
 
 		event := eventResponse()
-		for i := range event {
-			event[i].Desc = formater.RemoveTag(event[i].Desc)
-		}
+		//for i := range event {
+		//	event[i].Desc = formater.RemoveTag(event[i].Desc)
+		//}
 
 		w.Header().Set("Content-Type", "application/json")
 		enc := json.NewEncoder(w)
