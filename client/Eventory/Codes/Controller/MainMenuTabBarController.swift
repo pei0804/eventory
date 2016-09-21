@@ -36,6 +36,15 @@ class MainMenuTabBarController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
+    func badgeUpdate(newEvent: Int) {
+        
+        if newEvent > 0 {
+            self.tabBar.items![2].badgeValue = "New"
+        } else {
+            self.tabBar.items![2].badgeValue = nil
+        }
+    }
+    
     
     /*
      // MARK: - Navigation

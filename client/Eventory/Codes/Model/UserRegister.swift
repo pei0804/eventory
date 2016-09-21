@@ -15,6 +15,22 @@ class UserRegister {
     
     private var ud: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
+    func getSettingStatus() -> Bool {
+        
+        guard let isSetting = self.ud.objectForKey(SettingClass.Status.getUserSettingKey()) as? Bool else {
+            return false
+        }
+        return isSetting
+    }
+    
+    func setDefaultSettingStatus(isSetting: Bool) {
+        
+        if isSetting {
+            NSUserDefaults.standardUserDefaults().setObject(true, forKey: SettingClass.Status.getUserSettingKey());
+            NSUserDefaults.standardUserDefaults().synchronize();
+        }
+    }
+    
     func getUserSettingGenres() -> [String] {
        
         guard let userSettingGenres = self.ud.objectForKey(SettingClass.Genre.getUserSettingKey()) as? [String] else {
@@ -39,7 +55,7 @@ class UserRegister {
         return self.ud.objectForKey(SettingClass.Place.getSettingKey()) as! [Dictionary<String, AnyObject>]
     }
     
-    func userDefaultRegister(ragisterSetting: [Dictionary<String, AnyObject>]?, settingClass: SettingClass) {
+    func setUserSettingRegister(ragisterSetting: [Dictionary<String, AnyObject>]?, settingClass: SettingClass) {
         var userRegisterSetting: [String] = []
         
         guard let ragisterSetting = ragisterSetting else {

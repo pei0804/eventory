@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import SwiftTask
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,28 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
         
         // TODO ここらへんどうにかしたい
-        if UserRegister.sharedInstance.getUserSettingGenres().isEmpty || UserRegister.sharedInstance.getUserSettingPlaces().isEmpty {
+        if !UserRegister.sharedInstance.getSettingStatus() {
             let storyboard = UIStoryboard(name: "Register", bundle: nil)
             let initialViewController = storyboard.instantiateViewControllerWithIdentifier("signUp")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         } else {
-            let task = [EventManager.sharedInstance.fetchNewEvent()]
-            
-            Task.all(task).success { _ in
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
-                self.window?.rootViewController = initialViewController
-                self.window?.makeKeyAndVisible()
-                }.failure { _ in
-                    // TODOなんかする
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
-                    self.window?.rootViewController = initialViewController
-                    self.window?.makeKeyAndVisible()
-            }
-            
-            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
         }
         return true
     }

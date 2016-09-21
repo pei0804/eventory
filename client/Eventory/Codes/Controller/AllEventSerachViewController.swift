@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import SwiftTask
 
 class AllEventSerachViewController: BaseViewController {
     
@@ -46,9 +47,19 @@ class AllEventSerachViewController: BaseViewController {
     
     override func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            EventManager.sharedInstance.getNewEventAll()
-            self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
-            completed?()
+            
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
+                completed?()
+                }.failure { _ in
+                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    completed?()
+            }
         }
     }
 }

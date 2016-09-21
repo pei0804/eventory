@@ -54,8 +54,11 @@ class NoKeepEventViewController: BaseViewController {
                 self.eventSummarys = EventManager.sharedInstance.getNoKeepEventAll()
                 completed?()
                 }.failure { _ in
-                // TODOなんかする
-                completed?()
+                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    completed?()
             }
         }
     }
