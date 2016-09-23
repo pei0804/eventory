@@ -16,7 +16,7 @@ class EventSummary {
     var eventId: String = ""
     
     // APIの種別　主キー
-    var apiId: Int = 0
+    //var apiId: Int = 0
     
     // イベントタイトル
     var title: String = ""
@@ -25,19 +25,19 @@ class EventSummary {
     var catchphrase: String = ""
     
     // 説明文
-    var desc: String = ""
+    //var desc: String = ""
     
     // URL
     var url: String = ""
     
     // 定員
-    var limit: Int = 0
+    //var limit: Int = 0
     
     // 現在の参加者数 connpassにはない
-    var accepted: Int  = 0
+    //var accepted: Int  = 0
     
     // キャンセル待ち
-    var waitlisted: Int = 0
+    //var waitlisted: Int = 0
     
     // 開催住所
     var address: String = ""

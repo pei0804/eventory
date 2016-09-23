@@ -53,6 +53,7 @@
 		6C4E1F161D7D39BB00A2BE13 /* CheckListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckListTableViewCell.xib; sourceTree = "<group>"; };
 		6C4E1F181D7D3A8600A2BE13 /* RegisterGenreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterGenreViewController.swift; sourceTree = "<group>"; };
 		6C4E1F1A1D7D3AAE00A2BE13 /* RegisterPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPlaceViewController.swift; sourceTree = "<group>"; };
+		6C5E463F1D92231F00AC9EC9 /* Eventory-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Eventory-Bridging-Header.h"; sourceTree = "<group>"; };
 		6C6A26FE1D8E571D00F479CA /* AllEventSerachViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllEventSerachViewController.swift; sourceTree = "<group>"; };
 		6C6A27001D8E614D00F479CA /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6CA95B091D6729BF00983152 /* Eventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +184,7 @@
 		6CA95B251D672CEF00983152 /* Etc */ = {
 			isa = PBXGroup;
 			children = (
+				6C5E463F1D92231F00AC9EC9 /* Eventory-Bridging-Header.h */,
 				6CA95B0C1D6729BF00983152 /* AppDelegate.swift */,
 				6CA95B1F1D672B9700983152 /* SwiftyJSON.swift */,
 				6CD322C61D7EAB1B004B0851 /* Define.swift */,
@@ -503,6 +505,7 @@
 			baseConfigurationReference = 9D8D7702E376AFA369C0434F /* Pods-Eventory.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Eventory/Info.plist;
@@ -510,6 +513,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikamory.Eventory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -518,6 +523,7 @@
 			baseConfigurationReference = 93E44002139D8172A27F7E18 /* Pods-Eventory.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Eventory/Info.plist;
@@ -525,6 +531,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikamory.Eventory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";
 			};
 			name = Release;
 		};

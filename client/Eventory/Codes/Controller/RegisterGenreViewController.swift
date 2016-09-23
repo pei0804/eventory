@@ -57,15 +57,16 @@ class RegisterGenreViewController: UIViewController {
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
         
-        if checkCount <= 0 {
-            let alert: UIAlertController = UIAlertController(title: "最低１つ選んでください。", message: "１つも選択されていないと検索できません。", preferredStyle: .Alert)
-            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
+       // あえて、ひとつも選ばない人もいる可能性があるので許容してみる
+//        if checkCount <= 0 {
+//            let alert: UIAlertController = UIAlertController(title: "最低１つ選んでください。", message: "１つも選択されていないと検索できません。", preferredStyle: .Alert)
+//            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+//            alert.addAction(cancelAction)
+//            self.presentViewController(alert, animated: true, completion: nil)
+//            return
+//        }
         
-        UserRegister.sharedInstance.userDefaultRegister(genres, settingClass: SettingClass.Genre)
+        UserRegister.sharedInstance.setUserSettingRegister(genres, settingClass: SettingClass.Genre)
         
         if settingStatus {
             navigationController?.popToRootViewControllerAnimated(true)

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 
 	"github.com/tikasan/eventory/server/db"
 	"github.com/tikasan/eventory/server/define"
@@ -16,23 +17,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func eventCheckAndInsert() {
+func eventCheckAndInsert() <-chan []model.Event {
 
-	adminLog, err := os.OpenFile("./log/admin.log", os.O_APPEND|os.O_WRONLY, 0600)
-	if err != nil {
-		return
-	}
-	defer adminLog.Close()
-
+	now := time.Now()
 	atdn := make([]model.Inserter, define.SERACH_SCOPE)
 	connpass := make([]model.Inserter, define.SERACH_SCOPE)
 	//doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
 	allInserter := make([]model.Inserter, 0)
-
-	now := time.Now()
-	logger := log.New(adminLog, "[start]", log.LstdFlags)
-	logger.Println(now)
-	adminLog.Sync()
 
 	for i := 0; i < define.SERACH_SCOPE; i++ {
 		ym := now.AddDate(0, i, 0).Format("200601")
@@ -50,26 +41,25 @@ func eventCheckAndInsert() {
 	allInserter = append(allInserter, connpass...)
 	//allInserter = append(allInserter, doorKeeper...)
 	allEvents := make(chan []model.Event, len(allInserter))
-	for _, a := range allInserter {
-		go func(a model.Inserter) {
-			cli := model.NewInserter(a.Url, a.Api)
-			events, err := cli.Get()
-			if err != nil {
-				fmt.Fprint(os.Stderr, err)
-			}
-			allEvents <- events
-		}(a)
-	}
-	sql := db.ConDB()
-	defer sql.Close()
-	for ev := range allEvents {
-		model.Insert(sql, ev)
-	}
+	var wg sync.WaitGroup
 
-	end := time.Now()
-	logger = log.New(adminLog, "[end]", log.LstdFlags)
-	logger.Println(end)
-	adminLog.Sync()
+	go func() {
+		for _, a := range allInserter {
+			wg.Add(1)
+			go func(a model.Inserter) {
+				cli := model.NewInserter(a.Url, a.Api)
+				events, err := cli.Get()
+				if err != nil {
+					fmt.Fprint(os.Stderr, err)
+				}
+				allEvents <- events
+				wg.Done()
+			}(a)
+		}
+		wg.Wait()
+		close(allEvents)
+	}()
+	return allEvents
 }
 
 func eventResponse() []model.EventJson {
@@ -137,7 +127,36 @@ func main() {
 	})
 
 	http.HandleFunc("/api/events/admin", func(w http.ResponseWriter, r *http.Request) {
-		eventCheckAndInsert()
+
+		adminLog, err := os.OpenFile("./log/admin.log", os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			return
+		}
+		defer adminLog.Close()
+
+		now := time.Now()
+		logger := log.New(adminLog, "[start]", log.LstdFlags)
+		logger.Println(now)
+		adminLog.Sync()
+
+		sql := db.ConDB()
+		defer sql.Close()
+
+		receiver := eventCheckAndInsert()
+		for {
+			receive, ok := <-receiver
+			if ok {
+				model.Insert(sql, receive)
+			} else {
+				break
+			}
+
+		}
+
+		end := time.Now()
+		logger = log.New(adminLog, "[end]", log.LstdFlags)
+		logger.Println(end)
+		adminLog.Sync()
 		return
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))

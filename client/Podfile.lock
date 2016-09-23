@@ -32,6 +32,7 @@ PODS:
   - Realm/Headers (1.1.0)
   - RealmSwift (1.1.0):
     - Realm (= 1.1.0)
+  - SVProgressHUD (2.0.3)
   - SwiftTask (5.0.0)
 
 DEPENDENCIES:
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - ObjectMapper (~> 0.17)
   - RealmSwift
+  - SVProgressHUD
   - SwiftTask
 
 SPEC CHECKSUMS:
@@ -56,8 +58,9 @@ SPEC CHECKSUMS:
   ObjectMapper: a88114e5df20f055da63029f25cbc01014847c91
   Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftTask: 7fcd92f8ac16876e82c0e4ced0cea7e028456b6b
 
-PODFILE CHECKSUM: 3196edfc06ba726ee693154f4893d4acdba49d47
+PODFILE CHECKSUM: fa0001818cfe4ee74982661391482af018c20c8e
 
 COCOAPODS: 1.0.1

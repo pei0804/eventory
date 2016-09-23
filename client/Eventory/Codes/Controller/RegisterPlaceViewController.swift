@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftTask
+import SVProgressHUD
 
 class RegisterPlaceViewController: UIViewController {
     
@@ -59,31 +60,42 @@ class RegisterPlaceViewController: UIViewController {
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
         
-        if checkCount <= 0 {
-            let alert: UIAlertController = UIAlertController(title: "最低１つ選んでください。", message: "１つも選択されていないと有効な結果が得られません。", preferredStyle: .Alert)
-            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
+        // あえて、ひとつも選ばない人もいる可能性があるので許容してみる
+        //        if checkCount <= 0 {
+        //            let alert: UIAlertController = UIAlertController(title: "最低１つ選んでください。", message: "１つも選択されていないと有効な結果が得られません。", preferredStyle: .Alert)
+        //            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        //            alert.addAction(cancelAction)
+        //            self.presentViewController(alert, animated: true, completion: nil)
+        //            return
+        //        }
         
-        UserRegister.sharedInstance.userDefaultRegister(places, settingClass: SettingClass.Place)
+        UserRegister.sharedInstance.setUserSettingRegister(places, settingClass: SettingClass.Place)
+        UserRegister.sharedInstance.setDefaultSettingStatus(true)
         
         if settingStatus {
             navigationController?.popToRootViewControllerAnimated(true)
         } else {
             dispatch_async(dispatch_get_main_queue()) {
                 
+                SVProgressHUD.showWithStatus("サーバーと通信中")
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
                 
                 Task.all(task).success { _ in
                     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
+                    SVProgressHUD.dismiss()
                     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
                     self.presentViewController(vc, animated: true, completion: nil)
                     }.failure { _ in
                         // TODOなんかする
+                        SVProgressHUD.dismiss()
+                        
+                        let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                        let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        
                         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                         let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
                         self.presentViewController(vc, animated: true, completion: nil)

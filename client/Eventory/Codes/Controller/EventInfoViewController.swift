@@ -34,14 +34,29 @@ class EventInfoViewController: BaseViewController {
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }
     
-    override func viewWillAppear(animated:Bool) {
-        
+    var onceTokenViewWillAppear: dispatch_once_t = 0
+    
+    override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
+        
+        self.eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
+        
+        dispatch_once(&onceTokenViewWillAppear) {
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            
+            Task.all(task).success { _ in
+                self.tableView.reloadData()
+                }.failure { _ in
+                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
-    
+
     override func viewWillDisappear(animated:Bool) {
         
         super.viewWillDisappear(animated)
@@ -63,7 +78,10 @@ class EventInfoViewController: BaseViewController {
                 self.eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
                 completed?()
                 }.failure { _ in
-                    // TODOなんかする
+                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
                     completed?()
             }
         }
