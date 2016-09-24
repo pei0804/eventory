@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // A Atdn
 type At struct {
 	Events []AAt `json:"events"`
@@ -46,8 +48,8 @@ type EventJson struct {
 	//Waitlisted int    `json:"waitlisted"`
 	Address string `json:"address"`
 	Place   string `json:"place"`
-	StratAt string `json:"strat_at"`
-	EndAt   string `json:"end_at"`
+	StratAt time.Time   `json:"strat_at"`
+	EndAt   time.Time   `json:"end_at"`
 	ID      int    `json:"id"`
 }
 

@@ -49,6 +49,19 @@ func (i *Inserter) Get() (events []Event, err error) {
 		return
 	}
 
+	//resp, err := http.Get(i.Url)
+	//if err != nil {
+	//	fmt.Fprint(os.Stderr, err)
+	//	return
+	//}
+	//defer resp.Body.Close()
+	//
+	//respByte, err := ioutil.ReadAll(resp.Body)
+	//if err != nil {
+	//	fmt.Fprint(os.Stderr, err)
+	//	return
+	//}
+
 	if i.Api == define.ATDN {
 		var at At
 		err = json.Unmarshal(respByte, &at)
