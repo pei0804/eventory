@@ -87,7 +87,7 @@ func Request() <-chan []model.Event {
 		for _, a := range allInserter {
 			wg.Add(1)
 			go func(a model.Inserter) {
-				cli := model.NewInserter(a.Url, a.Api)
+				cli := model.NewInserter(a.Url, a.Api, a.Token)
 				events, err := cli.Get()
 				if err != nil {
 					fmt.Fprint(os.Stderr, err)
