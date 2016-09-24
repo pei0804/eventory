@@ -49,11 +49,13 @@ func (s *Server) Init(dbconf, env string) {
 			log.Fatalf("log admin.log initialization failed: %s", err)
 		}
 	}
+	return
 }
 
 func (s *Server) Run(port string) {
 	http.HandleFunc("/api/smt/events", func(w http.ResponseWriter, r *http.Request) {
 		api.Response(w, s.db)
+		return
 	})
 
 	http.HandleFunc("/api/events/admin", func(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +75,6 @@ func main() {
 	flag.Parse()
 	s := New()
 
-	// イニシャライザが走る
 	s.Init(*dbconf, *env)
 	s.Run(*port)
 }
