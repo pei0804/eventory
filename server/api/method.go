@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sync"
 	"time"
 
@@ -16,16 +17,28 @@ import (
 )
 
 func Check(db *sql.DB) {
-	adminLog, err := os.OpenFile("./log/admin.log", os.O_APPEND|os.O_WRONLY, 0600)
+
+	g, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	checkLogPath := filepath.Join(g, "log", "check.log")
+	_, err = os.Stat(checkLogPath)
+	if err != nil {
+		fmt.Fprint(os.Stderr, err)
+	}
+
+	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
 		return
 	}
-	defer adminLog.Close()
+	defer checkLog.Close()
 
 	now := time.Now()
-	logger := log.New(adminLog, "[start]", log.LstdFlags)
+	logger := log.New(checkLog, "[start]", log.LstdFlags)
 	logger.Println(now)
-	adminLog.Sync()
+	checkLog.Sync()
 
 	receiver := Request()
 	for {
@@ -39,9 +52,9 @@ func Check(db *sql.DB) {
 	}
 
 	end := time.Now()
-	logger = log.New(adminLog, "[end]", log.LstdFlags)
+	logger = log.New(checkLog, "[end]", log.LstdFlags)
 	logger.Println(end)
-	adminLog.Sync()
+	checkLog.Sync()
 }
 
 func Request() <-chan []model.Event {

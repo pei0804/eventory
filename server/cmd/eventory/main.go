@@ -3,12 +3,13 @@ package main
 import (
 	"database/sql"
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/tikasan/eventory/server/db"
+
+	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/tikasan/eventory/server/api"
@@ -32,21 +33,27 @@ func (s *Server) Init(dbconf, env string) {
 		log.Fatalf("db initialization failed: %s", err)
 	}
 
-	_, err = os.Stat("./log")
+	g, err := os.Getwd()
 	if err != nil {
-		err := os.Mkdir("./log", 0750)
+		log.Fatal(err)
+	}
+
+	logDir := filepath.Join(g, "log")
+	_, err = os.Stat(logDir)
+	if err != nil {
+		err := os.Mkdir(logDir, 0750)
 		if err != nil {
-			fmt.Fprint(os.Stderr, err)
 			log.Fatalf("log folder initialization failed: %s", err)
 		}
 
 	}
 
-	_, err = os.Stat("./log/admin.log")
+	checkLogPath := filepath.Join(logDir, "check.log")
+	_, err = os.Stat(checkLogPath)
 	if err != nil {
-		_, err := os.Create("./log/admin.log")
+		_, err := os.Create(checkLogPath)
 		if err != nil {
-			log.Fatalf("log admin.log initialization failed: %s", err)
+			log.Fatal("log check.log initialization failed: %s", err)
 		}
 	}
 	return
