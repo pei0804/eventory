@@ -1,0 +1,19 @@
+# Example Database Configurationgorp
+#
+# For using gorp, enable parseTime option on MySQL to serialize/deserialize time.Time.
+#
+# see: https://github.com/rubenv/sql-migrate/issues/2
+#
+# Also interpolateParams=true, to replace placement on database server.
+#
+# see: https://github.com/go-sql-driver/mysql/pull/309
+# see: http://dsas.blog.klab.org/archives/52191467.html
+development:
+  dialect: mysql
+  datasource: root:123@tcp(localhost:3306)/eventory?parseTime=true&collation=utf8_general_ci&interpolateParams=true
+  dir: migrations
+
+test:
+  dialect: mysql
+  datasource: root:password@tcp(localhost:3306)/test-wiki?parseTime=true&collation=utf8_general_ci&interpolateParams=true
+  dir: migrations

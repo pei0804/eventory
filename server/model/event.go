@@ -9,7 +9,6 @@ import (
 )
 
 func Insert(db *sql.DB, Events []Event) error {
-	fmt.Println("入れ始め")
 	stmtIns, err := db.Prepare("INSERT INTO m_event (eventId, title, description, url, limitCount, waitlisted, accepted, address, place, startAt, endAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
@@ -51,7 +50,6 @@ func Insert(db *sql.DB, Events []Event) error {
 
 		}
 	}
-	fmt.Println("入れ終わり")
 	return nil
 }
 
