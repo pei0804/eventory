@@ -27,58 +27,6 @@ func New() *Server {
 	return &Server{}
 }
 
-func (s *Server) CheckAndInsert() <-chan []model.Event {
-	now := time.Now()
-	atdn := make([]model.Inserter, define.SERACH_SCOPE)
-	connpass := make([]model.Inserter, define.SERACH_SCOPE)
-	//doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
-	allInserter := make([]model.Inserter, 0)
-
-	for i := 0; i < define.SERACH_SCOPE; i++ {
-		ym := now.AddDate(0, i, 0).Format("200601")
-		atdn[i].Url = fmt.Sprintf("https://api.atnd.org/events/?count=100&format=jsonp&callback=&ym=%s", ym)
-		atdn[i].Api = define.ATDN
-
-		connpass[i].Url = fmt.Sprintf("https://connpass.com/api/v1/event/?count=100&ym=%s", ym)
-		connpass[i].Api = define.CONNPASS
-
-		//doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
-		//doorKeeper[i].Api = define.DOORKEEPER
-	}
-
-	allInserter = append(allInserter, atdn...)
-	allInserter = append(allInserter, connpass...)
-	//allInserter = append(allInserter, doorKeeper...)
-	allEvents := make(chan []model.Event, len(allInserter))
-	var wg sync.WaitGroup
-
-	go func() {
-		for _, a := range allInserter {
-			wg.Add(1)
-			go func(a model.Inserter) {
-				cli := model.NewInserter(a.Url, a.Api)
-				events, err := cli.Get()
-				if err != nil {
-					fmt.Fprint(os.Stderr, err)
-				}
-				allEvents <- events
-				wg.Done()
-			}(a)
-		}
-		wg.Wait()
-		close(allEvents)
-	}()
-	return allEvents
-}
-
-func (s *Server) Response() []model.EventJson {
-	Event, err := model.EventAllNew(s.db)
-	if err != nil {
-		fmt.Fprint(os.Stderr, err)
-	}
-	return Event
-}
-
 func (s *Server) Init(dbconf, env string) {
 	cs, err := db.NewConfigsFromFile(dbconf)
 	if err != nil {
@@ -165,6 +113,58 @@ func (s *Server) Run(port string) {
 		return
 	})
 	log.Fatal(http.ListenAndServe(port, nil))
+}
+
+func (s *Server) CheckAndInsert() <-chan []model.Event {
+	now := time.Now()
+	atdn := make([]model.Inserter, define.SERACH_SCOPE)
+	connpass := make([]model.Inserter, define.SERACH_SCOPE)
+	//doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
+	allInserter := make([]model.Inserter, 0)
+
+	for i := 0; i < define.SERACH_SCOPE; i++ {
+		ym := now.AddDate(0, i, 0).Format("200601")
+		atdn[i].Url = fmt.Sprintf("https://api.atnd.org/events/?count=100&format=jsonp&callback=&ym=%s", ym)
+		atdn[i].Api = define.ATDN
+
+		connpass[i].Url = fmt.Sprintf("https://connpass.com/api/v1/event/?count=100&ym=%s", ym)
+		connpass[i].Api = define.CONNPASS
+
+		//doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
+		//doorKeeper[i].Api = define.DOORKEEPER
+	}
+
+	allInserter = append(allInserter, atdn...)
+	allInserter = append(allInserter, connpass...)
+	//allInserter = append(allInserter, doorKeeper...)
+	allEvents := make(chan []model.Event, len(allInserter))
+	var wg sync.WaitGroup
+
+	go func() {
+		for _, a := range allInserter {
+			wg.Add(1)
+			go func(a model.Inserter) {
+				cli := model.NewInserter(a.Url, a.Api)
+				events, err := cli.Get()
+				if err != nil {
+					fmt.Fprint(os.Stderr, err)
+				}
+				allEvents <- events
+				wg.Done()
+			}(a)
+		}
+		wg.Wait()
+		close(allEvents)
+	}()
+	return allEvents
+}
+
+func (s *Server) Response() []model.EventJson {
+	Event, err := model.EventAllNew(s.db)
+	if err != nil {
+		fmt.Fprint(os.Stderr, err)
+	}
+	return Event
 }
 
 func main() {
