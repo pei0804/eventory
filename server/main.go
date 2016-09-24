@@ -1,7 +1,9 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -17,8 +19,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func eventCheckAndInsert() <-chan []model.Event {
+type Server struct {
+	db *sql.DB
+}
 
+func New() *Server {
+	return &Server{}
+}
+
+func (s *Server) CheckAndInsert() <-chan []model.Event {
 	now := time.Now()
 	atdn := make([]model.Inserter, define.SERACH_SCOPE)
 	connpass := make([]model.Inserter, define.SERACH_SCOPE)
@@ -62,26 +71,30 @@ func eventCheckAndInsert() <-chan []model.Event {
 	return allEvents
 }
 
-func eventResponse() []model.EventJson {
-
-	sql := db.ConDB()
-	defer sql.Close()
-	Event, err := model.EventAllNew(sql)
+func (s *Server) Response() []model.EventJson {
+	Event, err := model.EventAllNew(s.db)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}
 	return Event
 }
 
-func init() {
+func (s *Server) Init(dbconf, env string) {
+	cs, err := db.NewConfigsFromFile(dbconf)
+	if err != nil {
+		log.Fatalf("cannot open database configuration. exit. %s", err)
+	}
+	s.db, err = cs.Open(env)
+	if err != nil {
+		log.Fatalf("db initialization failed: %s", err)
+	}
 
-	// logファイルの存在　なければ作成
-	_, err := os.Stat("./log")
+	_, err = os.Stat("./log")
 	if err != nil {
 		err := os.Mkdir("./log", 0750)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
-			return
+			log.Fatalf("log folder initialization failed: %s", err)
 		}
 
 	}
@@ -90,17 +103,14 @@ func init() {
 	if err != nil {
 		_, err := os.Create("./log/admin.log")
 		if err != nil {
-			fmt.Fprint(os.Stderr, err)
-			return
+			log.Fatalf("log admin.log initialization failed: %s", err)
 		}
 	}
 }
 
-func main() {
-
+func (s *Server) Run(port string) {
 	http.HandleFunc("/api/pc/events", func(w http.ResponseWriter, r *http.Request) {
-
-		event := eventResponse()
+		event := s.Response()
 		w.Header().Set("Content-Type", "application/json")
 		enc := json.NewEncoder(w)
 		if err := enc.Encode(event); err != nil {
@@ -110,8 +120,7 @@ func main() {
 	})
 
 	http.HandleFunc("/api/smt/events", func(w http.ResponseWriter, r *http.Request) {
-
-		event := eventResponse()
+		event := s.Response()
 		//for i := range event {
 		//	event[i].Desc = formater.RemoveTag(event[i].Desc)
 		//}
@@ -127,7 +136,6 @@ func main() {
 	})
 
 	http.HandleFunc("/api/events/admin", func(w http.ResponseWriter, r *http.Request) {
-
 		adminLog, err := os.OpenFile("./log/admin.log", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			return
@@ -139,14 +147,11 @@ func main() {
 		logger.Println(now)
 		adminLog.Sync()
 
-		sql := db.ConDB()
-		defer sql.Close()
-
-		receiver := eventCheckAndInsert()
+		receiver := s.CheckAndInsert()
 		for {
 			receive, ok := <-receiver
 			if ok {
-				model.Insert(sql, receive)
+				model.Insert(s.db, receive)
 			} else {
 				break
 			}
@@ -159,5 +164,20 @@ func main() {
 		adminLog.Sync()
 		return
 	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(port, nil))
+}
+
+func main() {
+	var (
+		port   = flag.String("port", ":8080", "port to bind")
+		dbconf = flag.String("dbconf", "dbconfig.yml", "database configuration file.")
+		env    = flag.String("env", "development", "application envirionment (production, development etc.)")
+	)
+
+	flag.Parse()
+	s := New()
+
+	// イニシャライザが走る
+	s.Init(*dbconf, *env)
+	s.Run(*port)
 }
