@@ -12,10 +12,11 @@ import (
 	"github.com/tikasan/eventory/server/formater"
 )
 
-func NewInserter(rawurl string, rawapi int) *Inserter {
+func NewInserter(rawurl string, rawapi int, token string) *Inserter {
 	return &Inserter{
 		Url: rawurl,
 		Api: rawapi,
+		Token: token,
 	}
 }
 
@@ -33,7 +34,9 @@ func (i *Inserter) Get() (events []Event, err error) {
 		fmt.Fprint(os.Stderr, err)
 		return
 	}
-	req.Header.Set("Authorization", "")
+	if i.Token != "" {
+		req.Header.Set("Authorization", i.Token)
+	}
 
 	client := new(http.Client)
 	resp, err := client.Do(req)
