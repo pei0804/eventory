@@ -23,15 +23,20 @@ type Inserter struct {
 	Url      string
 	RespByte []byte
 	Api      int
+	Token    string
 }
 
 func (i *Inserter) Get() (events []Event, err error) {
 
-	resp, err := http.Get(i.Url)
+	req, err := http.NewRequest("GET", i.Url, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return
 	}
+	req.Header.Set("Authorization", "")
+
+	client := new(http.Client)
+	resp, err := client.Do(req)
 	defer resp.Body.Close()
 
 	respByte, err := ioutil.ReadAll(resp.Body)
@@ -39,6 +44,19 @@ func (i *Inserter) Get() (events []Event, err error) {
 		fmt.Fprint(os.Stderr, err)
 		return
 	}
+
+	//resp, err := http.Get(i.Url)
+	//if err != nil {
+	//	fmt.Fprint(os.Stderr, err)
+	//	return
+	//}
+	//defer resp.Body.Close()
+	//
+	//respByte, err := ioutil.ReadAll(resp.Body)
+	//if err != nil {
+	//	fmt.Fprint(os.Stderr, err)
+	//	return
+	//}
 
 	if i.Api == define.ATDN {
 		var at At

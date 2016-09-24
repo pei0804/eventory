@@ -61,7 +61,7 @@ func Request() <-chan []model.Event {
 	now := time.Now()
 	atdn := make([]model.Inserter, define.SERACH_SCOPE)
 	connpass := make([]model.Inserter, define.SERACH_SCOPE)
-	//doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
+	doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
 	allInserter := make([]model.Inserter, 0)
 
 	for i := 0; i < define.SERACH_SCOPE; i++ {
@@ -72,13 +72,14 @@ func Request() <-chan []model.Event {
 		connpass[i].Url = fmt.Sprintf("https://connpass.com/api/v1/event/?count=100&ym=%s", ym)
 		connpass[i].Api = define.CONNPASS
 
-		//doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
-		//doorKeeper[i].Api = define.DOORKEEPER
+		doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
+		doorKeeper[i].Api = define.DOORKEEPER
+		doorKeeper[i].Token = ""
 	}
 
 	allInserter = append(allInserter, atdn...)
 	allInserter = append(allInserter, connpass...)
-	//allInserter = append(allInserter, doorKeeper...)
+	allInserter = append(allInserter, doorKeeper...)
 	allEvents := make(chan []model.Event, len(allInserter))
 	var wg sync.WaitGroup
 
