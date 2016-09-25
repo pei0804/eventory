@@ -59,10 +59,10 @@ func Check(db *sql.DB) {
 
 func Request() <-chan []model.Event {
 	now := time.Now()
-	atdn := make([]model.Inserter, define.SERACH_SCOPE)
-	connpass := make([]model.Inserter, define.SERACH_SCOPE)
-	doorKeeper := make([]model.Inserter, define.SERACH_SCOPE)
-	allInserter := make([]model.Inserter, 0)
+	atdn := make([]Inserter, define.SERACH_SCOPE)
+	connpass := make([]Inserter, define.SERACH_SCOPE)
+	doorKeeper := make([]Inserter, define.SERACH_SCOPE)
+	allInserter := make([]Inserter, 0)
 
 	for i := 0; i < define.SERACH_SCOPE; i++ {
 		ym := now.AddDate(0, i, 0).Format("200601")
@@ -86,8 +86,8 @@ func Request() <-chan []model.Event {
 	go func() {
 		for _, a := range allInserter {
 			wg.Add(1)
-			go func(a model.Inserter) {
-				cli := model.NewInserter(a.Url, a.Api, a.Token)
+			go func(a Inserter) {
+				cli := NewInserter(a.Url, a.Api, a.Token)
 				events, err := cli.Get()
 				if err != nil {
 					fmt.Fprint(os.Stderr, err)
