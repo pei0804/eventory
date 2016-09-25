@@ -24,6 +24,7 @@ class EventInfoTableViewCell: UITableViewCell {
     
     @IBOutlet weak var addressLbl: UILabel!
     @IBOutlet weak var titileLbl: UILabel!
+    @IBOutlet weak var titleBackgroundView: UIView!
     
     var id: Int = 0
     var indexPath: NSIndexPath = NSIndexPath(index: 0)
@@ -33,14 +34,16 @@ class EventInfoTableViewCell: UITableViewCell {
         EventManager.sharedInstance.keepAction(id, isKeep: true)
         keepBtn.setTitle("キープ◯", forState: .Normal)
         noKeepBtn.setTitle("興味なし", forState: .Normal)
-        self.eventSummary.checkStatus = CheckStatus.Keep.rawValue
+        titleBackgroundView.backgroundColor = Colors.main
+        eventSummary.checkStatus = CheckStatus.Keep.rawValue
     }
     
     @IBAction func noKeepBtn(sender: AnyObject) {
         EventManager.sharedInstance.keepAction(id, isKeep: false)
         noKeepBtn.setTitle("興味なし×", forState: .Normal)
         keepBtn.setTitle("キープ", forState: .Normal)
-        self.eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
+        titleBackgroundView.backgroundColor = Colors.noKeep
+        eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
     }
     
     func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
@@ -49,23 +52,28 @@ class EventInfoTableViewCell: UITableViewCell {
         
         id = eventSummary.id
         if eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
-            self.keepBtn.setTitle("キープ", forState: .Normal)
-            self.noKeepBtn.setTitle("興味なし", forState: .Normal)
+            keepBtn.setTitle("キープ", forState: .Normal)
+            noKeepBtn.setTitle("興味なし", forState: .Normal)
+            titleBackgroundView.backgroundColor = Colors.noCheck
         }
         else if eventSummary.checkStatus == CheckStatus.Keep.rawValue {
-            self.keepBtn.setTitle("キープ◯", forState: .Normal)
-            self.noKeepBtn.setTitle("興味なし", forState: .Normal)
+            keepBtn.setTitle("キープ◯", forState: .Normal)
+            noKeepBtn.setTitle("興味なし", forState: .Normal)
+            titleBackgroundView.backgroundColor = Colors.main
         }
         else if eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
-            self.noKeepBtn.setTitle("興味なし×", forState: .Normal)
-            self.keepBtn.setTitle("キープ", forState: .Normal)
+            noKeepBtn.setTitle("興味なし×", forState: .Normal)
+            keepBtn.setTitle("キープ", forState: .Normal)
+            titleBackgroundView.backgroundColor = Colors.noKeep
         }
         
         if CheckStatus.Keep.rawValue == viewPageClass.rawValue {
             keepBtn.hidden = true
+            titleBackgroundView.backgroundColor = Colors.main
         }
         else if CheckStatus.NoKeep.rawValue == viewPageClass.rawValue {
             noKeepBtn.hidden = true
+            titleBackgroundView.backgroundColor = Colors.noKeep
         }
         
         self.indexPath = indexPath

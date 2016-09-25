@@ -15,7 +15,7 @@ class MainMenuTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selectedIndex = 2
-        self.tabBar.tintColor = Colors.mainColor
+        self.tabBar.tintColor = Colors.main
         
         guard let items = self.tabBar.items else {
             return

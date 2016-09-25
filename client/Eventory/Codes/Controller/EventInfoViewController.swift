@@ -35,6 +35,7 @@ class EventInfoViewController: BaseViewController {
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }
     
+    var onceTokenViewWillAppear: dispatch_once_t = 0
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -42,7 +43,7 @@ class EventInfoViewController: BaseViewController {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
         
-        var onceTokenViewWillAppear: dispatch_once_t = 0
+        
         dispatch_once(&onceTokenViewWillAppear) {
             dispatch_async(dispatch_get_main_queue()) {
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
