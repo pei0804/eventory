@@ -37,7 +37,6 @@ func (i *Inserter) Get() (events []model.Event, err error) {
 	}
 	if i.Token != "" {
 		req.Header.Set("Authorization", i.Token)
-		fmt.Println("DK")
 	}
 
 	client := new(http.Client)
@@ -49,19 +48,6 @@ func (i *Inserter) Get() (events []model.Event, err error) {
 		fmt.Fprint(os.Stderr, err)
 		return
 	}
-
-	//resp, err := http.Get(i.Url)
-	//if err != nil {
-	//	fmt.Fprint(os.Stderr, err)
-	//	return
-	//}
-	//defer resp.Body.Close()
-	//
-	//respByte, err := ioutil.ReadAll(resp.Body)
-	//if err != nil {
-	//	fmt.Fprint(os.Stderr, err)
-	//	return
-	//}
 
 	if i.Api == define.ATDN {
 		var at model.At
