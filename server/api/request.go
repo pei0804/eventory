@@ -1,4 +1,4 @@
-package model
+package api
 
 import (
 	"encoding/json"
@@ -10,12 +10,13 @@ import (
 
 	"github.com/tikasan/eventory/server/define"
 	"github.com/tikasan/eventory/server/formater"
+	"github.com/tikasan/eventory/server/model"
 )
 
 func NewInserter(rawurl string, rawapi int, token string) *Inserter {
 	return &Inserter{
-		Url: rawurl,
-		Api: rawapi,
+		Url:   rawurl,
+		Api:   rawapi,
 		Token: token,
 	}
 }
@@ -27,7 +28,7 @@ type Inserter struct {
 	Token    string
 }
 
-func (i *Inserter) Get() (events []Event, err error) {
+func (i *Inserter) Get() (events []model.Event, err error) {
 
 	req, err := http.NewRequest("GET", i.Url, nil)
 	if err != nil {
@@ -48,28 +49,15 @@ func (i *Inserter) Get() (events []Event, err error) {
 		return
 	}
 
-	//resp, err := http.Get(i.Url)
-	//if err != nil {
-	//	fmt.Fprint(os.Stderr, err)
-	//	return
-	//}
-	//defer resp.Body.Close()
-	//
-	//respByte, err := ioutil.ReadAll(resp.Body)
-	//if err != nil {
-	//	fmt.Fprint(os.Stderr, err)
-	//	return
-	//}
-
 	if i.Api == define.ATDN {
-		var at At
+		var at model.At
 		err = json.Unmarshal(respByte, &at)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
 			return events, nil
 		}
-		e := new(Event)
-		events = make([]Event, len(at.Events))
+		e := new(model.Event)
+		events = make([]model.Event, len(at.Events))
 		for i, v := range at.Events {
 			formater.CopyStruct(v.Event, e)
 			events[i] = *e
@@ -77,15 +65,15 @@ func (i *Inserter) Get() (events []Event, err error) {
 		}
 
 	} else if i.Api == define.CONNPASS {
-		var cp Cp
+		var cp model.Cp
 		err := json.Unmarshal(respByte, &cp)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
 			return events, nil
 		}
 
-		e := new(Event)
-		events = make([]Event, len(cp.Events))
+		e := new(model.Event)
+		events = make([]model.Event, len(cp.Events))
 		for i, v := range cp.Events {
 			formater.CopyStruct(v, e)
 			events[i] = *e
@@ -94,15 +82,15 @@ func (i *Inserter) Get() (events []Event, err error) {
 
 	} else if i.Api == define.DOORKEEPER {
 
-		var dk []Dk
+		var dk []model.Dk
 		err := json.Unmarshal(respByte, &dk)
 		if err != nil {
 			fmt.Fprint(os.Stderr, err)
 			return events, nil
 		}
 
-		e := new(Event)
-		events = make([]Event, len(dk))
+		e := new(model.Event)
+		events = make([]model.Event, len(dk))
 		for i, v := range dk {
 			formater.CopyStruct(v.Event, e)
 			events[i] = *e

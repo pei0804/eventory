@@ -10,7 +10,9 @@ import UIKit
 
 struct Colors {
     
-    static let mainColor = UIColorFromRGB(0xE67E22)
+    static let main = UIColorFromRGB(0xE67E22)
+    static let noKeep = UIColorFromRGB(0x95a5a6)
+    static let noCheck = UIColorFromRGB(0x3498db)
 }
 
 

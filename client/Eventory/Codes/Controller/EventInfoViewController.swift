@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 import SwiftTask
+import SVProgressHUD
 
 class EventInfoViewController: BaseViewController {
     
@@ -35,7 +36,6 @@ class EventInfoViewController: BaseViewController {
     }
     
     var onceTokenViewWillAppear: dispatch_once_t = 0
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -43,16 +43,22 @@ class EventInfoViewController: BaseViewController {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
         
+        
         dispatch_once(&onceTokenViewWillAppear) {
-            let task = [EventManager.sharedInstance.fetchNewEvent()]
-            
-            Task.all(task).success { _ in
-                self.tableView.reloadData()
-                }.failure { _ in
-                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
-                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
-                    alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue()) {
+                let task = [EventManager.sharedInstance.fetchNewEvent()]
+                SVProgressHUD.showWithStatus("サーバーと通信中")
+                
+                Task.all(task).success { _ in
+                    self.tableView.reloadData()
+                    SVProgressHUD.dismiss()
+                    }.failure { _ in
+                        let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                        let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
+                }
             }
         }
     }

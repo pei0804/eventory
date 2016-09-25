@@ -14,8 +14,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="188"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
-                        <rect key="frame" x="182" y="129" width="120" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                        <rect key="frame" x="184" y="128" width="120" height="40"/>
                         <color key="backgroundColor" red="0.90196078431372551" green="0.49411764705882355" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="nkR-De-Hwu"/>
@@ -29,8 +29,8 @@
                             <action selector="keepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="lm2-Lr-Soi"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="開催日時" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
-                        <rect key="frame" x="18" y="97" width="284" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開催日時" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
+                        <rect key="frame" x="20" y="96" width="284" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="KGI-fB-2Ji"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="bOf-lB-F8J"/>
@@ -39,9 +39,9 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
-                        <rect key="frame" x="18" y="129" width="120" height="40"/>
-                        <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
+                        <rect key="frame" x="20" y="128" width="120" height="40"/>
+                        <color key="backgroundColor" red="0.58431372549019611" green="0.6470588235294118" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="1UH-vk-NTg"/>
                             <constraint firstAttribute="height" constant="40" id="bav-aB-PPu"/>
@@ -53,8 +53,8 @@
                             <action selector="noKeepBtn:" destination="3Ab-l4-3E7" eventType="touchUpInside" id="NTy-3E-oA1"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="住所" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
-                        <rect key="frame" x="18" y="72" width="284" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="住所" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
+                        <rect key="frame" x="20" y="71" width="284" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="EZb-7k-ZKb"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="P0h-S2-KNm"/>
@@ -63,17 +63,24 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="イベント名" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sT6-dV-tG6">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
-                        <color key="backgroundColor" red="0.63872195512820507" green="0.63216279390412733" blue="0.6258636373560964" alpha="1" colorSpace="calibratedRGB"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJP-OR-aJP">
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="63"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiT-lP-rOf">
+                                <rect key="frame" x="18" y="14" width="288" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="mm5-vk-iVJ"/>
-                            <constraint firstAttribute="height" constant="51" id="tQ5-EU-Jzo"/>
+                            <constraint firstItem="fiT-lP-rOf" firstAttribute="top" secondItem="cJP-OR-aJP" secondAttribute="top" constant="14" id="0pa-qb-VU2"/>
+                            <constraint firstItem="fiT-lP-rOf" firstAttribute="centerX" secondItem="cJP-OR-aJP" secondAttribute="centerX" id="968-MX-JC6"/>
+                            <constraint firstItem="fiT-lP-rOf" firstAttribute="centerY" secondItem="cJP-OR-aJP" secondAttribute="centerY" id="Vg6-MJ-M6n"/>
+                            <constraint firstItem="fiT-lP-rOf" firstAttribute="leading" secondItem="cJP-OR-aJP" secondAttribute="leading" constant="18" id="nak-Yc-RU8"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -83,19 +90,18 @@
                     <constraint firstItem="ZwK-om-ic5" firstAttribute="top" secondItem="YYL-g8-zg8" secondAttribute="bottom" constant="15" id="Kzs-5e-Fkd"/>
                     <constraint firstItem="YYL-g8-zg8" firstAttribute="top" secondItem="nFL-i8-oGF" secondAttribute="bottom" constant="8" id="QGS-vF-vQe"/>
                     <constraint firstAttribute="bottom" secondItem="ksn-pI-snp" secondAttribute="bottom" constant="20" id="RHQ-wl-KR1"/>
+                    <constraint firstItem="cJP-OR-aJP" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leading" id="Tpe-A4-XYC"/>
                     <constraint firstItem="YYL-g8-zg8" firstAttribute="top" secondItem="nFL-i8-oGF" secondAttribute="bottom" constant="8" id="WOZ-FA-jv0"/>
                     <constraint firstAttribute="trailing" secondItem="YYL-g8-zg8" secondAttribute="trailing" constant="20" id="asQ-N7-5ab"/>
-                    <constraint firstAttribute="trailing" secondItem="sT6-dV-tG6" secondAttribute="trailing" id="c9A-9K-kgU"/>
-                    <constraint firstItem="sT6-dV-tG6" firstAttribute="top" secondItem="bQh-gt-dvd" secondAttribute="top" id="fro-cl-79c"/>
                     <constraint firstAttribute="bottom" secondItem="ZwK-om-ic5" secondAttribute="bottom" constant="20" id="fwQ-yJ-M9g"/>
+                    <constraint firstItem="nFL-i8-oGF" firstAttribute="top" secondItem="cJP-OR-aJP" secondAttribute="bottom" constant="8" symbolic="YES" id="giM-5u-7me"/>
                     <constraint firstItem="ZwK-om-ic5" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leading" constant="20" id="hay-14-jIY"/>
+                    <constraint firstItem="cJP-OR-aJP" firstAttribute="centerX" secondItem="nFL-i8-oGF" secondAttribute="centerX" id="khV-5x-cuB"/>
                     <constraint firstItem="nFL-i8-oGF" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leading" constant="20" id="tPv-um-AI6"/>
-                    <constraint firstItem="sT6-dV-tG6" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leading" id="vWH-4b-gyl"/>
-                    <constraint firstItem="sT6-dV-tG6" firstAttribute="leading" secondItem="bQh-gt-dvd" secondAttribute="leading" id="wJY-f8-5Ph"/>
+                    <constraint firstItem="cJP-OR-aJP" firstAttribute="top" secondItem="bQh-gt-dvd" secondAttribute="top" id="ycg-nJ-eYj"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="wJY-f8-5Ph"/>
                         <exclude reference="QGS-vF-vQe"/>
                     </mask>
                 </variation>
@@ -105,7 +111,8 @@
                 <outlet property="dateLbl" destination="YYL-g8-zg8" id="8jB-Lx-RbL"/>
                 <outlet property="keepBtn" destination="ksn-pI-snp" id="264-VS-YZe"/>
                 <outlet property="noKeepBtn" destination="ZwK-om-ic5" id="rZm-sH-yr3"/>
-                <outlet property="titileLbl" destination="sT6-dV-tG6" id="Yi7-lJ-nyQ"/>
+                <outlet property="titileLbl" destination="fiT-lP-rOf" id="bnf-qd-cEf"/>
+                <outlet property="titleBackgroundView" destination="cJP-OR-aJP" id="54e-Ty-hVl"/>
             </connections>
             <point key="canvasLocation" x="250" y="343.5"/>
         </tableViewCell>

@@ -13,7 +13,7 @@ class CheckListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        self.tintColor = Colors.mainColor
+        self.tintColor = Colors.main
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -48,7 +48,7 @@ class CheckListTableViewCell: UITableViewCell {
         
         self.accessoryType = .Checkmark
         self.textLabel?.font = UIFont.boldSystemFontOfSize(17)
-        self.textLabel?.textColor = Colors.mainColor
+        self.textLabel?.textColor = Colors.main
     }
     
     func checkRemove() {

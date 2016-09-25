@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // A Atdn
 type At struct {
 	Events []AAt `json:"events"`
@@ -36,19 +38,19 @@ type Event struct {
 }
 
 type EventJson struct {
-	EventId    string `json:"event_id"`
+	EventId string `json:"event_id"`
 	//ApiId      int
-	Title      string `json:"title"`
+	Title string `json:"title"`
 	//Desc       string `json:"desc"`
-	Url        string `json:"url"`
+	Url string `json:"url"`
 	//Limit      int    `json:"limit"`
 	//Accepted   int    `json:"accepted"`
 	//Waitlisted int    `json:"waitlisted"`
-	Address    string `json:"address"`
-	Place      string `json:"place"`
-	StratAt    string `json:"strat_at"`
-	EndAt      string `json:"end_at"`
-	ID         int    `json:"id"`
+	Address string `json:"address"`
+	Place   string `json:"place"`
+	StratAt time.Time   `json:"strat_at"`
+	EndAt   time.Time   `json:"end_at"`
+	ID      int    `json:"id"`
 }
 
 type AtdnEvent struct {
@@ -64,7 +66,6 @@ type AtdnEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
-	ID         int    `json:"id"`
 }
 
 type ConnpassEvent struct {
@@ -80,7 +81,6 @@ type ConnpassEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
-	ID         int    `json:"id"`
 }
 
 type DoorkeeperEvent struct {
@@ -96,5 +96,4 @@ type DoorkeeperEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"starts_at"`
 	EndAt      string `json:"ends_at"`
-	ID         int    `json:"id"`
 }

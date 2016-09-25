@@ -82,7 +82,7 @@ class Event: Object, Mappable {
             let formatter = NSDateFormatter()
             formatter.locale = NSLocale(localeIdentifier: "ja_JP")
             formatter.timeZone = NSTimeZone(name: "JPN")
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             
             super.init(dateFormatter: formatter)
         }

@@ -12,7 +12,7 @@ class BaseNavigationViewController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.tintColor  = Colors.mainColor
+        self.navigationBar.tintColor  = Colors.main
     }
     
     override func didReceiveMemoryWarning() {
