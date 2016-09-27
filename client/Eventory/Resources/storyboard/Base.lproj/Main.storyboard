@@ -296,15 +296,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="568" id="D2G-w5-ibE"/>
-                                    <constraint firstAttribute="width" constant="320" id="Vun-K4-uj1"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="568" id="D2G-w5-ibE"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="Vun-K4-uj1"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableViewCell" id="aQH-93-Jv9">
                                         <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQH-93-Jv9" id="Mln-NM-jqN">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
