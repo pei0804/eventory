@@ -14,22 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-//    var newEvent: Int = 0 {
-//        didSet {
-//            // TODO 最初の時点ではどこのことを指しているかがわからない。
-//            if newEvent > 0 {
-//                if let tabBarController = self.window?.rootViewController as? UITabBarController {
-//                    tabBarController.tabBar.items![2].badgeValue = "New"
-//                }
-//            } else {
-//                if let tabBarController = self.window?.rootViewController as? UITabBarController {
-//                    tabBarController.tabBar.items![2].badgeValue = nil
-//                }
-//            }
-//        }
-//        
-//    }
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // TODO: パス確認用（削除必須）

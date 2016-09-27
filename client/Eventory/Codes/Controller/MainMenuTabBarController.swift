@@ -12,12 +12,11 @@ class MainMenuTabBarController: UITabBarController {
     
     var newEvent: Int = 0 {
         didSet {
-            print("きてます")
             // TODO 最初の時点ではどこのことを指しているかがわからない。
             if newEvent > 0 {
                 self.tabBar.items![2].badgeValue = "New"
             } else {
-                self.tabBar.items![2].badgeValue = ""
+                self.tabBar.items![2].badgeValue = nil
             }
         }
         
