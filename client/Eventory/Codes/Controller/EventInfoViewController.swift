@@ -40,9 +40,6 @@ class EventInfoViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         self.eventSummarys = EventManager.sharedInstance.getSelectNewEventAll()
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
-        
         
         dispatch_once(&onceTokenViewWillAppear) {
             dispatch_async(dispatch_get_main_queue()) {
@@ -66,8 +63,6 @@ class EventInfoViewController: BaseViewController {
     override func viewWillDisappear(animated:Bool) {
         
         super.viewWillDisappear(animated)
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
     }
     
     override func didReceiveMemoryWarning() {

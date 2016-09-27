@@ -10,12 +10,25 @@ import UIKit
 
 class MainMenuTabBarController: UITabBarController {
     
+    var newEvent: Int = 0 {
+        didSet {
+            // TODO 最初の時点ではどこのことを指しているかがわからない。
+            if newEvent > 0 {
+                self.tabBar.items![2].badgeValue = "New"
+            } else {
+                self.tabBar.items![2].badgeValue = nil
+            }
+        }
+        
+    }
+    
     let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.selectedIndex = 2
         self.tabBar.tintColor = Colors.main
+        self.updateBadge(EventManager.sharedInstance.getSelectNewEventAll().count)
         
         guard let items = self.tabBar.items else {
             return
@@ -36,13 +49,12 @@ class MainMenuTabBarController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-    func badgeUpdate(newEvent: Int) {
-        
-        if newEvent > 0 {
-            self.tabBar.items![2].badgeValue = "New"
-        } else {
-            self.tabBar.items![2].badgeValue = nil
-        }
+    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+        self.updateBadge(EventManager.sharedInstance.getSelectNewEventAll().count)
+    }
+    
+    func updateBadge(newEvent: Int) {
+        self.newEvent = newEvent
     }
     
     

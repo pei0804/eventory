@@ -30,8 +30,6 @@ class SettingViewController: UIViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
     }
     
     override func didReceiveMemoryWarning() {
