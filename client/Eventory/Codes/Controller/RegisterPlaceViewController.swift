@@ -91,10 +91,6 @@ class RegisterPlaceViewController: UIViewController {
                         let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                         alert.addAction(cancelAction)
                         self.presentViewController(alert, animated: true, completion: nil)
-                        
-                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-                        let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
-                        self.presentViewController(vc, animated: true, completion: nil)
                 }
             }
         }
