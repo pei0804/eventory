@@ -41,8 +41,6 @@ class RegisterPlaceViewController: UIViewController {
     override func viewWillDisappear(animated:Bool) {
         
         super.viewWillDisappear(animated)
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,8 +79,6 @@ class RegisterPlaceViewController: UIViewController {
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
                 
                 Task.all(task).success { _ in
-                    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.newEvent = EventManager.sharedInstance.getSelectNewEventAll().count
                     SVProgressHUD.dismiss()
                     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
