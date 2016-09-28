@@ -58,11 +58,6 @@ class BaseViewController: UIViewController {
             completed?()
         }
     }
-    
-    func scrollTop() {
-        self.scrollView?.setContentOffset(CGPointMake(0, 0), animated: true)
-    }
-    
 }
 
 extension BaseViewController: DZNEmptyDataSetSource {
