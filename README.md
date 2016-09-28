@@ -9,7 +9,8 @@
 ![イメージ図](https://github.com/tikasan/eventory/blob/master/doc/eventory_plan.png?raw=true)
 
 ## 今後の計画
-[issue]("https://github.com/tikasan/eventory/issues")に上げています。
+[issue]("https://github.com/tikasan/eventory/issues")に上げています。  
+[現状の設計の完成後の予定](https://github.com/tikasan/eventory/issues/52)
 
 ## 使用技術
 
@@ -25,6 +26,7 @@
 
 - Nginx
 - https
+- ElasticSearch(?)
 
 ## 実装済み機能
 
