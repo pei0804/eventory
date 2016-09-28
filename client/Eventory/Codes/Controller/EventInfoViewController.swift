@@ -15,6 +15,9 @@ class EventInfoViewController: BaseViewController {
     
     var eventSummarys: [EventSummary]? {
         didSet {
+            if let eventSummarys = eventSummarys where eventSummarys.count == 0 {
+                tableView.setContentOffset(CGPointZero, animated: false)
+            }
             self.tableView.reloadData()
         }
     }
