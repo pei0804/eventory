@@ -97,7 +97,7 @@ extension NoKeepEventViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 180
+        return EventInfoCellHeight
     }
 }
 

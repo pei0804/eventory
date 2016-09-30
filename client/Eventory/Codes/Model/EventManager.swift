@@ -85,18 +85,19 @@ class EventManager {
         var eventSummarys: [EventSummary] = [EventSummary]()
         for event in searchEvents {
             let eventSummary: EventSummary = EventSummary()
-            eventSummary.id = event.id
-            eventSummary.eventId = event.eventId
-            eventSummary.title = event.title
+            eventSummary.id         = event.id
+            eventSummary.apiId      = event.apiId
+            eventSummary.eventId    = event.eventId
+            eventSummary.title      = event.title
             //eventSummary.desc = event.desc
-            eventSummary.url = event.url
-            //eventSummary.limit = event.limit
-            //eventSummary.accepted = event.accepted
+            eventSummary.url        = event.url
+            eventSummary.limit      = event.limit
+            eventSummary.accepted   = event.accepted
             //eventSummary.waitlisted = event.waitlisted
-            eventSummary.address = event.address
-            eventSummary.place = event.place
-            eventSummary.stratAt = event.stratAt
-            eventSummary.endAt = event.endAt
+            eventSummary.address    = event.address
+            eventSummary.place      = event.place
+            eventSummary.stratAt    = event.stratAt
+            eventSummary.endAt      = event.endAt
             eventSummarys.append(eventSummary)
         }
         return eventSummarys
@@ -169,17 +170,18 @@ class EventManager {
                             self.realm.create(Event.self,
                                 value:[
                                     "id":event.id,
-                                    "eventId": event.eventId,
-                                    "title" : event.title,
+                                    "eventId"   : event.eventId,
+                                    "apiId"     : event.apiId,
+                                    "title"     : event.title,
                                     //"desc" : event.desc,
-                                    "url" : event.url,
-                                    //"limit" : event.limit,
-                                    //"accepted" : event.accepted,
+                                    "url"       : event.url,
+                                    "limit"     : event.limit,
+                                    "accepted"  : event.accepted,
                                     //"waitlisted" : event.waitlisted,
-                                    "address" : event.address,
-                                    "place" : event.place,
-                                    "stratAt" : event.stratAt,
-                                    "endAt" : event.endAt
+                                    "address"   : event.address,
+                                    "place"     : event.place,
+                                    "stratAt"   : event.stratAt,
+                                    "endAt"     : event.endAt
                                 ],
                                 update: true)
                         }
