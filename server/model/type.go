@@ -39,18 +39,18 @@ type Event struct {
 
 type EventJson struct {
 	EventId string `json:"event_id"`
-	//ApiId      int
-	Title string `json:"title"`
+	ApiId   int    `json:"api_id"`
+	Title   string `json:"title"`
 	//Desc       string `json:"desc"`
-	Url string `json:"url"`
-	//Limit      int    `json:"limit"`
-	//Accepted   int    `json:"accepted"`
+	Url      string `json:"url"`
+	Limit    int    `json:"limit"`
+	Accepted int    `json:"accepted"`
 	//Waitlisted int    `json:"waitlisted"`
-	Address string `json:"address"`
-	Place   string `json:"place"`
-	StratAt time.Time   `json:"strat_at"`
-	EndAt   time.Time   `json:"end_at"`
-	ID      int    `json:"id"`
+	Address string    `json:"address"`
+	Place   string    `json:"place"`
+	StratAt time.Time `json:"strat_at"`
+	EndAt   time.Time `json:"end_at"`
+	ID      int       `json:"id"`
 }
 
 type AtdnEvent struct {

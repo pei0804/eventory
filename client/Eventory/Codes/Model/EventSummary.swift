@@ -16,7 +16,7 @@ class EventSummary {
     var eventId: String = ""
     
     // APIの種別　主キー
-    //var apiId: Int = 0
+    var apiId: Int = 0
     
     // イベントタイトル
     var title: String = ""
@@ -31,10 +31,10 @@ class EventSummary {
     var url: String = ""
     
     // 定員
-    //var limit: Int = 0
+    var limit: Int = 0
     
     // 現在の参加者数 connpassにはない
-    //var accepted: Int  = 0
+    var accepted: Int  = 0
     
     // キャンセル待ち
     //var waitlisted: Int = 0
@@ -61,11 +61,12 @@ class EventSummary {
         
         self.eventId        = event.eventId
         self.title          = event.title
+        self.apiId          = event.apiId
         //self.desc           = event.desc
         self.url            = event.url
-        //self.limit          = event.limit
+        self.limit          = event.limit
+        self.accepted       = event.accepted
         //self.waitlisted     = event.waitlisted
-        //self.accepted       = event.accepted
         self.address        = event.address
         self.place          = event.place
         self.stratAt        = event.stratAt

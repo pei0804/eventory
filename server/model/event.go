@@ -9,7 +9,7 @@ import (
 )
 
 func Insert(db *sql.DB, Events []Event) error {
-	stmtIns, err := db.Prepare("INSERT INTO m_event (eventId, title, description, url, limitCount, waitlisted, accepted, address, place, startAt, endAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	stmtIns, err := db.Prepare("INSERT INTO m_event (event_id, api_id, title, description, url, limit_count, waitlisted, accepted, address, place, start_at, end_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return err
@@ -18,6 +18,7 @@ func Insert(db *sql.DB, Events []Event) error {
 	for _, ev := range Events {
 		if _, err = stmtIns.Exec(
 			fmt.Sprintf("%d-%d", ev.ApiId, ev.EventId),
+			ev.ApiId,
 			ev.Title,
 			ev.Desc,
 			ev.Url,
@@ -30,7 +31,7 @@ func Insert(db *sql.DB, Events []Event) error {
 			formater.DateTimeFormatter(ev.EndAt),
 		); err != nil {
 			// insertに失敗したらアップデートをかける
-			query := "UPDATE m_event SET title = ?, description = ?, url = ?, limitCount = ?, waitlisted = ?, accepted = ?, address = ?, place = ?, startAt = ?, endAt = ? WHERE eventId = ?"
+			query := "UPDATE m_event SET title = ?, description = ?, url = ?, limit_count = ?, waitlisted = ?, accepted = ?, address = ?, place = ?, start_at = ?, end_at = ? WHERE event_id = ?"
 			if _, err := db.Exec(query,
 				ev.Title,
 				ev.Desc,
@@ -62,7 +63,7 @@ func EventAll(db *sql.DB) ([]Event, error) {
 }
 
 func EventAllNew(db *sql.DB) ([]EventJson, error) {
-	rows, err := db.Query(`select eventId, title, url, address ,place, startAt, endAt, id from m_event where endAt > now();`)
+	rows, err := db.Query(`select event_id, api_id,title, url, limit_count, accepted, address ,place, start_at, end_at, id from m_event where end_at > now();`)
 	if err != nil {
 		return nil, err
 	}

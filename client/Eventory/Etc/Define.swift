@@ -7,21 +7,42 @@
 //
 
 import Foundation
-
+import UIKit
 
 // Cell
-let EventInfoTableViewCellIdentifier = "EventInfoTableViewCell"
-let CheckListTableViewCellIdentifier = "CheckListTableViewCell"
-let SettingTableViewCellIdentifier   = "SettingTableViewCell"
+let EventInfoTableViewCellIdentifier: String = "EventInfoTableViewCell"
+let CheckListTableViewCellIdentifier: String = "CheckListTableViewCell"
+let SettingTableViewCellIdentifier: String   = "SettingTableViewCell"
 
 // Controller
-let RegisterPlaceViewControllerIdentifier   = "RegisterPlaceViewController"
-let RegisterGenreViewControllerIdentifier   = "RegisterGenreViewController"
-let SettingViewControllerIdentifier         = "SettingViewController"
+let RegisterPlaceViewControllerIdentifier: String   = "RegisterPlaceViewController"
+let RegisterGenreViewControllerIdentifier: String   = "RegisterGenreViewController"
+let SettingViewControllerIdentifier: String         = "SettingViewController"
 
-let NetworkErrorTitle   = "サーバー接続に失敗しました"
-let NetworkErrorMessage = "端末がインターネットが使えない。またはサーバーに問題がありました。"
-let NetworkErrorButton  = "確認"
+// Alert
+let NetworkErrorTitle: String   = "サーバー接続に失敗しました"
+let NetworkErrorMessage: String = "端末がインターネットが使えない。またはサーバーに問題がありました。"
+let NetworkErrorButton: String  = "確認"
+
+// Cell
+let EventInfoCellHeight = CGFloat(250)
+
+enum ApiId: Int {
+    case Atdn       = 0
+    case Connpass   = 1
+    case Doorkeeper = 2
+    case None       = 5
+    
+    func getName() -> String {
+        
+        switch self {
+        case .Atdn:       return "ATDN"
+        case .Connpass:   return "Connpass"
+        case .Doorkeeper: return "Doorkeeper"
+        case .None:       return ""
+        }
+    }
+}
 
 enum SettingClass: Int {
     case Genre      = 0
