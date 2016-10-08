@@ -12,7 +12,6 @@ class MainMenuTabBarController: UITabBarController {
     
     var newEvent: Int = 0 {
         didSet {
-            // TODO 最初の時点ではどこのことを指しているかがわからない。
             if newEvent > 0 {
                 self.tabBar.items![2].badgeValue = "New"
             } else {
@@ -56,16 +55,4 @@ class MainMenuTabBarController: UITabBarController {
     func updateBadge(newEvent: Int) {
         self.newEvent = newEvent
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
