@@ -91,6 +91,7 @@ func Request() <-chan []model.Event {
 				events, err := cli.Get()
 				if err != nil {
 					fmt.Fprint(os.Stderr, err)
+					wg.Done()
 				}
 				allEvents <- events
 				wg.Done()
