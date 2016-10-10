@@ -18,7 +18,6 @@ class MainMenuTabBarController: UITabBarController {
                 self.tabBar.items![2].badgeValue = nil
             }
         }
-        
     }
     
     let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]

@@ -12,11 +12,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="237"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Ab-l4-3E7" id="bQh-gt-dvd">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="236.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="237"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="開催日時" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYL-g8-zg8">
-                        <rect key="frame" x="20" y="90" width="86.5" height="19"/>
+                        <rect key="frame" x="20" y="90" width="87" height="19"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="住所" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFL-i8-oGF">
-                        <rect key="frame" x="20" y="73" width="86.5" height="17"/>
+                        <rect key="frame" x="20" y="73" width="87" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="OGW-fD-ou9"/>
                             <constraint firstAttribute="width" constant="284" id="PoX-GS-QYT"/>
@@ -53,10 +53,10 @@
                         </variation>
                     </label>
                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJP-OR-aJP">
-                        <rect key="frame" x="0.0" y="0.0" width="126.5" height="63"/>
+                        <rect key="frame" x="0.0" y="0.0" width="127" height="63"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiT-lP-rOf">
-                                <rect key="frame" x="20" y="14" width="86.5" height="41"/>
+                                <rect key="frame" x="20" y="14" width="87" height="41"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="0.38039215686274508" green="0.68235294117647061" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -83,7 +83,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="10 / 定員20人" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QK0-r1-JNT">
-                        <rect key="frame" x="20" y="109" width="86.5" height="30"/>
+                        <rect key="frame" x="20" y="109" width="87" height="30"/>
                         <color key="backgroundColor" red="0.86485229606356417" green="0.88627450980392153" blue="0.8858207111958617" alpha="0.29469288793103449" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29.5" id="Wee-8b-XTs"/>
@@ -94,7 +94,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="MaterialButton" customModule="Eventory" customModuleProvider="target">
-                        <rect key="frame" x="-13.5" y="154" width="120" height="40"/>
+                        <rect key="frame" x="-14" y="154" width="121" height="40"/>
                         <color key="backgroundColor" red="0.90196078431372551" green="0.49411764705882355" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="Nkd-g7-9ta"/>

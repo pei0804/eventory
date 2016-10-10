@@ -62,9 +62,45 @@ class EventManager {
         return setEventInfo(events)
     }
     
-    func getNewEventAll() -> [EventSummary] {
+    func getNewEventAll(term: String) -> [EventSummary] {
         
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue)").sorted("stratAt")
+        // クエリ文字の結合が1回目かチェックする
+        let termArr: [String] = term.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        print(termArr)
+        var selectGenre: String = ""
+        
+        var firstFlg: Bool = false
+        
+        if term != "" {
+            for termWord in termArr {
+                if !firstFlg {
+                    selectGenre += "AND (title CONTAINS[c] '\(termWord)' OR address CONTAINS[c] '\(termWord)' OR  place CONTAINS[c] '\(termWord)' "
+                    firstFlg = true
+                } else {
+                    selectGenre += "OR title CONTAINS[c] '\(termWord)' OR address CONTAINS[c] '\(termWord)' OR  place CONTAINS[c] '\(termWord)' "
+                }
+            }
+            if termArr.count != 0 {
+                selectGenre += ")"
+            }
+        }
+        
+
+        // "checkStatus == 0 AND (title CONTAINS[c] 'Swift' OR address CONTAINS[c] 'Swift' OR  place CONTAINS[c] 'Swift' OR title CONTAINS[c] 'php' OR  'php' OR address CONTAINS[c] 'php' OR  place CONTAINS[c] 'php' )"'
+        
+        //        firstFlg = false
+        //        for place in termArr {
+        //            if !firstFlg {
+        //                selectGenre += "OR (address CONTAINS[c] '\(place)' OR  place CONTAINS[c] '\(place)'"
+        //                firstFlg = true
+        //            }
+        //            selectGenre += "OR address CONTAINS[c] '\(place)' OR place CONTAINS[c] '\(place)' "
+        //        }
+        //        if termArr.count != 0 {
+        //            selectGenre += ")"
+        //        }
+        
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre)").sorted("stratAt")
         return setEventInfo(events)
     }
     
@@ -119,7 +155,7 @@ class EventManager {
                 try realm.commitWrite()
             }
             catch {
-               fatalError("Realm can not delete")
+                fatalError("Realm can not delete")
             }
         }
     }
@@ -156,7 +192,7 @@ class EventManager {
         
         return Task<Float, String, NSError?> { progress, fulfill, reject, configure in
             Alamofire.request(.GET, "http://localhost:8080/api/smt/events").responseJSON { response in
-//            Alamofire.request(.GET, "http://ganbaruman.xyz:8080/api/smt/events").responseJSON { response in
+                //            Alamofire.request(.GET, "http://ganbaruman.xyz:8080/api/smt/events").responseJSON { response in
                 guard let json = response.result.value as? Array<Dictionary<String,AnyObject>> else {
                     reject(nil)
                     return
