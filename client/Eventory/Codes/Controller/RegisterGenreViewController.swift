@@ -12,7 +12,11 @@ class RegisterGenreViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var checkCount: Int = 0
-    var genres = [Dictionary<String, AnyObject>]?()
+    var genres = [Dictionary<String, AnyObject>]?() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     // 設定画面からのアクセスの場合trueになる
     var settingStatus = false
     

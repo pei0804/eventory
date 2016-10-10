@@ -14,13 +14,20 @@ class RegisterPlaceViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var checkCount: Int = 0
-    var places = [Dictionary<String, AnyObject>]?()
+    var places = [Dictionary<String, AnyObject>]?() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     // 設定画面からのアクセスの場合trueになる
     var settingStatus = false
     
+    @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -142,5 +149,26 @@ extension RegisterPlaceViewController: UITableViewDelegate {
             cell.checkAction(&places, indexPath: indexPath, checkCount: &checkCount)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+
+// MARK: - UISearchBarDelegate
+
+extension RegisterPlaceViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let text = searchBar.text ?? ""
+        if !text.isEmpty {
+            UserRegister.sharedInstance.insertNewSetting(&places, newSetting: text)
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 }

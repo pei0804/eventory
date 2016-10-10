@@ -118,6 +118,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="searchBar" destination="VLz-3v-DwS" id="qcq-0I-gFd"/>
                         <outlet property="tableView" destination="EZV-7R-lTs" id="4H4-HI-xMl"/>
                     </connections>
                 </viewController>
