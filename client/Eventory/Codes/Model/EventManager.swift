@@ -64,7 +64,6 @@ class EventManager {
     
     func getNewEventAll(term: String) -> [EventSummary] {
         
-        // クエリ文字の結合が1回目かチェックする
         let termArr: [String] = term.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         print(termArr)
         var selectGenre: String = ""

@@ -132,7 +132,7 @@ extension RegisterGenreViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text ?? ""
         if !text.isEmpty {
-            UserRegister.sharedInstance.insertNewSetting(&genres, newSetting: String(searchBar.text!))
+            UserRegister.sharedInstance.insertNewSetting(&genres, newSetting: text)
             searchBar.text = ""
             searchBar.resignFirstResponder()
         }

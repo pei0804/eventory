@@ -78,11 +78,10 @@ extension AllEventSerachViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        guard let term = freeWordSearchBar.text else {
-            freeWordSearchBar.resignFirstResponder()
-            return
+        let term = freeWordSearchBar.text ?? ""
+        if !term.isEmpty {
+            eventSummarys = EventManager.sharedInstance.getNewEventAll(term)
         }
-        eventSummarys = EventManager.sharedInstance.getNewEventAll(term)
         freeWordSearchBar.resignFirstResponder()
     }
     
