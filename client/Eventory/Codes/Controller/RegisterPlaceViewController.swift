@@ -14,13 +14,22 @@ class RegisterPlaceViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var checkCount: Int = 0
-    var places = [Dictionary<String, AnyObject>]?()
-    // 設定画面からのアクセスの場合trueになる
-    var settingStatus = false
+    var places = [Dictionary<String, AnyObject>]?() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
+    // 設定画面からのアクセスの場合trueになる
+    var leftBarButton: UIBarButtonItem = UIBarButtonItem()
+    var rightBarButton: UIBarButtonItem = UIBarButtonItem()
+    var settingStatus: Bool = false
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -30,12 +39,19 @@ class RegisterPlaceViewController: UIViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
+        
         if settingStatus {
+            leftBarButton = UIBarButtonItem(title: "設定", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            rightBarButton = UIBarButtonItem(title: "編集", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushEditModeBtn(_:)))
             places = UserRegister.sharedInstance.getSettingPlaces()
             checkCount = UserRegister.sharedInstance.getUserSettingPlaces().count
         } else {
+            leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
+            rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
             places = EventManager.sharedInstance.placesInitializer()
         }
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        self.navigationItem.rightBarButtonItem = rightBarButton
     }
     
     override func viewWillDisappear(animated:Bool) {
@@ -47,6 +63,10 @@ class RegisterPlaceViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func goBack(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+
+    }
     
     @IBAction func pushEditModeBtn(sender: AnyObject) {
         if tableView.editing == false {
@@ -142,5 +162,26 @@ extension RegisterPlaceViewController: UITableViewDelegate {
             cell.checkAction(&places, indexPath: indexPath, checkCount: &checkCount)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+
+// MARK: - UISearchBarDelegate
+
+extension RegisterPlaceViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let text = searchBar.text ?? ""
+        if !text.isEmpty {
+            UserRegister.sharedInstance.insertNewSetting(&places, newSetting: text)
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 }

@@ -14,11 +14,11 @@
                         <viewControllerLayoutGuide type="bottom" id="cD6-zx-6Kj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8vi-5W-nku">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="任意開催地" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-3v-DwS">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <searchBar contentMode="redraw" placeholder="開催地追加" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-3v-DwS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8s5-Nd-UgH"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="I7b-Ho-7Th"/>
@@ -29,86 +29,66 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-pf-3Kc">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="Hha-NM-pGI"/>
-                                    <constraint firstAttribute="height" constant="44" id="hgR-kZ-dRP"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OEp-q9-VYn"/>
-                                    <barButtonItem title="キーワード編集" id="WSX-Bb-7Gf">
-                                        <connections>
-                                            <action selector="pushEditModeBtn:" destination="cR8-IW-SBr" id="8CB-4B-nqd"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Qmj-rt-nhr"/>
-                                </items>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="hgR-kZ-dRP"/>
-                                    </mask>
-                                </variation>
-                            </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EZV-7R-lTs">
-                                <rect key="frame" x="0.0" y="108" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="5hG-ru-FsL"/>
                                     <constraint firstAttribute="width" constant="320" id="6lh-eM-5aP"/>
                                     <constraint firstAttribute="height" constant="415" id="MMk-3f-wo7"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="416" id="aBV-PS-2IZ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="cWc-CE-zbw"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="460" id="ifr-iK-6GX"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="5hG-ru-FsL"/>
+                                        <exclude reference="6lh-eM-5aP"/>
                                         <exclude reference="MMk-3f-wo7"/>
+                                        <exclude reference="aBV-PS-2IZ"/>
                                     </mask>
                                 </variation>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="IJc-pf-3Kc" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="1Ci-K6-phX"/>
-                            <constraint firstItem="cD6-zx-6Kj" firstAttribute="top" secondItem="IJc-pf-3Kc" secondAttribute="bottom" id="2Dl-He-07g"/>
                             <constraint firstAttribute="trailing" secondItem="EZV-7R-lTs" secondAttribute="trailing" id="5SJ-X7-CKO"/>
                             <constraint firstAttribute="trailing" secondItem="VLz-3v-DwS" secondAttribute="trailing" id="6KU-sM-IdF"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="6pw-su-Fiv"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="6q6-8J-jl5"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="9eq-Pb-QYM"/>
-                            <constraint firstItem="IJc-pf-3Kc" firstAttribute="top" secondItem="EZV-7R-lTs" secondAttribute="bottom" id="AC1-GE-Ghd"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="BFP-SD-vBS"/>
-                            <constraint firstItem="IJc-pf-3Kc" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="D57-QO-AON"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="HzJ-ie-KTb"/>
-                            <constraint firstAttribute="trailing" secondItem="IJc-pf-3Kc" secondAttribute="trailing" id="KME-XO-BJs"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="PQI-7E-F6p"/>
-                            <constraint firstItem="IJc-pf-3Kc" firstAttribute="top" secondItem="EZV-7R-lTs" secondAttribute="bottom" id="Qoa-by-Zif"/>
-                            <constraint firstItem="cD6-zx-6Kj" firstAttribute="top" secondItem="IJc-pf-3Kc" secondAttribute="bottom" id="YFV-KG-O3k"/>
+                            <constraint firstItem="cD6-zx-6Kj" firstAttribute="top" secondItem="EZV-7R-lTs" secondAttribute="bottom" id="X1a-yW-3PC"/>
+                            <constraint firstItem="EZV-7R-lTs" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="avH-7k-C25"/>
+                            <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="c4T-YH-t8c"/>
                             <constraint firstItem="EZV-7R-lTs" firstAttribute="top" secondItem="VLz-3v-DwS" secondAttribute="bottom" id="dAI-uk-aH1"/>
                             <constraint firstItem="VLz-3v-DwS" firstAttribute="leading" secondItem="8vi-5W-nku" secondAttribute="leading" id="fDx-Bo-gkM"/>
-                            <constraint firstAttribute="trailing" secondItem="IJc-pf-3Kc" secondAttribute="trailing" id="fed-Ib-iWE"/>
                             <constraint firstItem="cD6-zx-6Kj" firstAttribute="top" secondItem="EZV-7R-lTs" secondAttribute="bottom" id="gB4-YQ-skk"/>
-                            <constraint firstItem="IJc-pf-3Kc" firstAttribute="top" secondItem="EZV-7R-lTs" secondAttribute="bottom" id="roA-RM-All"/>
+                            <constraint firstAttribute="trailing" secondItem="EZV-7R-lTs" secondAttribute="trailing" id="u4R-EX-smv"/>
                             <constraint firstAttribute="trailing" secondItem="EZV-7R-lTs" secondAttribute="trailing" id="unn-wK-MFb"/>
                             <constraint firstItem="VLz-3v-DwS" firstAttribute="top" secondItem="5SI-sM-Vl5" secondAttribute="bottom" id="yMj-2u-oyl"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="5SJ-X7-CKO"/>
+                                <exclude reference="6pw-su-Fiv"/>
+                                <exclude reference="6q6-8J-jl5"/>
                                 <exclude reference="9eq-Pb-QYM"/>
                                 <exclude reference="BFP-SD-vBS"/>
+                                <exclude reference="HzJ-ie-KTb"/>
                                 <exclude reference="PQI-7E-F6p"/>
                                 <exclude reference="dAI-uk-aH1"/>
                                 <exclude reference="unn-wK-MFb"/>
-                                <exclude reference="AC1-GE-Ghd"/>
-                                <exclude reference="D57-QO-AON"/>
-                                <exclude reference="fed-Ib-iWE"/>
-                                <exclude reference="YFV-KG-O3k"/>
                                 <exclude reference="gB4-YQ-skk"/>
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="開催地" id="KKQ-QU-gaD">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="NYf-Mp-Gqy"/>
                         <barButtonItem key="rightBarButtonItem" title="登録" id="0y9-9U-G0V">
                             <connections>
                                 <action selector="pushSubmitBtn:" destination="cR8-IW-SBr" id="kjG-Hs-mNa"/>
@@ -118,6 +98,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="searchBar" destination="VLz-3v-DwS" id="qcq-0I-gFd"/>
                         <outlet property="tableView" destination="EZV-7R-lTs" id="4H4-HI-xMl"/>
                     </connections>
                 </viewController>
@@ -152,11 +133,33 @@
                         <viewControllerLayoutGuide type="bottom" id="MTn-Ha-WoV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DFv-Nl-gWl">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="任意ジャンル" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idr-0W-LI4">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tWf-u0-kwG">
+                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="415" id="3sd-aB-Mw2"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="QBJ-M0-dTc"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="QV6-XA-ieL"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="fwA-y9-Avl"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="460" id="hyj-dc-8a1"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="416" id="oN2-iu-hZI"/>
+                                    <constraint firstAttribute="height" constant="460" id="p06-C7-HWW"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3sd-aB-Mw2"/>
+                                        <exclude reference="QBJ-M0-dTc"/>
+                                        <exclude reference="QV6-XA-ieL"/>
+                                        <exclude reference="oN2-iu-hZI"/>
+                                        <exclude reference="p06-C7-HWW"/>
+                                    </mask>
+                                </variation>
+                            </tableView>
+                            <searchBar contentMode="redraw" placeholder="ジャンル追加" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idr-0W-LI4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="98A-kb-Cd2"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="AhJ-zo-vlp"/>
@@ -167,43 +170,6 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e5A-eY-7Xi">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="5bO-2U-TCM"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="CnI-y9-1m5"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="eVq-rR-32F"/>
-                                    <barButtonItem title="キーワード編集" id="JIm-nx-dMz">
-                                        <connections>
-                                            <action selector="pushEditModeBtn:" destination="I0T-aa-zDL" id="BUy-Jr-bBA"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="AAn-TH-oW2"/>
-                                </items>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5bO-2U-TCM"/>
-                                    </mask>
-                                </variation>
-                            </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tWf-u0-kwG">
-                                <rect key="frame" x="0.0" y="108" width="320" height="416"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="415" id="3sd-aB-Mw2"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="QBJ-M0-dTc"/>
-                                    <constraint firstAttribute="width" constant="320" id="QV6-XA-ieL"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="416" id="oN2-iu-hZI"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="3sd-aB-Mw2"/>
-                                        <exclude reference="QBJ-M0-dTc"/>
-                                    </mask>
-                                </variation>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -211,25 +177,21 @@
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="TUy-U3-eAj" secondAttribute="bottom" constant="44" id="1Gj-95-7de"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="Idr-0W-LI4" secondAttribute="bottom" constant="-44" id="2W7-rJ-C6w"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="Idr-0W-LI4" secondAttribute="bottom" constant="-44" id="56z-EC-Wni"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="66E-cY-qvK"/>
+                            <constraint firstAttribute="trailing" secondItem="tWf-u0-kwG" secondAttribute="trailing" id="5K3-4D-3St"/>
                             <constraint firstAttribute="trailing" secondItem="tWf-u0-kwG" secondAttribute="trailing" id="6XV-eQ-tJl"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="bottom" secondItem="MTn-Ha-WoV" secondAttribute="top" id="BBc-be-Cbc"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="Dux-UO-Z9Y"/>
+                            <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="Idr-0W-LI4" secondAttribute="bottom" id="9O8-ak-8dQ"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="FeO-uj-3c9"/>
-                            <constraint firstAttribute="trailing" secondItem="e5A-eY-7Xi" secondAttribute="trailing" id="JAx-zk-rYm"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="LCg-xL-1Ys"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="Idr-0W-LI4" secondAttribute="bottom" id="OXm-SY-EcO"/>
                             <constraint firstItem="MTn-Ha-WoV" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="PWx-uh-p8o"/>
                             <constraint firstAttribute="trailing" secondItem="tWf-u0-kwG" secondAttribute="trailing" id="Q9a-KS-GLC"/>
                             <constraint firstAttribute="trailing" secondItem="tWf-u0-kwG" secondAttribute="trailing" id="Suv-ko-gug"/>
                             <constraint firstItem="Idr-0W-LI4" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="UbX-1r-O4f"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="YIJ-px-9OZ"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="cbb-W7-jn6"/>
-                            <constraint firstItem="MTn-Ha-WoV" firstAttribute="top" secondItem="e5A-eY-7Xi" secondAttribute="bottom" id="ccS-LI-8hp"/>
                             <constraint firstAttribute="trailing" secondItem="Idr-0W-LI4" secondAttribute="trailing" id="gwW-ow-PSN"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="pkh-iN-t96"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="Idr-0W-LI4" secondAttribute="bottom" id="qAe-ra-Q4V"/>
-                            <constraint firstItem="e5A-eY-7Xi" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="y3x-cc-Cee"/>
+                            <constraint firstItem="MTn-Ha-WoV" firstAttribute="top" secondItem="tWf-u0-kwG" secondAttribute="bottom" id="qcX-At-7bq"/>
+                            <constraint firstItem="tWf-u0-kwG" firstAttribute="leading" secondItem="DFv-Nl-gWl" secondAttribute="leading" id="uhd-AP-4fq"/>
                             <constraint firstItem="Idr-0W-LI4" firstAttribute="top" secondItem="TUy-U3-eAj" secondAttribute="bottom" id="y7a-iu-ww7"/>
                         </constraints>
                         <variation key="default">
@@ -239,17 +201,20 @@
                                 <exclude reference="2W7-rJ-C6w"/>
                                 <exclude reference="56z-EC-Wni"/>
                                 <exclude reference="6XV-eQ-tJl"/>
+                                <exclude reference="FeO-uj-3c9"/>
+                                <exclude reference="OXm-SY-EcO"/>
                                 <exclude reference="Q9a-KS-GLC"/>
+                                <exclude reference="Suv-ko-gug"/>
                                 <exclude reference="YIJ-px-9OZ"/>
                                 <exclude reference="pkh-iN-t96"/>
-                                <exclude reference="LCg-xL-1Ys"/>
-                                <exclude reference="y3x-cc-Cee"/>
+                                <exclude reference="qAe-ra-Q4V"/>
                                 <exclude reference="PWx-uh-p8o"/>
-                                <exclude reference="ccS-LI-8hp"/>
                             </mask>
                         </variation>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="興味のあるジャンル" id="Ff6-DV-zSy">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="QeN-qY-QYp"/>
                         <barButtonItem key="rightBarButtonItem" title="登録" id="8YE-QS-3jH">
                             <connections>
                                 <action selector="pushSubmitBtn:" destination="I0T-aa-zDL" id="DDG-cr-u40"/>
