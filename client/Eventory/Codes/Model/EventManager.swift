@@ -85,21 +85,6 @@ class EventManager {
             }
         }
         
-
-        // "checkStatus == 0 AND (title CONTAINS[c] 'Swift' OR address CONTAINS[c] 'Swift' OR  place CONTAINS[c] 'Swift' OR title CONTAINS[c] 'php' OR  'php' OR address CONTAINS[c] 'php' OR  place CONTAINS[c] 'php' )"'
-        
-        //        firstFlg = false
-        //        for place in termArr {
-        //            if !firstFlg {
-        //                selectGenre += "OR (address CONTAINS[c] '\(place)' OR  place CONTAINS[c] '\(place)'"
-        //                firstFlg = true
-        //            }
-        //            selectGenre += "OR address CONTAINS[c] '\(place)' OR place CONTAINS[c] '\(place)' "
-        //        }
-        //        if termArr.count != 0 {
-        //            selectGenre += ")"
-        //        }
-        
         let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre)").sorted("stratAt")
         return setEventInfo(events)
     }
