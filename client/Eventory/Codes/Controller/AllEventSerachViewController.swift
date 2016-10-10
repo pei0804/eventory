@@ -22,6 +22,7 @@ class AllEventSerachViewController: BaseViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var freeWordSearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class AllEventSerachViewController: BaseViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        freeWordSearchBar.delegate = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }
@@ -40,7 +42,7 @@ class AllEventSerachViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        eventSummarys = EventManager.sharedInstance.getNewEventAll()
+        eventSummarys = EventManager.sharedInstance.getNewEventAll("")
         
     }
     
@@ -54,7 +56,7 @@ class AllEventSerachViewController: BaseViewController {
             let task = [EventManager.sharedInstance.fetchNewEvent()]
             
             Task.all(task).success { _ in
-                self.eventSummarys = EventManager.sharedInstance.getNewEventAll()
+                self.eventSummarys = EventManager.sharedInstance.getNewEventAll("")
                 completed?()
                 }.failure { _ in
                     let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
@@ -63,6 +65,31 @@ class AllEventSerachViewController: BaseViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                     completed?()
             }
+        }
+    }
+}
+
+extension AllEventSerachViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        freeWordSearchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        guard let term = freeWordSearchBar.text else {
+            freeWordSearchBar.resignFirstResponder()
+            return
+        }
+        eventSummarys = EventManager.sharedInstance.getNewEventAll(term)
+        freeWordSearchBar.resignFirstResponder()
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if (self.freeWordSearchBar.isFirstResponder()) {
+            self.freeWordSearchBar.resignFirstResponder()
         }
     }
 }

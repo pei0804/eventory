@@ -166,7 +166,7 @@
                                     </mask>
                                 </variation>
                             </tableView>
-                            <searchBar contentMode="redraw" placeholder="フリーワード検索" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PER-gl-tQv">
+                            <searchBar contentMode="redraw" placeholder="検索 （例：Swift 東京）" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PER-gl-tQv">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="57Y-lu-AMq"/>
@@ -202,6 +202,7 @@
                     <tabBarItem key="tabBarItem" title="探す" id="pri-v8-3Mw"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="freeWordSearchBar" destination="PER-gl-tQv" id="IQK-uk-uP4"/>
                         <outlet property="tableView" destination="P1B-JG-HkB" id="dXk-2C-SEg"/>
                     </connections>
                 </viewController>
@@ -304,7 +305,7 @@
                                         <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQH-93-Jv9" id="Mln-NM-jqN">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
