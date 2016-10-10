@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
         
         // TODO ここらへんどうにかしたい
-        if !UserRegister.sharedInstance.getSettingStatus() {
+        if UserRegister.sharedInstance.getSettingStatus() {
             let storyboard = UIStoryboard(name: "Register", bundle: nil)
             let initialViewController = storyboard.instantiateViewControllerWithIdentifier("signUp")
             self.window?.rootViewController = initialViewController

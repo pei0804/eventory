@@ -18,7 +18,9 @@ class RegisterGenreViewController: UIViewController {
         }
     }
     // 設定画面からのアクセスの場合trueになる
-    var settingStatus = false
+    var leftBarButton: UIBarButtonItem = UIBarButtonItem()
+    var rightBarButton: UIBarButtonItem = UIBarButtonItem()
+    var settingStatus: Bool = false
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var submitBtn: UIBarButtonItem!
@@ -39,12 +41,16 @@ class RegisterGenreViewController: UIViewController {
         
         super.viewWillAppear(animated)
         if settingStatus {
+            leftBarButton = UIBarButtonItem(title: "設定", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            rightBarButton = UIBarButtonItem(title: "編集", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushEditModeBtn(_:)))
             genres = UserRegister.sharedInstance.getSettingGenres()
             checkCount = UserRegister.sharedInstance.getUserSettingGenres().count
         } else {
+            rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
             genres = EventManager.sharedInstance.genreInitializer()
         }
-        self.tableView.reloadData()
+        self.navigationItem.leftBarButtonItem = leftBarButton
+        self.navigationItem.rightBarButtonItem = rightBarButton
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,6 +63,11 @@ class RegisterGenreViewController: UIViewController {
         } else {
             tableView.editing = false
         }
+    }
+    
+    @IBAction func goBack(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
