@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/tikasan/eventory/server/formater"
+	"github.com/tikasan/eventory/formater"
 )
 
 func Insert(db *sql.DB, Events []Event) error {
