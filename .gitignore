@@ -1,8 +1,11 @@
 .DS_Store
 .idea/
-
+vendor/*
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcworkspace/contents.xcworkspacedata
 Pods/
 *.playground
+glide.lock
+glide.yaml
+vendor/
