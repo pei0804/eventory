@@ -12,8 +12,8 @@ import (
 
 	"database/sql"
 
-	"github.com/tikasan/eventory/server/define"
-	"github.com/tikasan/eventory/server/model"
+	"github.com/tikasan/eventory/define"
+	"github.com/tikasan/eventory/model"
 )
 
 func Check(db *sql.DB) {
@@ -74,7 +74,7 @@ func Request() <-chan []model.Event {
 
 		doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
 		doorKeeper[i].Api = define.DOORKEEPER
-		doorKeeper[i].Token = "Bearer key"
+		doorKeeper[i].Token = "Bearer HrqQoyQUy-VBxwrssxBC"
 	}
 
 	allInserter = append(allInserter, atdn...)

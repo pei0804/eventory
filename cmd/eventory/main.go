@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/tikasan/eventory/server/db"
+	"github.com/tikasan/eventory/db"
 
 	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/tikasan/eventory/server/api"
+	"github.com/tikasan/eventory/api"
 )
 
 type Server struct {

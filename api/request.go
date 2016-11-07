@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/tikasan/eventory/server/define"
-	"github.com/tikasan/eventory/server/formater"
-	"github.com/tikasan/eventory/server/model"
+	"github.com/tikasan/eventory/define"
+	"github.com/tikasan/eventory/formater"
+	"github.com/tikasan/eventory/model"
 )
 
 func NewInserter(rawurl string, rawapi int, token string) *Inserter {
