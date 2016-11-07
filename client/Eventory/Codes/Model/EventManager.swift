@@ -65,7 +65,6 @@ class EventManager {
     func getNewEventAll(term: String) -> [EventSummary] {
         
         let termArr: [String] = term.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        print(termArr)
         var selectGenre: String = ""
         
         var firstFlg: Bool = false
