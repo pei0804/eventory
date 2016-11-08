@@ -1,0 +1,12 @@
+box: wercker/golang
+build:
+  steps:
+    - setup-go-workspace
+
+    - script:
+        name: setup
+        code: make setup
+
+    - script:
+        name: build
+        code: make build
