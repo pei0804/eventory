@@ -1,3 +1,4 @@
+[![wercker status](https://app.wercker.com/status/60547319ed47a9ef330a10bef25bc863/s/master "wercker status")](https://app.wercker.com/project/byKey/60547319ed47a9ef330a10bef25bc863)
 # eventory
 
 イベントまとめアプリ。自分にとって本当にほしい新着情報だけを見る。
