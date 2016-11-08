@@ -6,3 +6,6 @@ vendor/*
 !*.xcworkspace/contents.xcworkspacedata
 Pods/
 *.playground
+glide.lock
+glide.yaml
+vendor/
