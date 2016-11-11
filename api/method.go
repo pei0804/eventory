@@ -74,7 +74,7 @@ func Request() <-chan []model.Event {
 
 		doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
 		doorKeeper[i].Api = define.DOORKEEPER
-		doorKeeper[i].Token = "Bearer HrqQoyQUy-VBxwrssxBC"
+		doorKeeper[i].Token = "Bearer "
 	}
 
 	allInserter = append(allInserter, atdn...)
