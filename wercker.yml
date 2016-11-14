@@ -10,3 +10,7 @@ build:
     - script:
         name: build
         code: make build
+
+    - script:
+        name: test
+        code: go test -v ./...
