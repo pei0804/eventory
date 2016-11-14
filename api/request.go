@@ -26,12 +26,14 @@ type Inserter struct {
 	Api      int
 	Token    string
 	RespByte []byte
+	err      error
 }
 
 func (i *Inserter) sendQuery() {
 	req, err := http.NewRequest("GET", i.Url, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		i.err = err
 		return
 	}
 	if i.Token != "" {
@@ -40,11 +42,17 @@ func (i *Inserter) sendQuery() {
 
 	client := new(http.Client)
 	resp, err := client.Do(req)
+	if resp == nil {
+		fmt.Fprint(os.Stderr, errors.New("Not Found URL check Inserter Url"))
+		i.err = errors.New("Not Found URL check Inserter Url")
+		return
+	}
 	defer resp.Body.Close()
 
 	respByte, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		i.err = err
 		return
 	}
 	i.RespByte = respByte
@@ -55,6 +63,7 @@ func (i *Inserter) atdnJsonParse() (events []model.Event, err error) {
 	err = json.Unmarshal(i.RespByte, &at)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		i.err = err
 		return events, nil
 	}
 	e := new(model.Event)
@@ -72,6 +81,7 @@ func (i *Inserter) connpassJsonParse() (events []model.Event, err error) {
 	err = json.Unmarshal(i.RespByte, &cp)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		i.err = err
 		return events, nil
 	}
 
@@ -90,6 +100,7 @@ func (i *Inserter) doorkeeperJsonParse() (events []model.Event, err error) {
 	err = json.Unmarshal(i.RespByte, &dk)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		i.err = err
 		return events, nil
 	}
 
