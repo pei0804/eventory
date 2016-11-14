@@ -22,12 +22,13 @@ func NewInserter(rawurl string, rawapi int, token string) *Inserter {
 }
 
 type Inserter struct {
-	Url   string
-	Api   int
-	Token string
+	Url      string
+	Api      int
+	Token    string
+	RespByte []byte
 }
 
-func (i *Inserter) sendQuery() (respByte []byte) {
+func (i *Inserter) sendQuery() {
 	req, err := http.NewRequest("GET", i.Url, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
@@ -41,17 +42,17 @@ func (i *Inserter) sendQuery() (respByte []byte) {
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
 
-	respByte, err = ioutil.ReadAll(resp.Body)
+	respByte, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return
 	}
-	return respByte
+	i.RespByte = respByte
 }
 
-func atdnJsonParse(respByte []byte) (events []model.Event, err error) {
+func (i *Inserter) atdnJsonParse() (events []model.Event, err error) {
 	var at model.At
-	err = json.Unmarshal(respByte, &at)
+	err = json.Unmarshal(i.RespByte, &at)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return events, nil
@@ -66,9 +67,9 @@ func atdnJsonParse(respByte []byte) (events []model.Event, err error) {
 	return events, nil
 }
 
-func connpassJsonParse(respByte []byte) (events []model.Event, err error) {
+func (i *Inserter) connpassJsonParse() (events []model.Event, err error) {
 	var cp model.Cp
-	err = json.Unmarshal(respByte, &cp)
+	err = json.Unmarshal(i.RespByte, &cp)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return events, nil
@@ -84,9 +85,9 @@ func connpassJsonParse(respByte []byte) (events []model.Event, err error) {
 	return events, nil
 }
 
-func doorkeeperJsonParse(respByte []byte) (events []model.Event, err error) {
+func (i *Inserter) doorkeeperJsonParse() (events []model.Event, err error) {
 	var dk []model.Dk
-	err = json.Unmarshal(respByte, &dk)
+	err = json.Unmarshal(i.RespByte, &dk)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return events, nil
@@ -104,14 +105,14 @@ func doorkeeperJsonParse(respByte []byte) (events []model.Event, err error) {
 
 func (i *Inserter) Get() (events []model.Event, err error) {
 
-	respByte := i.sendQuery()
+	i.sendQuery()
 
 	if i.Api == define.ATDN {
-		return atdnJsonParse(respByte)
+		return i.atdnJsonParse()
 	} else if i.Api == define.CONNPASS {
-		return connpassJsonParse(respByte)
+		return i.connpassJsonParse()
 	} else if i.Api == define.DOORKEEPER {
-		return doorkeeperJsonParse(respByte)
+		return i.doorkeeperJsonParse()
 	}
 	return events, errors.New("未知のAPIがセットされています。")
 }
