@@ -37,6 +37,7 @@
 - DBマイグレーション
 - ログ
 - Makefile
+- GolangTest
 
 **今後実装予定**
 
