@@ -4,15 +4,16 @@ import (
 	"database/sql"
 	"flag"
 	"log"
-	"net/http"
 	"os"
 
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"github.com/tikasan/eventory/api"
 	"github.com/tikasan/eventory/db"
 
 	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/tikasan/eventory/api"
 )
 
 type Server struct {
@@ -24,6 +25,7 @@ func New() *Server {
 }
 
 func (s *Server) Init(dbconf, env string) {
+
 	cs, err := db.NewConfigsFromFile(dbconf)
 	if err != nil {
 		log.Fatalf("cannot open database configuration. exit. %s", err)
@@ -60,16 +62,21 @@ func (s *Server) Init(dbconf, env string) {
 }
 
 func (s *Server) Run(port string) {
-	http.HandleFunc("/api/smt/events", func(w http.ResponseWriter, r *http.Request) {
-		api.Response(w, s.db)
-		return
-	})
 
-	http.HandleFunc("/api/events/admin", func(w http.ResponseWriter, r *http.Request) {
-		api.Check(s.db)
-		return
-	})
-	log.Fatal(http.ListenAndServe(port, nil))
+	api := &api.Method{DB: s.db}
+
+	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
+
+	e.GET("/api/smt/events", api.Response)
+	e.GET("/api/events/admin", api.Check)
+
+	if err := e.Start(port); err != nil {
+		e.Logger.Fatal(err.Error())
+	}
 }
 
 func main() {
@@ -81,7 +88,6 @@ func main() {
 
 	flag.Parse()
 	s := New()
-
 	s.Init(*dbconf, *env)
 	s.Run(*port)
 }
