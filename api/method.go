@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,11 +11,17 @@ import (
 
 	"database/sql"
 
+	"github.com/labstack/echo"
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/model"
 )
 
-func Check(db *sql.DB) {
+// TODO ネーミング変えるべきかも
+type Method struct {
+	DB *sql.DB
+}
+
+func (m *Method) Check(c echo.Context) error {
 
 	g, err := os.Getwd()
 	if err != nil {
@@ -27,11 +32,12 @@ func Check(db *sql.DB) {
 	_, err = os.Stat(checkLogPath)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
+		return c.JSON(http.StatusInternalServerError, "JSON")
 	}
 
 	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		return
+		return c.JSON(http.StatusInternalServerError, "JSON")
 	}
 	defer checkLog.Close()
 
@@ -44,7 +50,7 @@ func Check(db *sql.DB) {
 	for {
 		receive, ok := <-receiver
 		if ok {
-			model.Insert(db, receive)
+			model.Insert(m.DB, receive)
 		} else {
 			break
 		}
@@ -55,6 +61,7 @@ func Check(db *sql.DB) {
 	logger = log.New(checkLog, "[end]", log.LstdFlags)
 	logger.Println(end)
 	checkLog.Sync()
+	return c.JSON(http.StatusOK, "OK")
 }
 
 func Request() <-chan []model.Event {
@@ -103,16 +110,11 @@ func Request() <-chan []model.Event {
 	return allEvents
 }
 
-func Response(w http.ResponseWriter, db *sql.DB) {
-	event, err := model.EventAllNew(db)
+func (m *Method) Response(c echo.Context) error {
+	event, err := model.EventAllNew(m.DB)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	enc := json.NewEncoder(w)
-
-	if err := enc.Encode(event); err != nil {
-		http.Error(w, "encoding failed", http.StatusInternalServerError)
-		return
-	}
+	c.Response().Header().Set("Content-Type", "application/json")
+	return c.JSON(http.StatusOK, event)
 }

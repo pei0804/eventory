@@ -21,6 +21,7 @@ func NewInserter(rawurl string, rawapi int, token string) *Inserter {
 	}
 }
 
+// TODO ネーミング変えるべきかも
 type Inserter struct {
 	Url      string
 	Api      int
