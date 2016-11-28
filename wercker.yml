@@ -13,4 +13,4 @@ build:
 
     - script:
         name: test
-        code: go test -v ./...
+        code: go test -v $(glide novendor)

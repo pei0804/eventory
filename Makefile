@@ -2,16 +2,15 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
-	go get github.com/tools/godep
-	godep restore
+	go get github.com/Masterminds/glide
 	go get github.com/rubenv/sql-migrate/...
 	go get gopkg.in/yaml.v1
 	go get github.com/go-sql-driver/mysql
 	go get github.com/yterajima/go-dtf
 	go get github.com/variadico/scaneo
-	go get -v ./...
 
 build:
+	glide install
 	go build -o cmd/eventory/main cmd/eventory/main.go
 
 migrate/init:
