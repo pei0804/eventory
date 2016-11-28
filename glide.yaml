@@ -1,0 +1,10 @@
+package: github.com/tikasan/eventory
+import:
+- package: github.com/go-sql-driver/mysql
+  version: v1.2-88-ga197e5d
+- package: github.com/labstack/echo
+  version: v3.0.2
+  subpackages:
+  - middleware
+- package: github.com/yterajima/go-dtf
+- package: gopkg.in/yaml.v1
