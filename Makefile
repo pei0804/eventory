@@ -2,12 +2,12 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
-	go get github.com/Masterminds/glide
-	go get github.com/rubenv/sql-migrate/...
-	go get gopkg.in/yaml.v1
-	go get github.com/go-sql-driver/mysql
-	go get github.com/yterajima/go-dtf
-	go get github.com/variadico/scaneo
+	which sql-migrate || go get github.com/rubenv/sql-migrate/...
+    which scaneo || go get github.com/variadico/scaneo
+    glide install
+
+test:
+    go test -v $(shell glide novendor)
 
 build:
 	glide install
