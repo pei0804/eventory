@@ -1,0 +1,16 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Eventory' do
+  # Comment this line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Eventory
+pod 'Alamofire', '~> 3.0'
+pod 'ObjectMapper', '~> 0.17'
+pod 'RealmSwift'
+pod 'SwiftTask'
+pod 'DZNEmptyDataSet'
+pod 'Firebase/Messaging'
+pod 'SVProgressHUD'
+end
