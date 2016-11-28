@@ -2,8 +2,8 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
-	which sql-migrate || go get github.com/rubenv/sql-migrate/...
-	which scaneo || go get github.com/variadico/scaneo
+	go get github.com/rubenv/sql-migrate/...
+	go get github.com/variadico/scaneo
 	glide install
 
 test:
