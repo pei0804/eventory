@@ -3,11 +3,11 @@ ENV:=development
 
 setup:
 	which sql-migrate || go get github.com/rubenv/sql-migrate/...
-    which scaneo || go get github.com/variadico/scaneo
-    glide install
+	which scaneo || go get github.com/variadico/scaneo
+	glide install
 
 test:
-    go test -v $(shell glide novendor)
+	go test -v $(shell glide novendor)
 
 build:
 	glide install
