@@ -93,8 +93,7 @@ class EventInfoTableViewCell: UITableViewCell {
         eventSummary.eventDate = ViewFormaatter.sharedInstance.setEventDate(eventSummary)
         dateLbl.text = eventSummary.eventDate
         
-        noKeepBtn.tag = eventSummary.id
-        keepBtn.tag = eventSummary.id
+        id = eventSummary.id
     }
     
 }
