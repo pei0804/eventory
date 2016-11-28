@@ -2,11 +2,10 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
+	export GO15VENDOREXPERIMENT=1
 	which sql-migrate || go get github.com/rubenv/sql-migrate/...
 	which scaneo || go get github.com/variadico/scaneo
 	which scaneo glide || go get -v github.com/Masterminds/glide
-	export GO15VENDOREXPERIMENT=1
-	export PATH=$HOME/gopath/bin:$PATH
 	glide install
 
 test:
