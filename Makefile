@@ -2,7 +2,6 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
-	export GO15VENDOREXPERIMENT=1
 	which sql-migrate || go get github.com/rubenv/sql-migrate/...
 	which scaneo || go get github.com/variadico/scaneo
 	which scaneo glide || go get -v github.com/Masterminds/glide
@@ -12,7 +11,7 @@ test:
 	go test -v $(shell glide novendor)
 
 build:
-	go build -o cmd/eventory/main cmd/eventory/main.go
+	export GO15VENDOREXPERIMENT=1 go build -o cmd/eventory/main cmd/eventory/main.go
 
 migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
