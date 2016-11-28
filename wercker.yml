@@ -1,4 +1,4 @@
-box: golang
+box: dorajistyle/golang-mysql-base:latest
 build:
   steps:
     - setup-go-workspace
