@@ -1,4 +1,4 @@
-box: dorajistyle/golang-mysql-base:latest
+box: golang
 build:
   steps:
     - setup-go-workspace
@@ -13,4 +13,4 @@ build:
 
     - script:
         name: test
-        code: go test -v $(glide novendor)
+        code: make test
