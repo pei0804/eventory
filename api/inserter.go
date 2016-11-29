@@ -46,7 +46,21 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	logger.Println(now)
 	checkLog.Sync()
 
-	receiver := Insert()
+	_, err = http.Head(define.ATDN_URL)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "atdn cant api access")
+	}
+	_, err = http.Head(define.CONNPASS_URL)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "connpass cant api access")
+	}
+	_, err = http.Head(define.DOORKEEPER_URL)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "doorkeeper cant api access")
+	}
+
+	receiver := communication()
+
 	for {
 		receive, ok := <-receiver
 		if !ok {
@@ -71,26 +85,22 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	return c.JSON(http.StatusOK, "OK")
 }
 
-func Insert() <-chan []model.Event {
+func communication() <-chan []model.Event {
 	now := time.Now()
 	atdn := make([]Request, define.SERACH_SCOPE)
 	connpass := make([]Request, define.SERACH_SCOPE)
 	doorKeeper := make([]Request, define.SERACH_SCOPE)
 	allRequest := make([]Request, 0)
 
-	atdnUrl := "https://api.atnd.org/events/?count=100&format=jsonp&callback="
-	connpassUrl := "https://connpass.com/api/v1/event/?count=100"
-	doorKeeperUrl := "https://api.doorkeeper.jp/events"
-
 	for i := 0; i < define.SERACH_SCOPE; i++ {
 		ym := now.AddDate(0, i, 0).Format("200601")
-		atdn[i].Url = fmt.Sprintf("%s&ym=%s", atdnUrl, ym)
+		atdn[i].Url = fmt.Sprintf("%s&ym=%s", define.ATDN_URL, ym)
 		atdn[i].Api = define.ATDN
 
-		connpass[i].Url = fmt.Sprintf("%s&ym=%s", connpassUrl, ym)
+		connpass[i].Url = fmt.Sprintf("%s&ym=%s", define.CONNPASS_URL, ym)
 		connpass[i].Api = define.CONNPASS
 
-		doorKeeper[i].Url = fmt.Sprintf("%s?page=%d", doorKeeperUrl, i)
+		doorKeeper[i].Url = fmt.Sprintf("%s?page=%d", define.DOORKEEPER_URL, i)
 		doorKeeper[i].Api = define.DOORKEEPER
 		doorKeeper[i].Token = ""
 	}
