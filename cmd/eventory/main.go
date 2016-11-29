@@ -63,7 +63,7 @@ func (s *Server) Init(dbconf, env string) {
 
 func (s *Server) Run(port string) {
 
-	api := &api.Method{DB: s.db}
+	api := &api.Inserter{DB: s.db}
 
 	e := echo.New()
 
@@ -71,8 +71,8 @@ func (s *Server) Run(port string) {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 
-	e.GET("/api/smt/events", api.Response)
-	e.GET("/api/events/admin", api.Check)
+	e.GET("/api/smt/events", api.GetEvent)
+	e.GET("/api/events/admin", api.EventFetch)
 
 	if err := e.Start(port); err != nil {
 		e.Logger.Fatal(err.Error())
