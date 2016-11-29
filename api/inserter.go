@@ -41,21 +41,19 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	}
 	defer checkLog.Close()
 
-	now := time.Now()
-	logger := log.New(checkLog, "[start]", log.LstdFlags)
-	logger.Println(now)
-	checkLog.Sync()
-
 	_, err = http.Head(define.ATDN_URL)
 	if err != nil {
+		writeLog(checkLog, "[err atdn cant access]")
 		return c.JSON(http.StatusBadRequest, "atdn cant api access")
 	}
 	_, err = http.Head(define.CONNPASS_URL)
 	if err != nil {
+		writeLog(checkLog, "[err connpass cant access]")
 		return c.JSON(http.StatusBadRequest, "connpass cant api access")
 	}
 	_, err = http.Head(define.DOORKEEPER_URL)
 	if err != nil {
+		writeLog(checkLog, "[err doorkeeper cant access]")
 		return c.JSON(http.StatusBadRequest, "doorkeeper cant api access")
 	}
 
@@ -68,20 +66,14 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		} else {
 			err := model.Insert(i.DB, receive)
 			if err != nil {
-				end := time.Now()
-				logger = log.New(checkLog, "[database error]", log.LstdFlags)
-				logger.Println(end)
-				checkLog.Sync()
+				writeLog(checkLog, "[err database insert]")
 				return c.JSON(http.StatusInternalServerError, "Database Insert Error")
 			}
 		}
 
 	}
 
-	end := time.Now()
-	logger = log.New(checkLog, "[end]", log.LstdFlags)
-	logger.Println(end)
-	checkLog.Sync()
+	writeLog(checkLog, "[ok fetch event]")
 	return c.JSON(http.StatusOK, "OK")
 }
 
@@ -138,4 +130,11 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 	}
 	c.Response().Header().Set("Content-Type", "application/json")
 	return c.JSON(http.StatusOK, event)
+}
+
+func writeLog(checkLog *os.File, message string) {
+	now := time.Now()
+	logger := log.New(checkLog, message, log.LstdFlags)
+	logger.Println(now)
+	checkLog.Sync()
 }
