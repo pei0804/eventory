@@ -32,12 +32,12 @@ func (m *Method) Check(c echo.Context) error {
 	_, err = os.Stat(checkLogPath)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		return c.JSON(http.StatusInternalServerError, "JSON")
+		return c.JSON(http.StatusInternalServerError, "log/check.log not found")
 	}
 
 	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "JSON")
+		return c.JSON(http.StatusInternalServerError, "log/check.log cant open")
 	}
 	defer checkLog.Close()
 
@@ -49,10 +49,17 @@ func (m *Method) Check(c echo.Context) error {
 	receiver := Request()
 	for {
 		receive, ok := <-receiver
-		if ok {
-			model.Insert(m.DB, receive)
-		} else {
+		if !ok {
 			break
+		} else {
+			err := model.Insert(m.DB, receive)
+			if err != nil {
+				end := time.Now()
+				logger = log.New(checkLog, "[database error]", log.LstdFlags)
+				logger.Println(end)
+				checkLog.Sync()
+				return c.JSON(http.StatusInternalServerError, "Database Insert Error")
+			}
 		}
 
 	}
