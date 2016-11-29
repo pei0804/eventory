@@ -8,8 +8,8 @@ import (
 	"github.com/tikasan/eventory/define"
 )
 
-func TestInserter_sendQuery(t *testing.T) {
-	a := Inserter{}
+func TestRequest_sendQuery(t *testing.T) {
+	a := Request{}
 	now := time.Now()
 	ym := now.AddDate(0, 1, 0).Format("200601")
 	a.Api = define.ATDN
@@ -22,14 +22,14 @@ func TestInserter_sendQuery(t *testing.T) {
 	}
 }
 
-func TestInserter_atdnJsonParse(t *testing.T) {
-	a := Inserter{}
+func TestRequest_atdnJsonParse(t *testing.T) {
+	a := Request{}
 	now := time.Now()
 	ym := now.AddDate(0, 1, 0).Format("200601")
 	a.Api = define.ATDN
 	a.Url = fmt.Sprintf("https://api.atnd.org/events/?count=100&format=jsonp&callback=&ym=%s", ym)
 	a.Token = ""
-	cli := NewInserter(a.Url, a.Api, a.Token)
+	cli := NewRequest(a.Url, a.Api, a.Token)
 	cli.sendQuery()
 	cli.atdnJsonParse()
 
@@ -38,14 +38,14 @@ func TestInserter_atdnJsonParse(t *testing.T) {
 	}
 }
 
-func TestInserter_connpassJsonParse(t *testing.T) {
-	c := Inserter{}
+func TestRequest_connpassJsonParse(t *testing.T) {
+	c := Request{}
 	now := time.Now()
 	ym := now.AddDate(0, 1, 0).Format("200601")
 	c.Url = fmt.Sprintf("https://connpass.com/api/v1/event/?count=100&ym=%s", ym)
 	c.Api = define.CONNPASS
 	c.Token = ""
-	cli := NewInserter(c.Url, c.Api, c.Token)
+	cli := NewRequest(c.Url, c.Api, c.Token)
 	cli.sendQuery()
 	cli.connpassJsonParse()
 
@@ -54,12 +54,12 @@ func TestInserter_connpassJsonParse(t *testing.T) {
 	}
 }
 
-func TestInserter_doorkeeperJsonParse(t *testing.T) {
-	d := Inserter{}
+func TestRequest_doorkeeperJsonParse(t *testing.T) {
+	d := Request{}
 	d.Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", 1)
 	d.Api = define.DOORKEEPER
 	d.Token = ""
-	cli := NewInserter(d.Url, d.Api, d.Token)
+	cli := NewRequest(d.Url, d.Api, d.Token)
 	cli.sendQuery()
 	cli.doorkeeperJsonParse()
 

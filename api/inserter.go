@@ -17,11 +17,11 @@ import (
 )
 
 // TODO ネーミング変えるべきかも
-type Method struct {
+type Inserter struct {
 	DB *sql.DB
 }
 
-func (m *Method) Check(c echo.Context) error {
+func (i *Inserter) EventFetch(c echo.Context) error {
 
 	g, err := os.Getwd()
 	if err != nil {
@@ -46,13 +46,13 @@ func (m *Method) Check(c echo.Context) error {
 	logger.Println(now)
 	checkLog.Sync()
 
-	receiver := Request()
+	receiver := Insert()
 	for {
 		receive, ok := <-receiver
 		if !ok {
 			break
 		} else {
-			err := model.Insert(m.DB, receive)
+			err := model.Insert(i.DB, receive)
 			if err != nil {
 				end := time.Now()
 				logger = log.New(checkLog, "[database error]", log.LstdFlags)
@@ -71,37 +71,41 @@ func (m *Method) Check(c echo.Context) error {
 	return c.JSON(http.StatusOK, "OK")
 }
 
-func Request() <-chan []model.Event {
+func Insert() <-chan []model.Event {
 	now := time.Now()
-	atdn := make([]Inserter, define.SERACH_SCOPE)
-	connpass := make([]Inserter, define.SERACH_SCOPE)
-	doorKeeper := make([]Inserter, define.SERACH_SCOPE)
-	allInserter := make([]Inserter, 0)
+	atdn := make([]Request, define.SERACH_SCOPE)
+	connpass := make([]Request, define.SERACH_SCOPE)
+	doorKeeper := make([]Request, define.SERACH_SCOPE)
+	allRequest := make([]Request, 0)
+
+	atdnUrl := "https://api.atnd.org/events/?count=100&format=jsonp&callback="
+	connpassUrl := "https://connpass.com/api/v1/event/?count=100"
+	doorKeeperUrl := "https://api.doorkeeper.jp/events"
 
 	for i := 0; i < define.SERACH_SCOPE; i++ {
 		ym := now.AddDate(0, i, 0).Format("200601")
-		atdn[i].Url = fmt.Sprintf("https://api.atnd.org/events/?count=100&format=jsonp&callback=&ym=%s", ym)
+		atdn[i].Url = fmt.Sprintf("%s&ym=%s", atdnUrl, ym)
 		atdn[i].Api = define.ATDN
 
-		connpass[i].Url = fmt.Sprintf("https://connpass.com/api/v1/event/?count=100&ym=%s", ym)
+		connpass[i].Url = fmt.Sprintf("%s&ym=%s", connpassUrl, ym)
 		connpass[i].Api = define.CONNPASS
 
-		doorKeeper[i].Url = fmt.Sprintf("https://api.doorkeeper.jp/events?page=%d", i)
+		doorKeeper[i].Url = fmt.Sprintf("%s?page=%d", doorKeeperUrl, i)
 		doorKeeper[i].Api = define.DOORKEEPER
-		doorKeeper[i].Token = "Bearer "
+		doorKeeper[i].Token = ""
 	}
 
-	allInserter = append(allInserter, atdn...)
-	allInserter = append(allInserter, connpass...)
-	allInserter = append(allInserter, doorKeeper...)
-	allEvents := make(chan []model.Event, len(allInserter))
+	allRequest = append(allRequest, atdn...)
+	allRequest = append(allRequest, connpass...)
+	allRequest = append(allRequest, doorKeeper...)
+	allEvents := make(chan []model.Event, len(allRequest))
 	var wg sync.WaitGroup
 
 	go func() {
-		for _, a := range allInserter {
+		for _, r := range allRequest {
 			wg.Add(1)
-			go func(a Inserter) {
-				cli := NewInserter(a.Url, a.Api, a.Token)
+			go func(r Request) {
+				cli := NewRequest(r.Url, r.Api, r.Token)
 				events, err := cli.Get()
 				if err != nil {
 					fmt.Fprint(os.Stderr, err)
@@ -109,7 +113,7 @@ func Request() <-chan []model.Event {
 				}
 				allEvents <- events
 				wg.Done()
-			}(a)
+			}(r)
 		}
 		wg.Wait()
 		close(allEvents)
@@ -117,8 +121,8 @@ func Request() <-chan []model.Event {
 	return allEvents
 }
 
-func (m *Method) Response(c echo.Context) error {
-	event, err := model.EventAllNew(m.DB)
+func (i *Inserter) GetEvent(c echo.Context) error {
+	event, err := model.EventAllNew(i.DB)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}

@@ -13,8 +13,8 @@ import (
 	"github.com/tikasan/eventory/model"
 )
 
-func NewInserter(rawurl string, rawapi int, token string) *Inserter {
-	return &Inserter{
+func NewRequest(rawurl string, rawapi int, token string) *Request {
+	return &Request{
 		Url:   rawurl,
 		Api:   rawapi,
 		Token: token,
@@ -22,7 +22,7 @@ func NewInserter(rawurl string, rawapi int, token string) *Inserter {
 }
 
 // TODO ネーミング変えるべきかも
-type Inserter struct {
+type Request struct {
 	Url      string
 	Api      int
 	Token    string
@@ -30,22 +30,22 @@ type Inserter struct {
 	err      error
 }
 
-func (i *Inserter) sendQuery() {
-	req, err := http.NewRequest("GET", i.Url, nil)
+func (r *Request) sendQuery() {
+	req, err := http.NewRequest("GET", r.Url, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		i.err = err
+		r.err = err
 		return
 	}
-	if i.Token != "" {
-		req.Header.Set("Authorization", i.Token)
+	if r.Token != "" {
+		req.Header.Set("Authorization", r.Token)
 	}
 
 	client := new(http.Client)
 	resp, err := client.Do(req)
 	if resp == nil {
-		fmt.Fprint(os.Stderr, errors.New("Not Found URL check Inserter Url"))
-		i.err = errors.New("Not Found URL check Inserter Url")
+		fmt.Fprint(os.Stderr, errors.New("Not Found URL check Request Url"))
+		r.err = errors.New("Not Found URL check Request Url")
 		return
 	}
 	defer resp.Body.Close()
@@ -53,18 +53,18 @@ func (i *Inserter) sendQuery() {
 	respByte, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		i.err = err
+		r.err = err
 		return
 	}
-	i.RespByte = respByte
+	r.RespByte = respByte
 }
 
-func (i *Inserter) atdnJsonParse() (events []model.Event, err error) {
+func (r *Request) atdnJsonParse() (events []model.Event, err error) {
 	var at model.At
-	err = json.Unmarshal(i.RespByte, &at)
+	err = json.Unmarshal(r.RespByte, &at)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		i.err = err
+		r.err = err
 		return events, nil
 	}
 	e := new(model.Event)
@@ -77,12 +77,12 @@ func (i *Inserter) atdnJsonParse() (events []model.Event, err error) {
 	return events, nil
 }
 
-func (i *Inserter) connpassJsonParse() (events []model.Event, err error) {
+func (r *Request) connpassJsonParse() (events []model.Event, err error) {
 	var cp model.Cp
-	err = json.Unmarshal(i.RespByte, &cp)
+	err = json.Unmarshal(r.RespByte, &cp)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		i.err = err
+		r.err = err
 		return events, nil
 	}
 
@@ -96,12 +96,12 @@ func (i *Inserter) connpassJsonParse() (events []model.Event, err error) {
 	return events, nil
 }
 
-func (i *Inserter) doorkeeperJsonParse() (events []model.Event, err error) {
+func (r *Request) doorkeeperJsonParse() (events []model.Event, err error) {
 	var dk []model.Dk
-	err = json.Unmarshal(i.RespByte, &dk)
+	err = json.Unmarshal(r.RespByte, &dk)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		i.err = err
+		r.err = err
 		return events, nil
 	}
 
@@ -115,16 +115,16 @@ func (i *Inserter) doorkeeperJsonParse() (events []model.Event, err error) {
 	return events, nil
 }
 
-func (i *Inserter) Get() (events []model.Event, err error) {
+func (r *Request) Get() (events []model.Event, err error) {
 
-	i.sendQuery()
+	r.sendQuery()
 
-	if i.Api == define.ATDN {
-		return i.atdnJsonParse()
-	} else if i.Api == define.CONNPASS {
-		return i.connpassJsonParse()
-	} else if i.Api == define.DOORKEEPER {
-		return i.doorkeeperJsonParse()
+	if r.Api == define.ATDN {
+		return r.atdnJsonParse()
+	} else if r.Api == define.CONNPASS {
+		return r.connpassJsonParse()
+	} else if r.Api == define.DOORKEEPER {
+		return r.doorkeeperJsonParse()
 	}
 	return events, errors.New("未知のAPIがセットされています。")
 }
