@@ -63,12 +63,11 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		receive, ok := <-receiver
 		if !ok {
 			break
-		} else {
-			err := model.Insert(i.DB, receive)
-			if err != nil {
-				writeLog(checkLog, "[err][database insert]")
-				return c.JSON(http.StatusInternalServerError, "[err][database insert]")
-			}
+		}
+		err := model.Insert(i.DB, receive)
+		if err != nil {
+			writeLog(checkLog, "[err][database insert]")
+			return c.JSON(http.StatusInternalServerError, "[err][database insert]")
 		}
 
 	}
