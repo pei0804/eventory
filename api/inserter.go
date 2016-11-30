@@ -103,23 +103,21 @@ func communication() <-chan []model.Event {
 	allEvents := make(chan []model.Event, len(allRequest))
 	var wg sync.WaitGroup
 
-	go func() {
-		for _, r := range allRequest {
-			wg.Add(1)
-			go func(r Request) {
-				cli := NewRequest(r.Url, r.Api, r.Token)
-				events, err := cli.convertingToJson()
-				if err != nil {
-					fmt.Fprint(os.Stderr, err)
-					wg.Done()
-				}
-				allEvents <- events
+	for _, r := range allRequest {
+		wg.Add(1)
+		go func(r Request) {
+			cli := NewRequest(r.Url, r.Api, r.Token)
+			events, err := cli.convertingToJson()
+			if err != nil {
+				fmt.Fprint(os.Stderr, err)
 				wg.Done()
-			}(r)
-		}
-		wg.Wait()
-		close(allEvents)
-	}()
+			}
+			allEvents <- events
+			wg.Done()
+		}(r)
+	}
+	wg.Wait()
+	close(allEvents)
 	return allEvents
 }
 
