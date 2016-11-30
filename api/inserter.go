@@ -32,29 +32,29 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	_, err = os.Stat(checkLogPath)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
-		return c.JSON(http.StatusInternalServerError, "log/check.log not found")
+		return c.JSON(http.StatusInternalServerError, "[err][log/check.log not found]")
 	}
 
 	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "log/check.log cant open")
+		return c.JSON(http.StatusInternalServerError, "[err][log/check.log cant open]")
 	}
 	defer checkLog.Close()
 
 	_, err = http.Head(define.ATDN_URL)
 	if err != nil {
-		writeLog(checkLog, "[err atdn cant access]")
-		return c.JSON(http.StatusBadRequest, "atdn cant api access")
+		writeLog(checkLog, "[err][atdn cant access]")
+		return c.JSON(http.StatusBadRequest, "[err][atdn cant access]")
 	}
 	_, err = http.Head(define.CONNPASS_URL)
 	if err != nil {
-		writeLog(checkLog, "[err connpass cant access]")
-		return c.JSON(http.StatusBadRequest, "connpass cant api access")
+		writeLog(checkLog, "[err][connpass cant access]")
+		return c.JSON(http.StatusBadRequest, "[err][connpass cant access]")
 	}
 	_, err = http.Head(define.DOORKEEPER_URL)
 	if err != nil {
-		writeLog(checkLog, "[err doorkeeper cant access]")
-		return c.JSON(http.StatusBadRequest, "doorkeeper cant api access")
+		writeLog(checkLog, "[err][doorkeeper cant access]")
+		return c.JSON(http.StatusBadRequest, "[err][doorkeeper cant access]")
 	}
 
 	receiver := communication()
@@ -66,14 +66,14 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		} else {
 			err := model.Insert(i.DB, receive)
 			if err != nil {
-				writeLog(checkLog, "[err database insert]")
-				return c.JSON(http.StatusInternalServerError, "Database Insert Error")
+				writeLog(checkLog, "[err][database insert]")
+				return c.JSON(http.StatusInternalServerError, "[err][database insert]")
 			}
 		}
 
 	}
 
-	writeLog(checkLog, "[ok fetch event]")
+	writeLog(checkLog, "[success][fetch event]")
 	return c.JSON(http.StatusOK, "OK")
 }
 
@@ -108,7 +108,7 @@ func communication() <-chan []model.Event {
 			wg.Add(1)
 			go func(r Request) {
 				cli := NewRequest(r.Url, r.Api, r.Token)
-				events, err := cli.Get()
+				events, err := cli.convertingToJson()
 				if err != nil {
 					fmt.Fprint(os.Stderr, err)
 					wg.Done()
