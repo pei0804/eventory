@@ -115,7 +115,7 @@ func (r *Request) doorkeeperJsonParse() (events []model.Event, err error) {
 	return events, nil
 }
 
-func (r *Request) Get() (events []model.Event, err error) {
+func (r *Request) convertingToJson() (events []model.Event, err error) {
 
 	r.sendQuery()
 
