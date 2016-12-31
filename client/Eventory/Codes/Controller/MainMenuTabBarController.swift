@@ -37,8 +37,8 @@ class MainMenuTabBarController: UITabBarController {
         }
         
         for (i,item) in items.enumerate() {
-            item.image = UIImage(named: "\(tabBarImages[i])_off.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-            item.selectedImage = UIImage(named: "\(tabBarImages[i])_on.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+            item.image = UIImage(named: "\(tabBarImages[i])Off.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+            item.selectedImage = UIImage(named: "\(tabBarImages[i])On.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         }
     }
     
