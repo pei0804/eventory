@@ -32,10 +32,4 @@ class KeepButton: UIButton {
         layer.borderWidth = 2;
         setTitleColor(Colors.main, forState: .Normal)
     }
-    
-    enum Status: Int {
-        case noActive = 0
-        case Active = 1
-        case None = 5
-    }
 }
