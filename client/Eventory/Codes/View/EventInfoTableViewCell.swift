@@ -12,6 +12,8 @@ class EventInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.separatorInset = UIEdgeInsetsZero
+        layoutMargins = UIEdgeInsetsZero
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -26,48 +28,58 @@ class EventInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var addressLbl: UILabel!
     @IBOutlet weak var titileLbl: UILabel!
     @IBOutlet weak var titleLblWidth: NSLayoutConstraint!
-    @IBOutlet weak var titleBackgroundView: UIView!
     
     var id: Int = 0
     var indexPath: NSIndexPath = NSIndexPath(index: 0)
     var eventSummary: EventSummary = EventSummary()
     let apiFromMessage = "情報提供元："
     
-    @IBAction func keepBtn(sender: AnyObject) {
-        EventManager.sharedInstance.keepAction(id, isKeep: true)
-        eventSummary.checkStatus = CheckStatus.Keep.rawValue
+    private func keepEvent() {
         titileLbl.textColor = Colors.main
-        titleBackgroundView.backgroundColor = Colors.main_bg
+        keepButton.active()
+        noKeepButton.noActive()
     }
     
-    @IBAction func noKeepBtn(sender: AnyObject) {
+    private func noKeepEvent() {
+        titileLbl.textColor = Colors.noKeep
+        noKeepButton.active()
+        keepButton.noActive()
+    }
+    
+    private func noCheckEvent() {
+        titileLbl.textColor = Colors.noCheck
+        noKeepButton.noActive()
+        keepButton.noActive()
+    }
+    
+    @IBAction func keepButton(sender: AnyObject) {
+        EventManager.sharedInstance.keepAction(id, isKeep: true)
+        eventSummary.checkStatus = CheckStatus.Keep.rawValue
+        keepEvent()
+    }
+    
+    @IBAction func noKeepButton(sender: AnyObject) {
         EventManager.sharedInstance.keepAction(id, isKeep: false)
         eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
-        titileLbl.textColor = Colors.noKeep
-        titleBackgroundView.backgroundColor = Colors.noKeep_bg
+        noKeepEvent()
     }
     
     func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
         
+        // イベントの情報
         if eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
-            titileLbl.textColor = Colors.noCheck
-            titleBackgroundView.backgroundColor = Colors.noCheck_bg
+            noCheckEvent()
         } else if eventSummary.checkStatus == CheckStatus.Keep.rawValue {
-            titileLbl.textColor = Colors.main
-            titleBackgroundView.backgroundColor = Colors.main_bg
+            keepEvent()
         } else if eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
-            titileLbl.textColor = Colors.noKeep
-            titleBackgroundView.backgroundColor = Colors.noKeep_bg
+            noKeepEvent()
         }
         
+        // 開いている画面
         if CheckStatus.Keep.rawValue == viewPageClass.rawValue {
-            keepBtn.hidden = true
-            titileLbl.textColor = Colors.main
-            titleBackgroundView.backgroundColor = Colors.main_bg
+            keepEvent()
         } else if CheckStatus.NoKeep.rawValue == viewPageClass.rawValue {
-            noKeepBtn.hidden = true
-            titileLbl.textColor = Colors.noKeep
-            titleBackgroundView.backgroundColor = Colors.noKeep_bg
+            noKeepEvent()
         }
         
         if eventSummary.apiId == ApiId.Atdn.rawValue {
@@ -85,9 +97,6 @@ class EventInfoTableViewCell: UITableViewCell {
         titileLbl.text = eventSummary.title
         titileLbl.numberOfLines = 0
         titileLbl.lineBreakMode = .ByWordWrapping
-        let frame = CGSizeMake(300, CGFloat.max)
-        let rect = titileLbl.sizeThatFits(frame)
-        titleLblWidth.constant = rect.width
         
         addressLbl.text = eventSummary.address != "" ? eventSummary.address : "開催地未定"
         eventSummary.eventDate = ViewFormaatter.sharedInstance.setEventDate(eventSummary)
