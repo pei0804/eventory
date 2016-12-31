@@ -57,7 +57,7 @@
                             </mask>
                         </variation>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="KeepButton" customModule="Eventory" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksn-pI-snp" customClass="KeepButton" customModule="Eventory" customModuleProvider="target">
                         <rect key="frame" x="160" y="154" width="140" height="40"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -65,8 +65,8 @@
                             <constraint firstAttribute="height" constant="40" id="QIE-cp-ZoW"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="hZK-hW-ALJ"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="キープ">
+                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="キープ" image="keepNoActive">
                             <color key="titleColor" red="0.90196078431372551" green="0.49411764705882355" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -89,7 +89,7 @@
                         <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="NoKeepButton" customModule="Eventory" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-om-ic5" customClass="NoKeepButton" customModule="Eventory" customModuleProvider="target">
                         <rect key="frame" x="20" y="154" width="140" height="40"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -97,8 +97,8 @@
                             <constraint firstAttribute="height" constant="40" id="kdZ-IV-vHj"/>
                             <constraint firstAttribute="width" constant="140" id="zpL-vP-vMG"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="興味なし">
+                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="興味なし" image="noKeepNoActive">
                             <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>
@@ -158,4 +158,8 @@
             <point key="canvasLocation" x="250" y="367.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="keepNoActive" width="20" height="20"/>
+        <image name="noKeepNoActive" width="20" height="20"/>
+    </resources>
 </document>

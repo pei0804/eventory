@@ -24,6 +24,8 @@ class KeepButton: UIButton {
         layer.borderColor = UIColor.clearColor().CGColor;
         layer.borderWidth = 0;
         setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setImage(UIImage(named:"keepActive.png"), forState: .Normal)
+        
     }
     
     func noActive() {
@@ -31,5 +33,6 @@ class KeepButton: UIButton {
         layer.borderColor = Colors.main.CGColor;
         layer.borderWidth = 2;
         setTitleColor(Colors.main, forState: .Normal)
+        setImage(UIImage(named:"keepNoActive.png"), forState: .Normal)
     }
 }

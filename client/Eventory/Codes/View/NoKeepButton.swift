@@ -24,6 +24,7 @@ class NoKeepButton: UIButton {
         layer.borderColor = UIColor.clearColor().CGColor;
         layer.borderWidth = 0;
         setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        setImage(UIImage(named:"noKeepActive.png"), forState: .Normal)
     }
     
     func noActive() {
@@ -31,5 +32,6 @@ class NoKeepButton: UIButton {
         layer.borderColor = Colors.noKeep.CGColor;
         layer.borderWidth = 2;
         setTitleColor(Colors.noKeep, forState: .Normal)
+        setImage(UIImage(named:"noKeepNoActive.png"), forState: .Normal)
     }
 }
