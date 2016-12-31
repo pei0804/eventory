@@ -12,7 +12,7 @@ class EventInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.separatorInset = UIEdgeInsetsZero
+        separatorInset = UIEdgeInsetsZero
         layoutMargins = UIEdgeInsetsZero
     }
     
@@ -66,19 +66,21 @@ class EventInfoTableViewCell: UITableViewCell {
     
     func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
         
-        // イベントの情報
-        if eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
-            noCheckEvent()
-        } else if eventSummary.checkStatus == CheckStatus.Keep.rawValue {
-            keepEvent()
-        } else if eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
-            noKeepEvent()
-        }
+        self.eventSummary = eventSummary
         
         // 開いている画面
         if CheckStatus.Keep.rawValue == viewPageClass.rawValue {
             keepEvent()
         } else if CheckStatus.NoKeep.rawValue == viewPageClass.rawValue {
+            noKeepEvent()
+        }
+        
+        // イベントの情報
+        if self.eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
+            noCheckEvent()
+        } else if self.eventSummary.checkStatus == CheckStatus.Keep.rawValue {
+            keepEvent()
+        } else if self.eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
             noKeepEvent()
         }
         

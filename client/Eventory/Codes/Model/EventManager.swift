@@ -117,6 +117,7 @@ class EventManager {
             eventSummary.place      = event.place
             eventSummary.stratAt    = event.stratAt
             eventSummary.endAt      = event.endAt
+            eventSummary.checkStatus = event.checkStatus
             eventSummaries.append(eventSummary)
         }
         return eventSummaries
