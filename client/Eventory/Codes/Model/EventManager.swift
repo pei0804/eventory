@@ -101,7 +101,7 @@ class EventManager {
     
     func setEventInfo(searchEvents: Results<Event>) -> [EventSummary] {
         
-        var eventSummarys: [EventSummary] = [EventSummary]()
+        var eventSummaries: [EventSummary] = [EventSummary]()
         for event in searchEvents {
             let eventSummary: EventSummary = EventSummary()
             eventSummary.id         = event.id
@@ -117,9 +117,9 @@ class EventManager {
             eventSummary.place      = event.place
             eventSummary.stratAt    = event.stratAt
             eventSummary.endAt      = event.endAt
-            eventSummarys.append(eventSummary)
+            eventSummaries.append(eventSummary)
         }
-        return eventSummarys
+        return eventSummaries
     }
     
     func eventInitializer() {

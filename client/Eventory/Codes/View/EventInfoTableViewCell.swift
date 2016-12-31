@@ -18,8 +18,8 @@ class EventInfoTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    @IBOutlet weak var noKeepBtn: UIButton!
-    @IBOutlet weak var keepBtn: UIButton!
+    @IBOutlet weak var noKeepButton: NoKeepButton!
+    @IBOutlet weak var keepButton: KeepButton!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var apiNameLbl: UILabel!
     @IBOutlet weak var eventStatusLbl: UILabel!

@@ -12,9 +12,9 @@ import SwiftTask
 
 class KeepEventViewController: BaseViewController {
     
-    var eventSummarys: [EventSummary]? {
+    var eventSummaries: [EventSummary]? {
         didSet {
-            if let eventSummarys = eventSummarys where eventSummarys.count == 0 {
+            if let eventSummaries = eventSummaries where eventSummaries.count == 0 {
                 tableView.setContentOffset(CGPointZero, animated: false)
             }
             self.tableView.reloadData()
@@ -40,7 +40,7 @@ class KeepEventViewController: BaseViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        eventSummarys = EventManager.sharedInstance.getKeepEventAll()
+        eventSummaries = EventManager.sharedInstance.getKeepEventAll()
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,7 +54,7 @@ class KeepEventViewController: BaseViewController {
             let task = [EventManager.sharedInstance.fetchNewEvent()]
             
             Task.all(task).success { _ in
-                self.eventSummarys = EventManager.sharedInstance.getKeepEventAll()
+                self.eventSummaries = EventManager.sharedInstance.getKeepEventAll()
                 completed?()
                 }.failure { _ in
                     let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
@@ -78,8 +78,8 @@ extension KeepEventViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let eventSummarys = eventSummarys {
-            return eventSummarys.count
+        if let eventSummaries = eventSummaries {
+            return eventSummaries.count
         }
         return 0
     }
@@ -87,8 +87,8 @@ extension KeepEventViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
-            if let eventSummarys = eventSummarys {
-                cell.bind(eventSummarys[indexPath.row], viewPageClass: CheckStatus.Keep, indexPath: indexPath)
+            if let eventSummaries = eventSummaries {
+                cell.bind(eventSummaries[indexPath.row], viewPageClass: CheckStatus.Keep, indexPath: indexPath)
                 return cell
             }
         }
@@ -106,10 +106,10 @@ extension KeepEventViewController: UITableViewDelegate, SFSafariViewControllerDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         
-        guard let eventSummarys = eventSummarys else {
+        guard let eventSummaries = eventSummaries else {
             return
         }
-        let url: String = eventSummarys[indexPath.row].url
+        let url: String = eventSummaries[indexPath.row].url
         if !url.lowercaseString.hasPrefix("http://") && !url.lowercaseString.hasPrefix("https://") {
             let alert: UIAlertController = UIAlertController(title: "不正なリンクを検出しました", message: "このイベントに設定されているリンクに問題がありました。", preferredStyle: .Alert)
             let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
