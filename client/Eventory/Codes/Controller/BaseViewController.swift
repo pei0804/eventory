@@ -72,3 +72,10 @@ extension BaseViewController: DZNEmptyDataSetSource {
         return NSAttributedString(string: text, attributes: attribs)
     }
 }
+
+extension BaseViewController: DZNEmptyDataSetDelegate {
+    
+    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
+        return true
+    }
+}

@@ -26,10 +26,11 @@ class NoKeepEventViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.scrollView = tableView
-        self.addRefreshControl()
+        scrollView = tableView
+        addRefreshControl()
         
-        self.tableView.emptyDataSetSource = self
+        tableView.emptyDataSetSource = self;
+        tableView.emptyDataSetDelegate = self;
         
         tableView.delegate = self
         tableView.dataSource = self
