@@ -1,6 +1,7 @@
 package formater
 
 import (
+	"bytes"
 	"regexp"
 
 	"strings"
@@ -10,6 +11,16 @@ import (
 
 	"github.com/yterajima/go-dtf"
 )
+
+func ConcatenateString(strs ...string) string {
+
+	var concatenateStr bytes.Buffer
+	for _, v := range strs {
+		concatenateStr.Write([]byte(v))
+		concatenateStr.Write([]byte{','})
+	}
+	return concatenateStr.String()
+}
 
 func DateTimeFormatter(timeStr string) string {
 	parsedTime, _ := dtf.Parse(timeStr)

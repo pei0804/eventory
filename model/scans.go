@@ -18,6 +18,7 @@ func ScanEvent(r *sql.Row) (Event, error) {
 		&s.Place,
 		&s.StratAt,
 		&s.EndAt,
+		&s.DataHash,
 		&s.ID,
 	); err != nil {
 		return Event{}, err
@@ -42,6 +43,7 @@ func ScanEvents(rs *sql.Rows) ([]Event, error) {
 			&s.Place,
 			&s.StratAt,
 			&s.EndAt,
+			&s.DataHash,
 			&s.ID,
 		); err != nil {
 			return nil, err

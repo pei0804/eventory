@@ -34,7 +34,8 @@ type Event struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"strat_at"`
 	EndAt      string `json:"end_at"`
-	ID         int    `json:"id"`
+	DataHash   string
+	ID         int `json:"id"`
 }
 
 type EventJson struct {
@@ -66,6 +67,7 @@ type AtdnEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
+	DataHash   string
 }
 
 type ConnpassEvent struct {
@@ -81,6 +83,7 @@ type ConnpassEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
+	DataHash   string
 }
 
 type DoorkeeperEvent struct {
@@ -96,4 +99,5 @@ type DoorkeeperEvent struct {
 	Place      string `json:"place"`
 	StratAt    string `json:"starts_at"`
 	EndAt      string `json:"ends_at"`
+	DataHash   string
 }
