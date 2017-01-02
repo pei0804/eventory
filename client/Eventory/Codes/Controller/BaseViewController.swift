@@ -78,4 +78,16 @@ extension BaseViewController: DZNEmptyDataSetDelegate {
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
         return true
     }
+    
+    func emptyDataSetWillAppear(scrollView: UIScrollView!) {
+        if let tableView = scrollView as? UITableView {
+            tableView.separatorColor = UIColor.clearColor();
+        }
+    }
+    
+    func emptyDataSetDidDisappear(scrollView: UIScrollView!) {
+        if let tableView = scrollView as? UITableView {
+            tableView.separatorColor = UIColor.grayColor();
+        }
+    }
 }
