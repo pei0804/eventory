@@ -71,9 +71,17 @@ func EventAll(db *sql.DB) ([]Event, error) {
 	return ScanEvents(rows)
 }
 
-func EventAllNew(db *sql.DB) ([]EventJson, error) {
-	rows, err := db.Query(`select event_id, api_id,title, url, limit_count, accepted, address ,place, start_at, end_at, id from m_event where end_at > now();`)
+func EventAllNew(db *sql.DB, updatedAt string) ([]EventJson, error) {
+	fmt.Println(updatedAt)
+
+	stmtIns, err := db.Prepare("select event_id, api_id,title, url, limit_count, accepted, address ,place, start_at, end_at, id from m_event where end_at > now() AND updated_at > ?")
 	if err != nil {
+		fmt.Fprint(os.Stderr, err)
+		return nil, err
+	}
+	rows, err := stmtIns.Query(updatedAt);
+	if err != nil {
+		fmt.Fprint(os.Stderr, err)
 		return nil, err
 	}
 	return ScanEventsJson(rows)

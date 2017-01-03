@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -121,7 +122,11 @@ func communication() <-chan []model.Event {
 }
 
 func (i *Inserter) GetEvent(c echo.Context) error {
-	event, err := model.EventAllNew(i.DB)
+
+	// 2017-01-01 22:22:22という本来のDateTimeの書式だと、空白以降が消えるので、
+	// その対策のために、2017-01-01+22:22:22というリクエストの受取用処理
+	updatedAt := strings.Replace(c.QueryParam("updated_at"), "+", " ", 1)
+	event, err := model.EventAllNew(i.DB, updatedAt)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}
