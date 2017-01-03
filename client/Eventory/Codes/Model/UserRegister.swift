@@ -31,6 +31,25 @@ class UserRegister {
         }
     }
     
+    func getUserEventInfoUpdateTime() -> String {
+        
+        guard let updatedAt = self.ud.objectForKey(userEventInfoUpdatedAt) as? String else {
+            return ""
+        }
+        return updatedAt
+    }
+    
+    func setUserEventInfoUpdateTime() -> Void {
+        
+        let now = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd+HH:mm:ss"
+        let updatedAt = formatter.stringFromDate(now)
+        
+        NSUserDefaults.standardUserDefaults().setObject(updatedAt, forKey: userEventInfoUpdatedAt);
+        NSUserDefaults.standardUserDefaults().synchronize();
+    }
+    
     func getUserSettingGenres() -> [String] {
        
         guard let userSettingGenres = self.ud.objectForKey(SettingClass.Genre.getUserSettingKey()) as? [String] else {
