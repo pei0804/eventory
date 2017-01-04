@@ -86,13 +86,14 @@ class EventInfoTableViewCell: UITableViewCell {
         
         if eventSummary.apiId == ApiId.Atdn.rawValue {
             apiNameLbl.text = apiFromMessage + ApiId.Atdn.getName()
+            eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
         } else if eventSummary.apiId == ApiId.Connpass.rawValue {
             apiNameLbl.text = apiFromMessage + ApiId.Connpass.getName()
+            eventStatusLbl.text = "定員\(eventSummary.limit)人"
         } else if eventSummary.apiId == ApiId.Doorkeeper.rawValue {
+            eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
             apiNameLbl.text = apiFromMessage + ApiId.Doorkeeper.getName()
         }
-        
-        eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
         
         self.indexPath = indexPath
         
