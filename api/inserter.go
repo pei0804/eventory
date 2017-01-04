@@ -121,7 +121,9 @@ func communication() <-chan []model.Event {
 }
 
 func (i *Inserter) GetEvent(c echo.Context) error {
-	event, err := model.EventAllNew(i.DB)
+
+	updatedAt := c.QueryParam("updated_at")
+	event, err := model.EventAllNew(i.DB, updatedAt)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}

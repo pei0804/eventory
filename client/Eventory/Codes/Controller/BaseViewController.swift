@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    var refreshControlY: CGFloat = 5.0
+    var refreshControlY: CGFloat = 3.0
     
     func addRefreshControl() {
         

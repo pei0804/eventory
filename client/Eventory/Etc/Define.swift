@@ -44,6 +44,8 @@ enum ApiId: Int {
     }
 }
 
+// UserDefault
+
 enum SettingClass: Int {
     case Genre      = 0
     case Place      = 1
@@ -70,3 +72,5 @@ enum SettingClass: Int {
         }
     }
 }
+
+let userEventInfoUpdatedAt = "UserEventInfoUpdatedAt"

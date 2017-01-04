@@ -174,8 +174,10 @@ class EventManager {
     
     func fetchNewEvent() -> Task<Float, String, NSError?> {
         
+        let updatedAt = UserRegister.sharedInstance.getUserEventInfoUpdateTime()
+        
         return Task<Float, String, NSError?> { progress, fulfill, reject, configure in
-            Alamofire.request(.GET, "http://localhost:8080/api/smt/events").responseJSON { response in
+            Alamofire.request(.GET, "http://localhost:8080/api/smt/events", parameters: ["updated_at": updatedAt]).responseJSON { response in
                 //            Alamofire.request(.GET, "http://ganbaruman.xyz:8080/api/smt/events").responseJSON { response in
                 guard let json = response.result.value as? Array<Dictionary<String,AnyObject>> else {
                     reject(nil)
@@ -208,6 +210,7 @@ class EventManager {
                     } catch {}
                 }
                 fulfill("SUCCESS")
+                UserRegister.sharedInstance.setUserEventInfoUpdateTime()
             }
         }
     }
