@@ -33,8 +33,8 @@ func Insert(db *sql.DB, Events []Event) error {
 			ev.Accepted,
 			ev.Address,
 			ev.Place,
-			formater.DateTimeFormatter(ev.StratAt),
-			formater.DateTimeFormatter(ev.EndAt),
+			formater.DateTime(ev.StratAt),
+			formater.DateTime(ev.EndAt),
 			ev.DataHash,
 		); err != nil {
 			// insertに失敗したらアップデートをかける
@@ -48,8 +48,8 @@ func Insert(db *sql.DB, Events []Event) error {
 				ev.Accepted,
 				ev.Address,
 				ev.Place,
-				formater.DateTimeFormatter(ev.StratAt),
-				formater.DateTimeFormatter(ev.EndAt),
+				formater.DateTime(ev.StratAt),
+				formater.DateTime(ev.EndAt),
 				ev.DataHash,
 				fmt.Sprintf("%d-%d", ev.ApiId, ev.EventId),
 				ev.DataHash,
