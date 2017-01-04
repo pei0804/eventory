@@ -19,7 +19,7 @@ func Insert(db *sql.DB, Events []Event) error {
 
 	var dataHashAgo string
 	for _, ev := range Events {
-		dataHashAgo = formater.ConcatenateString(ev.Title, ev.Desc, ev.Url, ev.Address, ev.Place, ev.StratAt, ev.EndAt)
+		dataHashAgo = formater.ConcatenateString(ev.Title, ev.Desc, ev.Url, ev.Address, string(ev.Limit), string(ev.Accepted), ev.Place, ev.StratAt, ev.EndAt)
 		dataHashed := sha256.Sum256([]byte(dataHashAgo))
 		ev.DataHash = hex.EncodeToString(dataHashed[:])
 		if _, err = stmtIns.Exec(
