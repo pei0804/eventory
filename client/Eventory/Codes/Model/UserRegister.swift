@@ -43,7 +43,7 @@ class UserRegister {
         
         let now = NSDate()
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd+HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let updatedAt = formatter.stringFromDate(now)
         
         NSUserDefaults.standardUserDefaults().setObject(updatedAt, forKey: userEventInfoUpdatedAt);
