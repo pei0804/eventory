@@ -5,16 +5,16 @@ import (
 	"time"
 )
 
-func TestDateTimeFormatter(t *testing.T) {
+func TestDateTime(t *testing.T) {
 	var wantResult, result string
 	wantResult = "2016-12-31 11:00:00"
 
-	result = DateTimeFormatter("2016-12-31T11:00:00.000+09:00")
+	result = DateTime("2016-12-31T11:00:00.000+09:00")
 	if result != wantResult {
 		t.Fatalf("求められているフォーマットと違います　%s", result)
 	}
 
-	result = DateTimeFormatter("2016-12-31T11:00:00+09:00")
+	result = DateTime("2016-12-31T11:00:00+09:00")
 	if result != wantResult {
 		t.Fatalf("求められているフォーマットと違います　%s", result)
 	}

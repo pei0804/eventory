@@ -22,7 +22,7 @@ func ConcatenateString(strs ...string) string {
 	return concatenateStr.String()
 }
 
-func DateTimeFormatter(timeStr string) string {
+func DateTime(timeStr string) string {
 	parsedTime, _ := dtf.Parse(timeStr)
 	return parsedTime.Format("2006-01-02 15:04:05")
 }

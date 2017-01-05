@@ -1,8 +1,16 @@
-.DS_Store
-.idea/
+# go
 vendor/*
+log/*
+
+# ios
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcworkspace/contents.xcworkspacedata
 Pods/
 *.playground
+UserInterfaceState.xcuserstate
+GoogleService-Info.plist
+
+# Etc
+.DS_Store
+.idea/
