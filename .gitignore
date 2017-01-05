@@ -6,3 +6,5 @@ vendor/*
 !*.xcworkspace/contents.xcworkspacedata
 Pods/
 *.playground
+
+GoogleService-Info.plist
