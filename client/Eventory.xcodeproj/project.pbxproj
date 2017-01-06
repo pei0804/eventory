@@ -12,7 +12,6 @@
 		6C1DAFFA1D8FB7C800044A41 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DAFF91D8FB7C800044A41 /* Color.swift */; };
 		6C1DB0081D8FC1F300044A41 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */; };
 		6C2BCA461D6A8A19005D16DA /* NoKeepEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */; };
-		6C2BCA481D6A926E005D16DA /* MaterialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2BCA471D6A926E005D16DA /* MaterialButton.swift */; };
 		6C3026D31D698E7C00D73A90 /* ViewFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */; };
 		6C3026D51D69A13400D73A90 /* KeepEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3026D41D69A13400D73A90 /* KeepEventViewController.swift */; };
 		6C4E1F151D7D36A600A2BE13 /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C4E1F141D7D36A600A2BE13 /* Register.storyboard */; };
@@ -49,7 +48,6 @@
 		6C1DAFF91D8FB7C800044A41 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoKeepEventViewController.swift; sourceTree = "<group>"; };
-		6C2BCA471D6A926E005D16DA /* MaterialButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialButton.swift; sourceTree = "<group>"; };
 		6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormatter.swift; sourceTree = "<group>"; };
 		6C3026D41D69A13400D73A90 /* KeepEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeepEventViewController.swift; sourceTree = "<group>"; };
 		6C4E1F141D7D36A600A2BE13 /* Register.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 			children = (
 				6CA95B2C1D67303400983152 /* EventInfoTableViewCell.swift */,
 				6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */,
-				6C2BCA471D6A926E005D16DA /* MaterialButton.swift */,
 				6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */,
 				6C88DF461E165BA000203C85 /* KeepButton.swift */,
 				6C064EE71E1742B700658318 /* NoKeepButton.swift */,
@@ -385,7 +382,6 @@
 				6CA95B2F1D67306C00983152 /* EventInfoViewController.swift in Sources */,
 				6CA95B2D1D67303400983152 /* EventInfoTableViewCell.swift in Sources */,
 				6C6A26FF1D8E571D00F479CA /* AllEventSerachViewController.swift in Sources */,
-				6C2BCA481D6A926E005D16DA /* MaterialButton.swift in Sources */,
 				6C1DAFFA1D8FB7C800044A41 /* Color.swift in Sources */,
 				6CA95B0D1D6729BF00983152 /* AppDelegate.swift in Sources */,
 				6CA95B201D672B9700983152 /* Event.swift in Sources */,
@@ -466,6 +462,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -504,6 +501,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.3;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -523,6 +521,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -540,6 +539,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
