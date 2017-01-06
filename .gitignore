@@ -1,6 +1,6 @@
 # go
 vendor/*
-log/*
+app/log/*
 
 # ios
 *.xcodeproj/*
@@ -14,3 +14,4 @@ GoogleService-Info.plist
 # Etc
 .DS_Store
 .idea/
+eventory.iml

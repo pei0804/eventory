@@ -3,15 +3,16 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/tikasan/eventory/api"
 	"github.com/tikasan/eventory/db"
-
-	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -24,7 +25,19 @@ func New() *Server {
 	return &Server{}
 }
 
-func (s *Server) Init(dbconf, env string) {
+func init() {
+	var (
+		dbconf = flag.String("dbconf", "dbconfig.yml", "database configuration file.")
+		env    = flag.String("env", "development", "application envirionment (production, development etc.)")
+	)
+
+	flag.Parse()
+	s := New()
+	s.Setup(*dbconf, *env)
+	s.Run()
+}
+
+func (s *Server) Setup(dbconf, env string) {
 
 	cs, err := db.NewConfigsFromFile(dbconf)
 	if err != nil {
@@ -35,6 +48,8 @@ func (s *Server) Init(dbconf, env string) {
 		log.Fatalf("db initialization failed: %s", err)
 	}
 
+	fmt.Println(env)
+
 	g, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +58,7 @@ func (s *Server) Init(dbconf, env string) {
 	logDir := filepath.Join(g, "log")
 	_, err = os.Stat(logDir)
 	if err != nil {
-		err := os.Mkdir(logDir, 0750)
+		err := os.Mkdir(logDir, 0775)
 		if err != nil {
 			log.Fatalf("log folder initialization failed: %s", err)
 		}
@@ -58,10 +73,9 @@ func (s *Server) Init(dbconf, env string) {
 			log.Fatal("log check.log initialization failed: %s", err)
 		}
 	}
-	return
 }
 
-func (s *Server) Run(port string) {
+func (s *Server) Run() {
 
 	api := &api.Inserter{DB: s.db}
 
@@ -74,20 +88,6 @@ func (s *Server) Run(port string) {
 	e.GET("/api/smt/events", api.GetEvent)
 	e.GET("/api/events/admin", api.EventFetch)
 
-	if err := e.Start(port); err != nil {
-		e.Logger.Fatal(err.Error())
-	}
-}
-
-func main() {
-	var (
-		port   = flag.String("port", ":8080", "port to bind")
-		dbconf = flag.String("dbconf", "dbconfig.yml", "database configuration file.")
-		env    = flag.String("env", "development", "application envirionment (production, development etc.)")
-	)
-
-	flag.Parse()
-	s := New()
-	s.Init(*dbconf, *env)
-	s.Run(*port)
+	e.Pre(middleware.RemoveTrailingSlash())
+	http.Handle("/", e)
 }
