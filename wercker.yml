@@ -5,8 +5,8 @@ build:
 
     - script:
         name: setup
-        code: make setup
+        code: server/make setup
 
     - script:
         name: test
-        code: make test
+        code: server/make test
