@@ -8,9 +8,5 @@ build:
         code: make setup
 
     - script:
-        name: build
-        code: make build
-
-    - script:
         name: test
         code: make test
