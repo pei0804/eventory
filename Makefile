@@ -10,9 +10,6 @@ setup:
 test:
 	go test -v $(shell glide novendor)
 
-build:
-	GO15VENDOREXPERIMENT=1 go build -o cmd/eventory/main cmd/eventory/main.go
-
 migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
 

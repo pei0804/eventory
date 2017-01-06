@@ -79,7 +79,7 @@ func EventAllNew(db *sql.DB, updatedAt string) ([]EventJson, error) {
 		fmt.Fprint(os.Stderr, err)
 		return nil, err
 	}
-	rows, err := stmtIns.Query(updatedAt);
+	rows, err := stmtIns.Query(updatedAt)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return nil, err

@@ -1,9 +1,8 @@
-package main
+package server
 
 import (
 	"database/sql"
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -25,18 +24,6 @@ func New() *Server {
 	return &Server{}
 }
 
-func init() {
-	var (
-		dbconf = flag.String("dbconf", "dbconfig.yml", "database configuration file.")
-		env    = flag.String("env", "development", "application envirionment (production, development etc.)")
-	)
-
-	flag.Parse()
-	s := New()
-	s.Setup(*dbconf, *env)
-	s.Run()
-}
-
 func (s *Server) Setup(dbconf, env string) {
 
 	cs, err := db.NewConfigsFromFile(dbconf)
@@ -47,8 +34,6 @@ func (s *Server) Setup(dbconf, env string) {
 	if err != nil {
 		log.Fatalf("db initialization failed: %s", err)
 	}
-
-	fmt.Println(env)
 
 	g, err := os.Getwd()
 	if err != nil {
@@ -90,4 +75,16 @@ func (s *Server) Run() {
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	http.Handle("/", e)
+}
+
+func init() {
+	var (
+		dbconf = flag.String("dbconf", "dbconfig.yml", "database configuration file.")
+		env    = flag.String("env", "development", "application envirionment (production, development etc.)")
+	)
+
+	flag.Parse()
+	s := New()
+	s.Setup(*dbconf, *env)
+	s.Run()
 }
