@@ -5,12 +5,8 @@ build:
 
     - script:
         name: setup
-        code: cd ./server
-
-    - script:
-        name: setup
         code: make setup
 
     - script:
         name: test
-        code: server/make test
+        code: make test
