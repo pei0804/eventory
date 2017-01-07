@@ -174,8 +174,16 @@ class EventManager {
     
     func fetchNewEvent() -> Task<Float, String, NSError?> {
         
-        let updatedAt = UserRegister.sharedInstance.getUserEventInfoUpdateTime()
-        
+        var updatedAt = UserRegister.sharedInstance.getUserEventInfoUpdateTime()
+        let result = self.realm.objects(Event)
+
+        // 初回ダウンロードは更新時間は関係なしに取ってくるが、
+        // サーバーとの通信エラーが発生するとそのまま更新時間がセットされてしまうので、
+        // それの対策のために便宜的にupdatedAtを空にしている。
+        if(result.count == 0) {
+            updatedAt = ""
+        }
+
         return Task<Float, String, NSError?> { progress, fulfill, reject, configure in
             Alamofire.request(.GET, "https://eventory-8a068.appspot.com/api/smt/events", parameters: ["updated_at": updatedAt]).responseJSON { response in
                 //            Alamofire.request(.GET, "http://ganbaruman.xyz:8080/api/smt/events").responseJSON { response in

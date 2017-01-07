@@ -95,7 +95,7 @@ class RegisterPlaceViewController: UIViewController {
         } else {
             dispatch_async(dispatch_get_main_queue()) {
                 
-                SVProgressHUD.showWithStatus("サーバーと通信中")
+                SVProgressHUD.showWithStatus(ServerConnectionMessage)
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
                 
                 Task.all(task).success { _ in

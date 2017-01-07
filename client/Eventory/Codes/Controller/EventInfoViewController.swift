@@ -48,7 +48,7 @@ class EventInfoViewController: BaseViewController {
         dispatch_once(&onceTokenViewWillAppear) {
             dispatch_async(dispatch_get_main_queue()) {
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
-                SVProgressHUD.showWithStatus("サーバーと通信中")
+                SVProgressHUD.showWithStatus(ServerConnectionMessage)
                 
                 Task.all(task).success { _ in
                     self.tableView.reloadData()

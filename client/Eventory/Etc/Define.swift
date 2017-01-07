@@ -23,6 +23,7 @@ let SettingViewControllerIdentifier: String         = "SettingViewController"
 let NetworkErrorTitle: String   = "サーバー接続に失敗しました"
 let NetworkErrorMessage: String = "端末がインターネットが使えない。またはサーバーに問題がありました。"
 let NetworkErrorButton: String  = "確認"
+let ServerConnectionMessage: String = "サーバーと通信中"
 
 // Cell
 let EventInfoCellHeight = CGFloat(250)

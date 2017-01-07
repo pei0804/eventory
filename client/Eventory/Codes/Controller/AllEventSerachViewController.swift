@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 import SwiftTask
+import SVProgressHUD
 
 class AllEventSerachViewController: BaseViewController {
     
@@ -55,11 +56,14 @@ class AllEventSerachViewController: BaseViewController {
         dispatch_async(dispatch_get_main_queue()) {
             
             let task = [EventManager.sharedInstance.fetchNewEvent()]
-            
+            SVProgressHUD.showWithStatus(ServerConnectionMessage)
+
             Task.all(task).success { _ in
                 self.eventSummaries = EventManager.sharedInstance.getNewEventAll("")
+                SVProgressHUD.dismiss()
                 completed?()
                 }.failure { _ in
+                    SVProgressHUD.dismiss()
                     let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
                     let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                     alert.addAction(cancelAction)
