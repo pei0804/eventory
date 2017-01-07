@@ -23,37 +23,41 @@ type Inserter struct {
 
 func (i *Inserter) EventFetch(c echo.Context) error {
 
-	g, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
+	if c.FormValue("token") != "" {
+		return c.JSON(http.StatusUnauthorized, "[err][auth check]")
 	}
 
-	checkLogPath := filepath.Join(g, "log", "check.log")
-	_, err = os.Stat(checkLogPath)
-	if err != nil {
-		fmt.Fprint(os.Stderr, err)
-		return c.JSON(http.StatusInternalServerError, "[err][log/check.log not found]")
-	}
+	//g, err := os.Getwd()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//checkLogPath := filepath.Join(g, "log", "check.log")
+	//_, err = os.Stat(checkLogPath)
+	//if err != nil {
+	//	fmt.Fprint(os.Stderr, err)
+	//	return c.JSON(http.StatusInternalServerError, "[err][log/check.log not found]")
+	//}
+	//
+	//checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0777)
+	//if err != nil {
+	//	return c.JSON(http.StatusInternalServerError, "[err][log/check.log cant open]")
+	//}
+	//defer checkLog.Close()
 
-	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
+	_, err := http.Head(define.ATDN_URL)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "[err][log/check.log cant open]")
-	}
-	defer checkLog.Close()
-
-	_, err = http.Head(define.ATDN_URL)
-	if err != nil {
-		writeLog(checkLog, "[err][atdn cant access]")
+		//writeLog(checkLog, "[err][atdn cant access]")
 		return c.JSON(http.StatusBadRequest, "[err][atdn cant access]")
 	}
 	_, err = http.Head(define.CONNPASS_URL)
 	if err != nil {
-		writeLog(checkLog, "[err][connpass cant access]")
+		//writeLog(checkLog, "[err][connpass cant access]")
 		return c.JSON(http.StatusBadRequest, "[err][connpass cant access]")
 	}
 	_, err = http.Head(define.DOORKEEPER_URL)
 	if err != nil {
-		writeLog(checkLog, "[err][doorkeeper cant access]")
+		//writeLog(checkLog, "[err][doorkeeper cant access]")
 		return c.JSON(http.StatusBadRequest, "[err][doorkeeper cant access]")
 	}
 
@@ -66,13 +70,13 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		}
 		err := model.Insert(i.DB, receive)
 		if err != nil {
-			writeLog(checkLog, "[err][database insert]")
+			//writeLog(checkLog, "[err][database insert]")
 			return c.JSON(http.StatusInternalServerError, "[err][database insert]")
 		}
 
 	}
 
-	writeLog(checkLog, "[success][fetch event]")
+	//writeLog(checkLog, "[success][fetch event]")
 	return c.JSON(http.StatusOK, "OK")
 }
 
@@ -93,7 +97,7 @@ func communication() <-chan []model.Event {
 
 		doorKeeper[i].Url = fmt.Sprintf("%s?page=%d", define.DOORKEEPER_URL, i)
 		doorKeeper[i].Api = define.DOORKEEPER
-		doorKeeper[i].Token = ""
+		doorKeeper[i].Token = "Bearer 6PXmtU_UK3qYF6jARTky"
 	}
 
 	allRequest = append(allRequest, atdn...)

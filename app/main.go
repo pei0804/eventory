@@ -71,7 +71,7 @@ func (s *Server) Run() {
 	e.Use(middleware.CORS())
 
 	e.GET("/api/smt/events", api.GetEvent)
-	e.GET("/api/events/admin", api.EventFetch)
+	e.POST("/api/events/admin", api.EventFetch)
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	http.Handle("/", e)
