@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"sync"
 	"time"
 
@@ -23,7 +22,7 @@ type Inserter struct {
 
 func (i *Inserter) EventFetch(c echo.Context) error {
 
-	if c.FormValue("token") != "" {
+	if c.FormValue("token") != "rzo23y_fgRK1hnDDvMAH" {
 		return c.JSON(http.StatusUnauthorized, "[err][auth check]")
 	}
 
@@ -45,23 +44,23 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	//}
 	//defer checkLog.Close()
 
-	_, err := http.Head(define.ATDN_URL)
-	if err != nil {
-		//writeLog(checkLog, "[err][atdn cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][atdn cant access]")
-	}
-	_, err = http.Head(define.CONNPASS_URL)
-	if err != nil {
-		//writeLog(checkLog, "[err][connpass cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][connpass cant access]")
-	}
-	_, err = http.Head(define.DOORKEEPER_URL)
-	if err != nil {
-		//writeLog(checkLog, "[err][doorkeeper cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][doorkeeper cant access]")
-	}
+	//_, err := http.Head(define.ATDN_URL)
+	//if err != nil {
+	//	//writeLog(checkLog, "[err][atdn cant access]")
+	//	return c.JSON(http.StatusBadRequest, "[err][atdn cant access]")
+	//}
+	//_, err = http.Head(define.CONNPASS_URL)
+	//if err != nil {
+	//	//writeLog(checkLog, "[err][connpass cant access]")
+	//	return c.JSON(http.StatusBadRequest, "[err][connpass cant access]")
+	//}
+	//_, err = http.Head(define.DOORKEEPER_URL)
+	//if err != nil {
+	//	//writeLog(checkLog, "[err][doorkeeper cant access]")
+	//	return c.JSON(http.StatusBadRequest, "[err][doorkeeper cant access]")
+	//}
 
-	receiver := communication()
+	receiver := communication(c)
 
 	for {
 		receive, ok := <-receiver
@@ -80,7 +79,7 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	return c.JSON(http.StatusOK, "OK")
 }
 
-func communication() <-chan []model.Event {
+func communication(c echo.Context) <-chan []model.Event {
 	now := time.Now()
 	atdn := make([]Request, define.SERACH_SCOPE)
 	connpass := make([]Request, define.SERACH_SCOPE)
@@ -97,7 +96,7 @@ func communication() <-chan []model.Event {
 
 		doorKeeper[i].Url = fmt.Sprintf("%s?page=%d", define.DOORKEEPER_URL, i)
 		doorKeeper[i].Api = define.DOORKEEPER
-		doorKeeper[i].Token = "Bearer 6PXmtU_UK3qYF6jARTky"
+		doorKeeper[i].Token = ""
 	}
 
 	allRequest = append(allRequest, atdn...)
@@ -109,7 +108,7 @@ func communication() <-chan []model.Event {
 	for _, r := range allRequest {
 		wg.Add(1)
 		go func(r Request) {
-			cli := NewRequest(r.Url, r.Api, r.Token)
+			cli := NewRequest(r.Url, r.Api, r.Token, c)
 			events, err := cli.convertingToJson()
 			if err != nil {
 				fmt.Fprint(os.Stderr, err)

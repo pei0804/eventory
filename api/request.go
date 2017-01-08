@@ -8,16 +8,21 @@ import (
 	"net/http"
 	"os"
 
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/urlfetch"
+
+	"github.com/labstack/echo"
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/formater"
 	"github.com/tikasan/eventory/model"
 )
 
-func NewRequest(rawurl string, rawapi int, token string) *Request {
+func NewRequest(rawurl string, rawapi int, token string, c echo.Context) *Request {
 	return &Request{
-		Url:   rawurl,
-		Api:   rawapi,
-		Token: token,
+		Url:     rawurl,
+		Api:     rawapi,
+		Token:   token,
+		Context: c,
 	}
 }
 
@@ -28,9 +33,11 @@ type Request struct {
 	Token    string
 	RespByte []byte
 	err      error
+	Context  echo.Context
 }
 
 func (r *Request) sendQuery() {
+	ctx := appengine.NewContext(r.Context.Request())
 	req, err := http.NewRequest("GET", r.Url, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
@@ -41,7 +48,7 @@ func (r *Request) sendQuery() {
 		req.Header.Set("Authorization", r.Token)
 	}
 
-	client := new(http.Client)
+	client := urlfetch.Client(ctx)
 	resp, err := client.Do(req)
 	if resp == nil {
 		fmt.Fprint(os.Stderr, errors.New("Not Found URL check Request Url"))
