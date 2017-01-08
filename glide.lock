@@ -1,10 +1,14 @@
-hash: 5b7dd74f2cd98b308f74a927e1e8002337f5fd51cc82419fa377d9057efceaf7
-updated: 2017-01-07T13:45:13.449768657+09:00
+hash: 91bf2c2e62cd10094a94780284c25180bd7dc23d560246fe8d17947251498d1d
+updated: 2017-01-08T08:29:36.694353041+09:00
 imports:
 - name: github.com/dgrijalva/jwt-go
   version: 9ed569b5d1ac936e6494082958d63a6aa4fff99a
 - name: github.com/go-sql-driver/mysql
   version: a197e5d40516f2e9f74dcee085a5f2d4604e94df
+- name: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+  subpackages:
+  - proto
 - name: github.com/labstack/echo
   version: 8d504c1b699c757b267255c53b3e5219f9974abc
   subpackages:
@@ -40,6 +44,18 @@ imports:
   version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
   subpackages:
   - unix
+- name: google.golang.org/appengine
+  version: 8758a385849434ba5eac8aeedcf5192c5a0f5f10
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
 - name: gopkg.in/yaml.v1
   version: 9f9df34309c04878acc86042b16630b0f696e1de
 testImports: []
