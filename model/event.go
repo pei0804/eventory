@@ -11,18 +11,13 @@ import (
 )
 
 func Insert(db *sql.DB, Events []Event) error {
-	stmtIns, err := db.Prepare("INSERT INTO m_event (event_id, api_id, title, description, url, limit_count, waitlisted, accepted, address, place, start_at, end_at, data_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-	if err != nil {
-		fmt.Fprint(os.Stderr, err)
-		return err
-	}
 
-	var dataHashAgo string
+	insert := `INSERT INTO m_event (event_id, api_id, title, description, url, limit_count, waitlisted, accepted, address, place, start_at, end_at, data_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 	for _, ev := range Events {
-		dataHashAgo = formater.ConcatenateString(ev.Title, ev.Desc, ev.Url, ev.Address, string(ev.Limit), string(ev.Accepted), ev.Place, ev.StratAt, ev.EndAt)
+		dataHashAgo := formater.ConcatenateString(ev.Title, ev.Desc, ev.Url, ev.Address, string(ev.Limit), string(ev.Accepted), ev.Place, ev.StratAt, ev.EndAt)
 		dataHashed := sha256.Sum256([]byte(dataHashAgo))
 		ev.DataHash = hex.EncodeToString(dataHashed[:])
-		if _, err = stmtIns.Exec(
+		if _, err := db.Exec(insert,
 			fmt.Sprintf("%d-%d", ev.ApiId, ev.EventId),
 			ev.ApiId,
 			ev.Title,
@@ -38,7 +33,7 @@ func Insert(db *sql.DB, Events []Event) error {
 			ev.DataHash,
 		); err != nil {
 			// insertに失敗したらアップデートをかける
-			query := "UPDATE m_event SET title = ?, description = ?, url = ?, limit_count = ?, waitlisted = ?, accepted = ?, address = ?, place = ?, start_at = ?, end_at = ?, data_hash = ? WHERE event_id = ? AND data_hash <> ?"
+			query := `UPDATE m_event SET title = ?, description = ?, url = ?, limit_count = ?, waitlisted = ?, accepted = ?, address = ?, place = ?, start_at = ?, end_at = ?, data_hash = ? WHERE event_id = ? AND data_hash <> ?`
 			if _, err := db.Exec(query,
 				ev.Title,
 				ev.Desc,
