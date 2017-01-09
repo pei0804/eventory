@@ -7,9 +7,6 @@ import (
 	"sync"
 	"time"
 
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/urlfetch"
-
 	"database/sql"
 
 	"github.com/labstack/echo"
@@ -24,9 +21,7 @@ type Inserter struct {
 
 func (i *Inserter) EventFetch(c echo.Context) error {
 
-	if c.FormValue("token") != "rzo23y_fgRK1hnDDvMAH" {
-		return c.JSON(http.StatusUnauthorized, "[err][auth check]")
-	}
+	if c.Request().Header.Get("X-Appengine-Cron")[0] == 0 { return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]")) }
 
 	receiver := communication(c)
 
@@ -42,22 +37,22 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 
 	}
 
-	// TODO 本来は下のメソッドを先に実行すべき。+　全てチェックするべき、リリース後対応する。
-	ctx := appengine.NewContext(c.Request())
-	client := urlfetch.Client(ctx)
-
-	_, err := client.Head(define.ATDN_URL)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][atdn cant access]", err))
-	}
-	_, err = client.Head(define.CONNPASS_URL)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][connpass cant access] %s", err))
-	}
-	_, err = client.Head(define.DOORKEEPER_URL)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][doorkeeper cant access] %s", err))
-	}
+	//// TODO 本来は下のメソッドを先に実行すべき。+　全てチェックするべき、リリース後対応する。
+	//ctx := appengine.NewContext(c.Request())
+	//client := urlfetch.Client(ctx)
+	//
+	//_, err := client.Head(define.ATDN_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][atdn cant access]", err))
+	//}
+	//_, err = client.Head(define.CONNPASS_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][connpass cant access] %s", err))
+	//}
+	//_, err = client.Head(define.DOORKEEPER_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][doorkeeper cant access] %s", err))
+	//}
 
 	return c.JSON(http.StatusOK, "OK")
 }
