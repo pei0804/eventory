@@ -14,6 +14,8 @@ class CheckListTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         self.tintColor = Colors.main
+        separatorInset = UIEdgeInsetsZero
+        layoutMargins = UIEdgeInsetsZero
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
