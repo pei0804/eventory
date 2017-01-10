@@ -41,8 +41,8 @@ class RegisterGenreViewController: UIViewController {
         
         super.viewWillAppear(animated)
         if settingStatus {
-            leftBarButton = UIBarButtonItem(title: "設定", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
-            rightBarButton = UIBarButtonItem(title: "編集", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushEditModeBtn(_:)))
+            leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
+            rightBarButton = UIBarButtonItem(title: "適用", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
             genres = UserRegister.sharedInstance.getSettingGenres()
             checkCount = UserRegister.sharedInstance.getUserSettingGenres().count
         } else {
@@ -71,15 +71,6 @@ class RegisterGenreViewController: UIViewController {
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
-        
-       // あえて、ひとつも選ばない人もいる可能性があるので許容してみる
-//        if checkCount <= 0 {
-//            let alert: UIAlertController = UIAlertController(title: "最低１つ選んでください。", message: "１つも選択されていないと検索できません。", preferredStyle: .Alert)
-//            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-//            alert.addAction(cancelAction)
-//            self.presentViewController(alert, animated: true, completion: nil)
-//            return
-//        }
         
         UserRegister.sharedInstance.setUserSettingRegister(genres, settingClass: SettingClass.Genre)
         
@@ -136,6 +127,14 @@ extension RegisterGenreViewController: UITableViewDelegate {
             cell.checkAction(&genres, indexPath: indexPath, checkCount: &checkCount)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+
+    func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "削除"
     }
 }
 
