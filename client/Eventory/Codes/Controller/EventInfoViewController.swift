@@ -50,6 +50,9 @@ class EventInfoViewController: BaseViewController {
 
                 Task.all(task).success { _ in
                     self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
+                    if let newEventCount = self.eventSummaries?.count {
+                        UIApplication.sharedApplication().applicationIconBadgeNumber = newEventCount
+                    }
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
                     }.failure { _ in

@@ -33,6 +33,7 @@
 		6CA95B331D6749EC00983152 /* EventSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA95B321D6749EC00983152 /* EventSummary.swift */; };
 		6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */; };
 		6CC5C15F1D90BB9B00683EBB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC5C15E1D90BB9B00683EBB /* Images.xcassets */; };
+		6CCD65AC1E2509000017826B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6CCD65AB1E2509000017826B /* GoogleService-Info.plist */; };
 		6CD322C71D7EAB1B004B0851 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C61D7EAB1B004B0851 /* Define.swift */; };
 		6CD322C91D7EAFCF004B0851 /* CheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */; };
 		6CD322CD1D83F056004B0851 /* UserRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD322CC1D83F056004B0851 /* UserRegister.swift */; };
@@ -72,6 +73,8 @@
 		6CA95B321D6749EC00983152 /* EventSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSummary.swift; sourceTree = "<group>"; };
 		6CC5C15C1D90B57D00683EBB /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		6CC5C15E1D90BB9B00683EBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6CCD65AB1E2509000017826B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6CCD65AD1E250A230017826B /* Eventory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Eventory.entitlements; sourceTree = "<group>"; };
 		6CD322C61D7EAB1B004B0851 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
 		6CD322CC1D83F056004B0851 /* UserRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegister.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		6CA95B001D6729BF00983152 = {
 			isa = PBXGroup;
 			children = (
+				6CCD65AB1E2509000017826B /* GoogleService-Info.plist */,
 				6CA95B0B1D6729BF00983152 /* Eventory */,
 				5885F7F918D04889CA56885E /* Frameworks */,
 				6CA95B0A1D6729BF00983152 /* Products */,
@@ -135,6 +139,7 @@
 		6CA95B0B1D6729BF00983152 /* Eventory */ = {
 			isa = PBXGroup;
 			children = (
+				6CCD65AD1E250A230017826B /* Eventory.entitlements */,
 				6CA95B271D672DA000983152 /* Codes */,
 				6CA95B251D672CEF00983152 /* Etc */,
 				6CA95B281D672DBC00983152 /* Resources */,
@@ -271,9 +276,12 @@
 				TargetAttributes = {
 					6CA95B081D6729BF00983152 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = QJD2JGJB24;
+						DevelopmentTeam = 3VM353B4CF;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -304,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CA95B2B1D672FDA00983152 /* EventInfoTableViewCell.xib in Resources */,
+				6CCD65AC1E2509000017826B /* GoogleService-Info.plist in Resources */,
 				6CA95B171D6729BF00983152 /* LaunchScreen.storyboard in Resources */,
 				6CC5C15D1D90B57D00683EBB /* AppIcon.xcassets in Resources */,
 				6CA95B121D6729BF00983152 /* Main.storyboard in Resources */,
@@ -512,11 +521,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eventory/Eventory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3VM353B4CF;
 				INFOPLIST_FILE = Eventory/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chikamory.Eventory;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.ganbaruman.Eventory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";
@@ -531,11 +542,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Eventory/Eventory.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3VM353B4CF;
 				INFOPLIST_FILE = Eventory/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chikamory.Eventory;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.ganbaruman.Eventory;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Eventory/Etc/Eventory-Bridging-Header.h";

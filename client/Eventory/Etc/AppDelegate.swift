@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftTask
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // TODO: パス確認用（削除必須）
         print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
+        PushNotificationManager.sharedInstance.registerRemote()
         
         // TODO ここらへんどうにかしたい
         if !UserRegister.sharedInstance.getSettingStatus() {
@@ -39,7 +41,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
     }
-    
+
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+
+        switch application.applicationState {
+        case .Inactive, .Background:
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            Task.all(task).success { _ in
+                let newEvent = EventManager.sharedInstance.getSelectNewEventAll()
+                if newEvent.count > 0 {
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = newEvent.count
+                }
+                }.failure { _ in
+            }
+        default:
+            break
+        }
+
+    }
+
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
         var tokenString = ""
