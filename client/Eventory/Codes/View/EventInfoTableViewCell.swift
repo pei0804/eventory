@@ -35,33 +35,33 @@ class EventInfoTableViewCell: UITableViewCell {
     let apiFromMessage = "情報提供元："
     
     private func keepEvent() {
-        titileLbl.textColor = Colors.main
-        keepButton.active()
-        noKeepButton.noActive()
+        self.titileLbl.textColor = Colors.main
+        self.keepButton.active()
+        self.noKeepButton.noActive()
     }
     
     private func noKeepEvent() {
-        titileLbl.textColor = Colors.noKeep
-        noKeepButton.active()
-        keepButton.noActive()
+        self.titileLbl.textColor = Colors.noKeep
+        self.noKeepButton.active()
+        self.keepButton.noActive()
     }
     
     private func noCheckEvent() {
-        titileLbl.textColor = Colors.noCheck
-        noKeepButton.noActive()
-        keepButton.noActive()
+        self.titileLbl.textColor = Colors.noCheck
+        self.noKeepButton.noActive()
+        self.keepButton.noActive()
     }
     
     @IBAction func keepButton(sender: AnyObject) {
         EventManager.sharedInstance.keepAction(id, isKeep: true)
-        eventSummary.checkStatus = CheckStatus.Keep.rawValue
-        keepEvent()
+        self.eventSummary.checkStatus = CheckStatus.Keep.rawValue
+        self.keepEvent()
     }
     
     @IBAction func noKeepButton(sender: AnyObject) {
         EventManager.sharedInstance.keepAction(id, isKeep: false)
-        eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
-        noKeepEvent()
+        self.eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
+        self.noKeepEvent()
     }
     
     func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
@@ -70,42 +70,42 @@ class EventInfoTableViewCell: UITableViewCell {
         
         // 開いている画面
         if CheckStatus.Keep.rawValue == viewPageClass.rawValue {
-            keepEvent()
+            self.keepEvent()
         } else if CheckStatus.NoKeep.rawValue == viewPageClass.rawValue {
-            noKeepEvent()
+            self.noKeepEvent()
         }
         
         // イベントの情報
         if self.eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
-            noCheckEvent()
+            self.noCheckEvent()
         } else if self.eventSummary.checkStatus == CheckStatus.Keep.rawValue {
-            keepEvent()
+            self.keepEvent()
         } else if self.eventSummary.checkStatus == CheckStatus.NoKeep.rawValue {
-            noKeepEvent()
+            self.noKeepEvent()
         }
         
         if eventSummary.apiId == ApiId.Atdn.rawValue {
-            apiNameLbl.text = apiFromMessage + ApiId.Atdn.getName()
-            eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
+            self.apiNameLbl.text = apiFromMessage + ApiId.Atdn.getName()
+            self.eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
         } else if eventSummary.apiId == ApiId.Connpass.rawValue {
-            apiNameLbl.text = apiFromMessage + ApiId.Connpass.getName()
-            eventStatusLbl.text = "定員\(eventSummary.limit)人"
+            self.apiNameLbl.text = apiFromMessage + ApiId.Connpass.getName()
+            self.eventStatusLbl.text = "定員\(eventSummary.limit)人"
         } else if eventSummary.apiId == ApiId.Doorkeeper.rawValue {
-            eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
-            apiNameLbl.text = apiFromMessage + ApiId.Doorkeeper.getName()
+            self.eventStatusLbl.text = "\(eventSummary.accepted) / 定員\(eventSummary.limit)人"
+            self.apiNameLbl.text = apiFromMessage + ApiId.Doorkeeper.getName()
         }
         
         self.indexPath = indexPath
         
-        titileLbl.text = eventSummary.title
-        titileLbl.numberOfLines = 0
-        titileLbl.lineBreakMode = .ByWordWrapping
+        self.titileLbl.text = eventSummary.title
+        self.titileLbl.numberOfLines = 0
+        self.titileLbl.lineBreakMode = .ByWordWrapping
         
-        addressLbl.text = eventSummary.address != "" ? eventSummary.address : "開催地未定"
-        eventSummary.eventDate = ViewFormaatter.sharedInstance.setEventDate(eventSummary)
-        dateLbl.text = eventSummary.eventDate
+        self.addressLbl.text = eventSummary.address != "" ? eventSummary.address : "開催地未定"
+        self.eventSummary.eventDate = ViewFormaatter.sharedInstance.setEventDate(eventSummary)
+        self.dateLbl.text = eventSummary.eventDate
         
-        id = eventSummary.id
+        self.id = eventSummary.id
     }
     
 }

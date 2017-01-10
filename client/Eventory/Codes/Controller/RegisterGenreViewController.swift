@@ -30,9 +30,9 @@ class RegisterGenreViewController: UIViewController {
         super.viewDidLoad()
         EventManager.sharedInstance.genreInitializer()
         
-        searchBar.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.searchBar.delegate = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.tableView.registerNib(UINib(nibName: CheckListTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: CheckListTableViewCellIdentifier)
     }

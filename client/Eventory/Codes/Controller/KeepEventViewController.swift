@@ -27,14 +27,14 @@ class KeepEventViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrollView = tableView
-        addRefreshControl()
+        self.scrollView = tableView
+        self.addRefreshControl()
         
-        tableView.emptyDataSetSource = self;
-        tableView.emptyDataSetDelegate = self;
+        self.tableView.emptyDataSetSource = self;
+        self.tableView.emptyDataSetDelegate = self;
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }

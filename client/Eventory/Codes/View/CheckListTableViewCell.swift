@@ -14,8 +14,8 @@ class CheckListTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         self.tintColor = Colors.main
-        separatorInset = UIEdgeInsetsZero
-        layoutMargins = UIEdgeInsetsZero
+        self.separatorInset = UIEdgeInsetsZero
+        self.layoutMargins = UIEdgeInsetsZero
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -27,9 +27,9 @@ class CheckListTableViewCell: UITableViewCell {
         
         self.textLabel?.text = userRegister["name"] as? String
         if userRegister["status"] as! Bool {
-            check()
+            self.check()
         } else {
-            checkRemove()
+            self.checkRemove()
         }
     }
     
@@ -38,11 +38,11 @@ class CheckListTableViewCell: UITableViewCell {
         if self.accessoryType == .None {
             userRegister![indexPath.row]["status"] = true
             checkCount += 1
-            check()
+            self.check()
         } else {
             userRegister![indexPath.row]["status"] = false
             checkCount -= 1
-            checkRemove()
+            self.checkRemove()
         }
     }
     

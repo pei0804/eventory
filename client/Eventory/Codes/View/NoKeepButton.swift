@@ -12,26 +12,26 @@ class NoKeepButton: UIButton {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        setup()
+        self.setup()
     }
     
     private func setup() {
-        layer.cornerRadius = 4.0
+        self.layer.cornerRadius = 4.0
     }
     
     func active() {
-        layer.backgroundColor = Colors.noKeep.CGColor
-        layer.borderColor = UIColor.clearColor().CGColor;
-        layer.borderWidth = 0;
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        setImage(UIImage(named:"noKeepActive.png"), forState: .Normal)
+        self.layer.backgroundColor = Colors.noKeep.CGColor
+        self.layer.borderColor = UIColor.clearColor().CGColor;
+        self.layer.borderWidth = 0;
+        self.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.setImage(UIImage(named:"noKeepActive.png"), forState: .Normal)
     }
     
     func noActive() {
-        layer.backgroundColor = UIColor.clearColor().CGColor
-        layer.borderColor = Colors.noKeep.CGColor;
-        layer.borderWidth = 2;
-        setTitleColor(Colors.noKeep, forState: .Normal)
-        setImage(UIImage(named:"noKeepNoActive.png"), forState: .Normal)
+        self.layer.backgroundColor = UIColor.clearColor().CGColor
+        self.layer.borderColor = Colors.noKeep.CGColor;
+        self.layer.borderWidth = 2;
+        self.setTitleColor(Colors.noKeep, forState: .Normal)
+        self.setImage(UIImage(named:"noKeepNoActive.png"), forState: .Normal)
     }
 }

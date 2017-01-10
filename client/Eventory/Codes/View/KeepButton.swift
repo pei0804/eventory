@@ -12,27 +12,27 @@ class KeepButton: UIButton {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        setup()
+        self.setup()
     }
     
     private func setup() {
-        layer.cornerRadius = 4.0
+        self.layer.cornerRadius = 4.0
     }
     
     func active() {
-        layer.backgroundColor = Colors.main.CGColor
-        layer.borderColor = UIColor.clearColor().CGColor;
-        layer.borderWidth = 0;
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        setImage(UIImage(named:"keepActive.png"), forState: .Normal)
+        self.layer.backgroundColor = Colors.main.CGColor
+        self.layer.borderColor = UIColor.clearColor().CGColor;
+        self.layer.borderWidth = 0;
+        self.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.setImage(UIImage(named:"keepActive.png"), forState: .Normal)
         
     }
     
     func noActive() {
-        layer.backgroundColor = UIColor.clearColor().CGColor
-        layer.borderColor = Colors.main.CGColor;
-        layer.borderWidth = 2;
-        setTitleColor(Colors.main, forState: .Normal)
-        setImage(UIImage(named:"keepNoActive.png"), forState: .Normal)
+        self.layer.backgroundColor = UIColor.clearColor().CGColor
+        self.layer.borderColor = Colors.main.CGColor;
+        self.layer.borderWidth = 2;
+        self.setTitleColor(Colors.main, forState: .Normal)
+        self.setImage(UIImage(named:"keepNoActive.png"), forState: .Normal)
     }
 }
