@@ -11,34 +11,26 @@
 
 ## 今後の計画
 [issue]("https://github.com/tikasan/eventory/issues")に上げています。  
-[現状の設計の完成後の予定](https://github.com/tikasan/eventory/issues/52)
 
 ## 使用技術
 
+### フロント
+
 - Swift
+
+### バックエンド
+
 - golang
-- apache
-- MySQL
+
+### データベース
+
+- CloudSQL
 - Realm
-- Linux(Rasbery Pi2)
-- DDNS
+
+### インフラ
+
+- GAE(PaaS)
+- FireBase(mBaaS)
 
 **今後使用予定**
-
-- Nginx
-- https
-- ElasticSearch(?)
-
-## 実装済み機能
-
-- イベントデータ収集
-- APIサーバー
-- 並列処理
-- DBマイグレーション
-- ログ
-- Makefile
-- GolangTest
-
-**今後実装予定**
-
-- プッシュ通知
+- ElasticSearch
