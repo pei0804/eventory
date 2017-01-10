@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
-            EventManager.sharedInstance.eventInitializer()
         }
         return true
     }

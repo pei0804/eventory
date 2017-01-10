@@ -42,15 +42,14 @@ class EventInfoViewController: BaseViewController {
     var onceTokenViewWillAppear: dispatch_once_t = 0
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
-        
+
         dispatch_once(&onceTokenViewWillAppear) {
             dispatch_async(dispatch_get_main_queue()) {
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
                 SVProgressHUD.showWithStatus(ServerConnectionMessage)
-                
+
                 Task.all(task).success { _ in
+                    self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
                     }.failure { _ in
@@ -58,10 +57,12 @@ class EventInfoViewController: BaseViewController {
                         let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                         alert.addAction(cancelAction)
                         self.presentViewController(alert, animated: true, completion: nil)
+                        self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
                         SVProgressHUD.dismiss()
                 }
             }
         }
+
     }
 
     override func viewWillDisappear(animated:Bool) {
