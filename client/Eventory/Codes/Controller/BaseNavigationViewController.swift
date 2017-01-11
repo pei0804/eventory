@@ -11,6 +11,7 @@ import UIKit
 class BaseNavigationViewController: UINavigationController {
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.navigationBar.tintColor  = Colors.main
         self.navigationBar.translucent = false;
@@ -18,6 +19,7 @@ class BaseNavigationViewController: UINavigationController {
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
     }
 }

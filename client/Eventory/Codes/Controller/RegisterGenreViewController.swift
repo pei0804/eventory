@@ -14,7 +14,7 @@ class RegisterGenreViewController: UIViewController {
     var checkCount: Int = 0
     var genres = [Dictionary<String, AnyObject>]?() {
         didSet {
-            tableView.reloadData()
+            self.tableView.reloadData()
         }
     }
     // 設定画面からのアクセスの場合trueになる
@@ -40,42 +40,44 @@ class RegisterGenreViewController: UIViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        if settingStatus {
-            leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
-            rightBarButton = UIBarButtonItem(title: "適用", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
-            genres = UserRegister.sharedInstance.getSettingGenres()
-            checkCount = UserRegister.sharedInstance.getUserSettingGenres().count
+        if self.settingStatus {
+            self.leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
+            self.rightBarButton = UIBarButtonItem(title: "適用", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            self.genres = UserRegister.sharedInstance.getSettingGenres()
+            self.checkCount = UserRegister.sharedInstance.getUserSettingGenres().count
         } else {
-            rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
-            genres = EventManager.sharedInstance.genreInitializer()
+            self.rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            self.genres = EventManager.sharedInstance.genreInitializer()
         }
-        self.navigationItem.leftBarButtonItem = leftBarButton
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.leftBarButtonItem = self.leftBarButton
+        self.navigationItem.rightBarButtonItem = self.rightBarButton
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
     }
     
     @IBAction func pushEditModeBtn(sender: AnyObject) {
-        if tableView.editing == false {
-            tableView.editing = true
+        
+        if self.tableView.editing == false {
+            self.tableView.editing = true
         } else {
-            tableView.editing = false
+            self.tableView.editing = false
         }
     }
     
     @IBAction func goBack(sender: AnyObject) {
+        
         self.navigationController?.popToRootViewControllerAnimated(true)
         
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
         
-        UserRegister.sharedInstance.setUserSettingRegister(genres, settingClass: SettingClass.Genre)
-        
-        if settingStatus {
-            navigationController?.popToRootViewControllerAnimated(true)
+        UserRegister.sharedInstance.setUserSettingRegister(self.genres, settingClass: SettingClass.Genre)
+        if self.settingStatus {
+            self.navigationController?.popToRootViewControllerAnimated(true)
         } else {
             let vc = UIStoryboard(name:"Register", bundle: nil).instantiateViewControllerWithIdentifier(RegisterPlaceViewControllerIdentifier)
             self.navigationController?.pushViewController(vc, animated: true)
@@ -94,7 +96,7 @@ extension RegisterGenreViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let genres = genres {
+        if let genres = self.genres {
             return genres.count
         }
         return 0
@@ -102,8 +104,8 @@ extension RegisterGenreViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
-            if let genres = genres {
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
+            if let genres = self.genres {
                 cell.bind(genres[indexPath.row])
                 return cell
             }
@@ -112,8 +114,9 @@ extension RegisterGenreViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            UserRegister.sharedInstance.deleteSetting(&genres, index: indexPath.row)
+            UserRegister.sharedInstance.deleteSetting(&self.genres, index: indexPath.row)
         }
     }
 }
@@ -123,8 +126,8 @@ extension RegisterGenreViewController: UITableViewDataSource {
 extension RegisterGenreViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
-            cell.checkAction(&genres, indexPath: indexPath, checkCount: &checkCount)
+        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
+            cell.checkAction(&self.genres, indexPath: indexPath, checkCount: &self.checkCount)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -143,17 +146,17 @@ extension RegisterGenreViewController: UITableViewDelegate {
 extension RegisterGenreViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        let text = searchBar.text ?? ""
+        let text = self.searchBar.text ?? ""
         if !text.isEmpty {
-            UserRegister.sharedInstance.insertNewSetting(&genres, newSetting: text)
-            searchBar.text = ""
-            searchBar.resignFirstResponder()
+            UserRegister.sharedInstance.insertNewSetting(&self.genres, newSetting: text)
+            self.searchBar.text = ""
+            self.searchBar.resignFirstResponder()
         }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
     }
 }

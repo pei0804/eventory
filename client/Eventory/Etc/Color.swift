@@ -12,7 +12,6 @@ struct Colors {
     
     // 現状は色にネーミングで意味を持たせない
     // いずれも番号がついていないものが一番濃い色にしている
-    
     static let main     = UIColorFromRGB(0xE67E22)
     static let main2    = UIColorFromRGB(0xFFE8D3)
     
@@ -26,6 +25,7 @@ struct Colors {
 
 
 func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+    
     return UIColor(
         red:    CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
         green:  CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,

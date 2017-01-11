@@ -11,15 +11,18 @@ import UIKit
 class NoKeepButton: UIButton {
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         self.setup()
     }
     
     private func setup() {
+        
         self.layer.cornerRadius = 4.0
     }
     
     func active() {
+        
         self.layer.backgroundColor = Colors.noKeep.CGColor
         self.layer.borderColor = UIColor.clearColor().CGColor;
         self.layer.borderWidth = 0;
@@ -28,6 +31,7 @@ class NoKeepButton: UIButton {
     }
     
     func noActive() {
+        
         self.layer.backgroundColor = UIColor.clearColor().CGColor
         self.layer.borderColor = Colors.noKeep.CGColor;
         self.layer.borderWidth = 2;

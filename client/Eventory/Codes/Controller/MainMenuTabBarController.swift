@@ -23,6 +23,7 @@ class MainMenuTabBarController: UITabBarController {
     let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.selectedIndex = 2
         self.tabBar.tintColor = Colors.main
@@ -32,7 +33,7 @@ class MainMenuTabBarController: UITabBarController {
             return
         }
         
-        if items.count != tabBarImages.count {
+        if items.count != self.tabBarImages.count {
             fatalError("assets tabbarmenu not match count")
         }
         
@@ -43,15 +44,17 @@ class MainMenuTabBarController: UITabBarController {
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+        
         self.updateBadge(EventManager.sharedInstance.getSelectNewEventAll().count)
     }
     
     func updateBadge(newEvent: Int) {
+        
         self.newEvent = newEvent
     }
 }

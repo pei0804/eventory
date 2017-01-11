@@ -27,6 +27,7 @@ class RegisterPlaceViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.searchBar.delegate = self
@@ -39,19 +40,18 @@ class RegisterPlaceViewController: UIViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        
-        if settingStatus {
-            leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
-            rightBarButton = UIBarButtonItem(title: "適用", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
-            places = UserRegister.sharedInstance.getSettingPlaces()
-            checkCount = UserRegister.sharedInstance.getUserSettingPlaces().count
+        if self.settingStatus {
+            self.leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
+            self.rightBarButton = UIBarButtonItem(title: "適用", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            self.places = UserRegister.sharedInstance.getSettingPlaces()
+            self.checkCount = UserRegister.sharedInstance.getUserSettingPlaces().count
         } else {
-            leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
-            rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
-            places = EventManager.sharedInstance.placesInitializer()
+            self.leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
+            self.rightBarButton = UIBarButtonItem(title: "次へ", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.pushSubmitBtn(_:)))
+            self.places = EventManager.sharedInstance.placesInitializer()
         }
-        self.navigationItem.leftBarButtonItem = leftBarButton
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.navigationItem.leftBarButtonItem = self.leftBarButton
+        self.navigationItem.rightBarButtonItem = self.rightBarButton
     }
     
     override func viewWillDisappear(animated:Bool) {
@@ -60,44 +60,42 @@ class RegisterPlaceViewController: UIViewController {
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
     }
     
     @IBAction func goBack(sender: AnyObject) {
+        
         self.navigationController?.popToRootViewControllerAnimated(true)
 
     }
     
     @IBAction func pushEditModeBtn(sender: AnyObject) {
-        if tableView.editing == false {
-            tableView.editing = true
+        
+        if self.tableView.editing == false {
+            self.tableView.editing = true
         } else {
-            tableView.editing = false
+            self.tableView.editing = false
         }
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
         
-        UserRegister.sharedInstance.setUserSettingRegister(places, settingClass: SettingClass.Place)
+        UserRegister.sharedInstance.setUserSettingRegister(self.places, settingClass: SettingClass.Place)
         UserRegister.sharedInstance.setDefaultSettingStatus(true)
-        
-        if settingStatus {
-            navigationController?.popToRootViewControllerAnimated(true)
+        if self.settingStatus {
+            self.navigationController?.popToRootViewControllerAnimated(true)
         } else {
             dispatch_async(dispatch_get_main_queue()) {
-                
                 SVProgressHUD.showWithStatus(ServerConnectionMessage)
                 let task = [EventManager.sharedInstance.fetchNewEvent()]
-                
                 Task.all(task).success { _ in
                     SVProgressHUD.dismiss()
                     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let vc: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("MainMenu") as! UITabBarController
                     self.presentViewController(vc, animated: true, completion: nil)
                     }.failure { _ in
-                        // TODOなんかする
                         SVProgressHUD.dismiss()
-                        
                         let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
                         let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                         alert.addAction(cancelAction)
@@ -120,7 +118,7 @@ extension RegisterPlaceViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let places = places {
+        if let places = self.places {
             return places.count
         }
         return 0
@@ -128,8 +126,8 @@ extension RegisterPlaceViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
-            if let places = places {
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
+            if let places = self.places {
                 cell.bind(places[indexPath.row])
                 return cell
             }
@@ -138,8 +136,9 @@ extension RegisterPlaceViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            UserRegister.sharedInstance.deleteSetting(&places, index: indexPath.row)
+            UserRegister.sharedInstance.deleteSetting(&self.places, index: indexPath.row)
         }
     }
 }
@@ -148,10 +147,10 @@ extension RegisterPlaceViewController: UITableViewDataSource {
 
 extension RegisterPlaceViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
-            cell.checkAction(&places, indexPath: indexPath, checkCount: &checkCount)
+        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
+            cell.checkAction(&self.places, indexPath: indexPath, checkCount: &self.checkCount)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
 
@@ -170,17 +169,17 @@ extension RegisterPlaceViewController: UITableViewDelegate {
 extension RegisterPlaceViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        let text = searchBar.text ?? ""
+        let text = self.searchBar.text ?? ""
         if !text.isEmpty {
-            UserRegister.sharedInstance.insertNewSetting(&places, newSetting: text)
-            searchBar.text = ""
-            searchBar.resignFirstResponder()
+            UserRegister.sharedInstance.insertNewSetting(&self.places, newSetting: text)
+            self.searchBar.text = ""
+            self.searchBar.resignFirstResponder()
         }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
     }
 }

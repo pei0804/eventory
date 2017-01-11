@@ -29,6 +29,7 @@ let ServerConnectionMessage: String = "サーバーと通信中"
 let EventInfoCellHeight = CGFloat(250)
 
 enum ApiId: Int {
+    
     case Atdn       = 0
     case Connpass   = 1
     case Doorkeeper = 2
@@ -48,6 +49,7 @@ enum ApiId: Int {
 // UserDefault
 
 enum SettingClass: Int {
+    
     case Genre      = 0
     case Place      = 1
     case Status     = 2

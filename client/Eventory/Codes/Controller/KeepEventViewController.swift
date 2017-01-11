@@ -15,8 +15,8 @@ class KeepEventViewController: BaseViewController {
     
     var eventSummaries: [EventSummary]? {
         didSet {
-            if let eventSummaries = eventSummaries where eventSummaries.count == 0 {
-                tableView.setContentOffset(CGPointZero, animated: false)
+            if let eventSummaries = self.eventSummaries where eventSummaries.count == 0 {
+                self.tableView.setContentOffset(CGPointZero, animated: false)
             }
             self.tableView.reloadData()
         }
@@ -42,7 +42,7 @@ class KeepEventViewController: BaseViewController {
     override func viewWillAppear(animated:Bool) {
         
         super.viewWillAppear(animated)
-        eventSummaries = EventManager.sharedInstance.getKeepEventAll()
+        self.eventSummaries = EventManager.sharedInstance.getKeepEventAll()
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,7 +54,6 @@ class KeepEventViewController: BaseViewController {
         dispatch_async(dispatch_get_main_queue()) {
             SVProgressHUD.showWithStatus(ServerConnectionMessage)
             let task = [EventManager.sharedInstance.fetchNewEvent()]
-            
             Task.all(task).success { _ in
                 SVProgressHUD.dismiss()
                 self.eventSummaries = EventManager.sharedInstance.getKeepEventAll()
@@ -82,7 +81,7 @@ extension KeepEventViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let eventSummaries = eventSummaries {
+        if let eventSummaries = self.eventSummaries {
             return eventSummaries.count
         }
         return 0
@@ -90,8 +89,8 @@ extension KeepEventViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
-            if let eventSummaries = eventSummaries {
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
+            if let eventSummaries = self.eventSummaries {
                 cell.bind(eventSummaries[indexPath.row], viewPageClass: CheckStatus.Keep, indexPath: indexPath)
                 return cell
             }
@@ -110,7 +109,7 @@ extension KeepEventViewController: UITableViewDelegate, SFSafariViewControllerDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         
-        guard let eventSummaries = eventSummaries else {
+        guard let eventSummaries = self.eventSummaries else {
             return
         }
         let url: String = eventSummaries[indexPath.row].url
