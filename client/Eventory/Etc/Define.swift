@@ -23,11 +23,13 @@ let SettingViewControllerIdentifier: String         = "SettingViewController"
 let NetworkErrorTitle: String   = "サーバー接続に失敗しました"
 let NetworkErrorMessage: String = "端末がインターネットが使えない。またはサーバーに問題がありました。"
 let NetworkErrorButton: String  = "確認"
+let ServerConnectionMessage: String = "サーバーと通信中"
 
 // Cell
 let EventInfoCellHeight = CGFloat(250)
 
 enum ApiId: Int {
+    
     case Atdn       = 0
     case Connpass   = 1
     case Doorkeeper = 2
@@ -47,6 +49,7 @@ enum ApiId: Int {
 // UserDefault
 
 enum SettingClass: Int {
+    
     case Genre      = 0
     case Place      = 1
     case Status     = 2

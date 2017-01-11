@@ -42,12 +42,12 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
-  - DZNEmptyDataSet
+  - DZNEmptyDataSet (~> 1.8.1)
   - Firebase/Messaging
   - ObjectMapper (~> 0.17)
-  - RealmSwift
-  - SVProgressHUD
-  - SwiftTask
+  - RealmSwift (~> 2.1.2)
+  - SVProgressHUD (~> 2.1.2)
+  - SwiftTask (~> 5.0.0)
 
 SPEC CHECKSUMS:
   Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
@@ -66,6 +66,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftTask: 7fcd92f8ac16876e82c0e4ced0cea7e028456b6b
 
-PODFILE CHECKSUM: 67796953b36d4ee77c34b2323ba0c44649c2bd04
+PODFILE CHECKSUM: 463f8f14f14fb16bb593265c0522189b5b96c1d9
 
 COCOAPODS: 1.0.1

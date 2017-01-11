@@ -5,8 +5,6 @@ import (
 	"flag"
 	"log"
 	"net/http"
-	"os"
-	"path/filepath"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -33,30 +31,6 @@ func (s *Server) Setup(dbconf, env string) {
 	s.db, err = cs.Open(env)
 	if err != nil {
 		log.Fatalf("db initialization failed: %s", err)
-	}
-
-	g, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	logDir := filepath.Join(g, "log")
-	_, err = os.Stat(logDir)
-	if err != nil {
-		err := os.Mkdir(logDir, 0775)
-		if err != nil {
-			log.Fatalf("log folder initialization failed: %s", err)
-		}
-
-	}
-
-	checkLogPath := filepath.Join(logDir, "check.log")
-	_, err = os.Stat(checkLogPath)
-	if err != nil {
-		_, err := os.Create(checkLogPath)
-		if err != nil {
-			log.Fatal("log check.log initialization failed: %s", err)
-		}
 	}
 }
 

@@ -1,4 +1,7 @@
--- +migrate Up
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+09:00";
+
+
 DROP TABLE IF EXISTS `m_event`;
 CREATE TABLE `m_event` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '裏で管理する用のId',
@@ -17,11 +20,7 @@ CREATE TABLE `m_event` (
   `data_hash` char(64) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- +migrate Down
-DROP TABLE m_event;

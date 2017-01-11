@@ -75,6 +75,7 @@ class EventSummary {
 }
 
 enum Api: Int {
+    
     case Atdn = 0
     case Connpass = 1
     case Doorkeeper = 2
@@ -92,6 +93,7 @@ enum Api: Int {
 }
 
 enum CheckStatus: Int {
+    
     case NoCheck = 0
     case Keep = 1
     case NoKeep = 2

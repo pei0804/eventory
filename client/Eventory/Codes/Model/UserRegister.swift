@@ -59,6 +59,7 @@ class UserRegister {
     }
     
     func getSettingGenres() -> [Dictionary<String, AnyObject>] {
+        
         return self.ud.objectForKey(SettingClass.Genre.getSettingKey()) as! [Dictionary<String, AnyObject>]
     }
     
@@ -71,10 +72,12 @@ class UserRegister {
     }
     
     func getSettingPlaces() -> [Dictionary<String, AnyObject>] {
+        
         return self.ud.objectForKey(SettingClass.Place.getSettingKey()) as! [Dictionary<String, AnyObject>]
     }
     
     func setUserSettingRegister(ragisterSetting: [Dictionary<String, AnyObject>]?, settingClass: SettingClass) {
+        
         var userRegisterSetting: [String] = []
         
         guard let ragisterSetting = ragisterSetting else {

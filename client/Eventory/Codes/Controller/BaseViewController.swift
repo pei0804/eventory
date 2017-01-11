@@ -47,6 +47,7 @@ class BaseViewController: UIViewController {
     }
     
     @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
+        
         self.handleRefresh()
         self.refresh() {
             refreshControl.endRefreshing()
@@ -54,15 +55,19 @@ class BaseViewController: UIViewController {
     }
     
     func refresh(completed: (() -> Void)? = nil) {
+        
         dispatch_async(dispatch_get_main_queue()) {
             completed?()
         }
     }
 }
 
+// MARK: - DZNEmptyDataSetSource
+
 extension BaseViewController: DZNEmptyDataSetSource {
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        
         let text = "条件に合致する情報がありません"
         let attribs = [
             NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
@@ -73,20 +78,25 @@ extension BaseViewController: DZNEmptyDataSetSource {
     }
 }
 
+// MARK: - DZNEmptyDataSetDelegate
+
 extension BaseViewController: DZNEmptyDataSetDelegate {
     
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
+        
         return true
     }
     
     func emptyDataSetWillAppear(scrollView: UIScrollView!) {
-        if let tableView = scrollView as? UITableView {
+        
+        if let tableView = self.scrollView as? UITableView {
             tableView.separatorColor = UIColor.clearColor();
         }
     }
     
     func emptyDataSetDidDisappear(scrollView: UIScrollView!) {
-        if let tableView = scrollView as? UITableView {
+        
+        if let tableView = self.scrollView as? UITableView {
             tableView.separatorColor = UIColor.grayColor();
         }
     }

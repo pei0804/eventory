@@ -2,10 +2,8 @@ package api
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"sync"
 	"time"
 
@@ -23,41 +21,9 @@ type Inserter struct {
 
 func (i *Inserter) EventFetch(c echo.Context) error {
 
-	g, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
+	if c.Request().Header.Get("X-Appengine-Cron")[0] == 0 { return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]")) }
 
-	checkLogPath := filepath.Join(g, "log", "check.log")
-	_, err = os.Stat(checkLogPath)
-	if err != nil {
-		fmt.Fprint(os.Stderr, err)
-		return c.JSON(http.StatusInternalServerError, "[err][log/check.log not found]")
-	}
-
-	checkLog, err := os.OpenFile(checkLogPath, os.O_APPEND|os.O_WRONLY, 0600)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "[err][log/check.log cant open]")
-	}
-	defer checkLog.Close()
-
-	_, err = http.Head(define.ATDN_URL)
-	if err != nil {
-		writeLog(checkLog, "[err][atdn cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][atdn cant access]")
-	}
-	_, err = http.Head(define.CONNPASS_URL)
-	if err != nil {
-		writeLog(checkLog, "[err][connpass cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][connpass cant access]")
-	}
-	_, err = http.Head(define.DOORKEEPER_URL)
-	if err != nil {
-		writeLog(checkLog, "[err][doorkeeper cant access]")
-		return c.JSON(http.StatusBadRequest, "[err][doorkeeper cant access]")
-	}
-
-	receiver := communication()
+	receiver := communication(c)
 
 	for {
 		receive, ok := <-receiver
@@ -66,17 +32,32 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		}
 		err := model.Insert(i.DB, receive)
 		if err != nil {
-			writeLog(checkLog, "[err][database insert]")
-			return c.JSON(http.StatusInternalServerError, "[err][database insert]")
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][database insert] %s", err))
 		}
 
 	}
 
-	writeLog(checkLog, "[success][fetch event]")
+	//// TODO 本来は下のメソッドを先に実行すべき。+　全てチェックするべき、リリース後対応する。
+	//ctx := appengine.NewContext(c.Request())
+	//client := urlfetch.Client(ctx)
+	//
+	//_, err := client.Head(define.ATDN_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][atdn cant access]", err))
+	//}
+	//_, err = client.Head(define.CONNPASS_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][connpass cant access] %s", err))
+	//}
+	//_, err = client.Head(define.DOORKEEPER_URL)
+	//if err != nil {
+	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][doorkeeper cant access] %s", err))
+	//}
+
 	return c.JSON(http.StatusOK, "OK")
 }
 
-func communication() <-chan []model.Event {
+func communication(c echo.Context) <-chan []model.Event {
 	now := time.Now()
 	atdn := make([]Request, define.SERACH_SCOPE)
 	connpass := make([]Request, define.SERACH_SCOPE)
@@ -105,7 +86,7 @@ func communication() <-chan []model.Event {
 	for _, r := range allRequest {
 		wg.Add(1)
 		go func(r Request) {
-			cli := NewRequest(r.Url, r.Api, r.Token)
+			cli := NewRequest(r.Url, r.Api, r.Token, c)
 			events, err := cli.convertingToJson()
 			if err != nil {
 				fmt.Fprint(os.Stderr, err)
@@ -129,11 +110,4 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 	}
 	c.Response().Header().Set("Content-Type", "application/json")
 	return c.JSON(http.StatusOK, event)
-}
-
-func writeLog(checkLog *os.File, message string) {
-	now := time.Now()
-	logger := log.New(checkLog, message, log.LstdFlags)
-	logger.Println(now)
-	checkLog.Sync()
 }

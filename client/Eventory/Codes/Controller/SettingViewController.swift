@@ -22,9 +22,12 @@ class SettingViewController: UIViewController {
         ]
     ]
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.tableView.separatorInset = UIEdgeInsetsZero
+        self.tableView.layoutMargins = UIEdgeInsetsZero
     }
     
     override func viewWillAppear(animated:Bool) {
@@ -33,6 +36,7 @@ class SettingViewController: UIViewController {
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
     }
 }
@@ -48,12 +52,13 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return settingClasses.count
+        return self.settingClasses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SettingTableViewCellIdentifier, forIndexPath: indexPath)
-        cell.textLabel?.text = settingClasses[indexPath.row]["name"]
+        
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(SettingTableViewCellIdentifier, forIndexPath: indexPath)
+        cell.textLabel?.text = self.settingClasses[indexPath.row]["name"]
         cell.accessoryType = .DisclosureIndicator
         return cell
     }

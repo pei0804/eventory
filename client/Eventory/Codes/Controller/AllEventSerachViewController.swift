@@ -9,13 +9,14 @@
 import UIKit
 import SafariServices
 import SwiftTask
+import SVProgressHUD
 
 class AllEventSerachViewController: BaseViewController {
     
     var eventSummaries: [EventSummary]? {
         didSet {
-            if let eventSummaries = eventSummaries where eventSummaries.count == 0 {
-                tableView.setContentOffset(CGPointZero, animated: false)
+            if let eventSummaries = self.eventSummaries where eventSummaries.count == 0 {
+                self.tableView.setContentOffset(CGPointZero, animated: false)
             }
             self.tableView.reloadData()
         }
@@ -25,17 +26,18 @@ class AllEventSerachViewController: BaseViewController {
     @IBOutlet weak var freeWordSearchBar: UISearchBar!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        scrollView = tableView
-        addRefreshControl()
+        self.scrollView = tableView
+        self.addRefreshControl()
         
-        tableView.emptyDataSetSource = self;
-        tableView.emptyDataSetDelegate = self;
+        self.tableView.emptyDataSetSource = self;
+        self.tableView.emptyDataSetDelegate = self;
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        freeWordSearchBar.delegate = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.freeWordSearchBar.delegate = self
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }
@@ -48,18 +50,21 @@ class AllEventSerachViewController: BaseViewController {
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
     }
     
     override func refresh(completed: (() -> Void)? = nil) {
+        
         dispatch_async(dispatch_get_main_queue()) {
-            
             let task = [EventManager.sharedInstance.fetchNewEvent()]
-            
+            SVProgressHUD.showWithStatus(ServerConnectionMessage)
             Task.all(task).success { _ in
                 self.eventSummaries = EventManager.sharedInstance.getNewEventAll("")
+                SVProgressHUD.dismiss()
                 completed?()
                 }.failure { _ in
+                    SVProgressHUD.dismiss()
                     let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
                     let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                     alert.addAction(cancelAction)
@@ -70,20 +75,22 @@ class AllEventSerachViewController: BaseViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate 
+
 extension AllEventSerachViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
-        freeWordSearchBar.resignFirstResponder()
+        self.freeWordSearchBar.resignFirstResponder()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        let term = freeWordSearchBar.text ?? ""
+        let term = self.freeWordSearchBar.text ?? ""
         if !term.isEmpty {
-            eventSummaries = EventManager.sharedInstance.getNewEventAll(term)
+            self.eventSummaries = EventManager.sharedInstance.getNewEventAll(term)
         }
-        freeWordSearchBar.resignFirstResponder()
+        self.freeWordSearchBar.resignFirstResponder()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -94,6 +101,8 @@ extension AllEventSerachViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension AllEventSerachViewController: UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -103,7 +112,7 @@ extension AllEventSerachViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let eventSummaries = eventSummaries {
+        if let eventSummaries = self.eventSummaries {
             return eventSummaries.count
         }
         return 0
@@ -111,8 +120,8 @@ extension AllEventSerachViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
-            if let eventSummaries = eventSummaries {
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
+            if let eventSummaries = self.eventSummaries {
                 cell.bind(eventSummaries[indexPath.row], viewPageClass: CheckStatus.NoCheck, indexPath: indexPath)
                 return cell
             }
@@ -121,6 +130,7 @@ extension AllEventSerachViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
         return EventInfoCellHeight
     }
 }
@@ -131,7 +141,7 @@ extension AllEventSerachViewController: UITableViewDelegate, SFSafariViewControl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
         
-        guard let eventSummaries = eventSummaries else {
+        guard let eventSummaries = self.eventSummaries else {
             return
         }
         let url: String = eventSummaries[indexPath.row].url
