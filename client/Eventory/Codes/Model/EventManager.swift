@@ -35,10 +35,10 @@ class EventManager {
         var firstFlg: Bool = false
         for genre in genres {
             if !firstFlg {
-                selectGenre += "AND (title CONTAINS[c] '\(genre)' "
+                selectGenre += "AND (title CONTAINS[c] '\(genre.realmEscaped)' "
                 firstFlg = true
             }
-            selectGenre += "OR title CONTAINS[c] '\(genre)' "
+            selectGenre += "OR title CONTAINS[c] '\(genre.realmEscaped)' "
         }
         // 0は許容していないがバグ回避のためチェック
         if genres.count != 0 {
@@ -48,17 +48,17 @@ class EventManager {
         firstFlg = false
         for place in places {
             if !firstFlg {
-                selectGenre += "AND (address CONTAINS[c] '\(place)' OR  place CONTAINS[c] '\(place)'"
+                selectGenre += "AND (address CONTAINS[c] '\(place.realmEscaped)' OR  place CONTAINS[c] '\(place.realmEscaped)'"
                 firstFlg = true
             }
-            selectGenre += "OR address CONTAINS[c] '\(place)' OR place CONTAINS[c] '\(place)' "
+            selectGenre += "OR address CONTAINS[c] '\(place.realmEscaped)' OR place CONTAINS[c] '\(place.realmEscaped)' "
         }
         // 0は許容していないがバグ回避のためチェック
         if places.count != 0 {
             selectGenre += ")"
         }
         
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("stratAt")
         return setEventInfo(events)
     }
     
@@ -72,10 +72,10 @@ class EventManager {
         if term != "" {
             for termWord in termArr {
                 if !firstFlg {
-                    selectGenre += "AND (title CONTAINS[c] '\(termWord)' OR address CONTAINS[c] '\(termWord)' OR  place CONTAINS[c] '\(termWord)' "
+                    selectGenre += "AND (title CONTAINS[c] '\(termWord.realmEscaped)' OR address CONTAINS[c] '\(termWord.realmEscaped)' OR  place CONTAINS[c] '\(termWord.realmEscaped)' "
                     firstFlg = true
                 } else {
-                    selectGenre += "OR title CONTAINS[c] '\(termWord)' OR address CONTAINS[c] '\(termWord)' OR  place CONTAINS[c] '\(termWord)' "
+                    selectGenre += "OR title CONTAINS[c] '\(termWord.realmEscaped)' OR address CONTAINS[c] '\(termWord.realmEscaped)' OR  place CONTAINS[c] '\(termWord.realmEscaped)' "
                 }
             }
             if termArr.count != 0 {
@@ -83,7 +83,7 @@ class EventManager {
             }
         }
         
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("stratAt")
         return setEventInfo(events)
     }
     
@@ -452,5 +452,20 @@ class EventManager {
             ]
         ]
         return place
+    }
+}
+
+public extension String {
+
+    public var realmEscaped: String {
+        let reps = [
+            "\\" : "\\\\",
+            "'"  : "\\'",
+            ]
+        var ret = self
+        for rep in reps {
+            ret = self.stringByReplacingOccurrencesOfString(rep.0, withString: rep.1)
+        }
+        return ret
     }
 }
