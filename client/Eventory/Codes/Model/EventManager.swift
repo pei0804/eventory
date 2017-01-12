@@ -227,11 +227,11 @@ class EventManager {
         
         let genreArray: [Dictionary<String, AnyObject>] = [
             [
-                "name": "PHP",
+                "name": "Javascript",
                 "status": false
             ],
             [
-                "name": "Javascript",
+                "name": "PHP",
                 "status": false
             ],
             [
@@ -240,6 +240,30 @@ class EventManager {
             ],
             [
                 "name": "Swift",
+                "status": false
+            ],
+            [
+                "name": "Ruby",
+                "status": false
+            ],
+            [
+                "name": "Python",
+                "status": false
+            ],
+            [
+                "name": "Perl",
+                "status": false
+            ],
+            [
+                "name": "Scala",
+                "status": false
+            ],
+            [
+                "name": "Haskell",
+                "status": false
+            ],
+            [
+                "name": "Go",
                 "status": false
             ],
             [
