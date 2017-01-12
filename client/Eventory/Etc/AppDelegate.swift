@@ -43,21 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-
-        switch application.applicationState {
-        case .Inactive, .Background:
-            let task = [EventManager.sharedInstance.fetchNewEvent()]
-            Task.all(task).success { _ in
-                let newEvent = EventManager.sharedInstance.getSelectNewEventAll()
-                if newEvent.count > 0 {
-                    UIApplication.sharedApplication().applicationIconBadgeNumber = newEvent.count
-                }
-                }.failure { _ in
-            }
-        default:
-            break
-        }
-
+        
     }
 
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {

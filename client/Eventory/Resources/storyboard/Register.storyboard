@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QQ0-Fe-zgk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QQ0-Fe-zgk">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--開催地-->
@@ -14,11 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="cD6-zx-6Kj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8vi-5W-nku">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="開催地追加" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-3v-DwS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8s5-Nd-UgH"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="I7b-Ho-7Th"/>
@@ -30,8 +34,8 @@
                                 </scopeButtonTitles>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EZV-7R-lTs">
-                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="5hG-ru-FsL"/>
                                     <constraint firstAttribute="width" constant="320" id="6lh-eM-5aP"/>
@@ -50,7 +54,7 @@
                                 </variation>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="EZV-7R-lTs" secondAttribute="trailing" id="5SJ-X7-CKO"/>
                             <constraint firstAttribute="trailing" secondItem="VLz-3v-DwS" secondAttribute="trailing" id="6KU-sM-IdF"/>
@@ -96,7 +100,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="searchBar" destination="VLz-3v-DwS" id="qcq-0I-gFd"/>
                         <outlet property="tableView" destination="EZV-7R-lTs" id="4H4-HI-xMl"/>
@@ -104,25 +107,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ss9-tC-28f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="766" y="503"/>
+            <point key="canvasLocation" x="1001" y="501"/>
         </scene>
         <!--Base Navigation View Controller-->
         <scene sceneID="Dhn-N2-j3M">
             <objects>
                 <navigationController storyboardIdentifier="signUp" id="QQ0-Fe-zgk" customClass="BaseNavigationViewController" customModule="Eventory" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B2o-fu-5C2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="I0T-aa-zDL" kind="relationship" relationship="rootViewController" id="Ucg-zC-iP8"/>
+                        <segue destination="I0T-aa-zDL" kind="relationship" relationship="rootViewController" id="opA-K9-rLS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGF-vE-IWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-110" y="503"/>
+            <point key="canvasLocation" x="-518" y="501"/>
         </scene>
         <!--興味のあるジャンル-->
         <scene sceneID="f47-q9-FeN">
@@ -133,12 +135,12 @@
                         <viewControllerLayoutGuide type="bottom" id="MTn-Ha-WoV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DFv-Nl-gWl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tWf-u0-kwG">
-                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="415" id="3sd-aB-Mw2"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="QBJ-M0-dTc"/>
@@ -159,7 +161,7 @@
                                 </variation>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="ジャンル追加" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idr-0W-LI4">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="98A-kb-Cd2"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="AhJ-zo-vlp"/>
@@ -171,7 +173,7 @@
                                 </scopeButtonTitles>
                             </searchBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="TUy-U3-eAj" secondAttribute="bottom" id="0mr-5I-j2B"/>
                             <constraint firstItem="tWf-u0-kwG" firstAttribute="top" secondItem="TUy-U3-eAj" secondAttribute="bottom" constant="44" id="1Gj-95-7de"/>
@@ -221,17 +223,16 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="searchBar" destination="Idr-0W-LI4" id="Fyg-VS-7TN"/>
                         <outlet property="submitBtn" destination="8YE-QS-3jH" id="jAZ-rd-ylP"/>
                         <outlet property="tableView" destination="tWf-u0-kwG" id="MHj-1d-i5f"/>
-                        <segue destination="cR8-IW-SBr" kind="show" id="unO-Nk-EaP"/>
+                        <segue destination="cR8-IW-SBr" kind="show" identifier="placeSettingSegue" id="unO-Nk-EaP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IZ0-od-dxg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="341" y="503"/>
+            <point key="canvasLocation" x="262" y="501"/>
         </scene>
     </scenes>
 </document>

@@ -10,8 +10,9 @@ pod 'ObjectMapper', '~> 0.17'
 pod 'RealmSwift', '~> 2.1.2'
 pod 'SwiftTask', '~> 5.0.0'
 pod 'DZNEmptyDataSet', '~> 1.8.1'
-pod 'Firebase/Messaging'
 pod 'SVProgressHUD', '~> 2.1.2'
+pod 'Firebase/Core'
+pod 'Firebase/Messaging'
 end
 
 

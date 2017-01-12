@@ -11,12 +11,15 @@ import UIKit
 class EventInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
+
         super.awakeFromNib()
         self.separatorInset = UIEdgeInsetsZero
         self.layoutMargins = UIEdgeInsetsZero
+        self.contentView.autoresizingMask = autoresizingMask;
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
     }
     
