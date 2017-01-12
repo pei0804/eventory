@@ -50,11 +50,6 @@ class EventInfoViewController: BaseViewController {
                 SVProgressHUD.showWithStatus(ServerConnectionMessage)
                 Task.all(task).success { _ in
                     self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
-                    if let newEventCount = self.eventSummaries?.count {
-                        if newEventCount > 0 {
-                            UIApplication.sharedApplication().applicationIconBadgeNumber = 1
-                        }
-                    }
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
                     }.failure { _ in
