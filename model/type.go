@@ -101,3 +101,9 @@ type DoorkeeperEvent struct {
 	EndAt      string `json:"ends_at"`
 	DataHash   string
 }
+
+type UpdateInfo struct {
+	Id       int64     `datastore:"-" goon:"id"`
+	Type     string    `datastore:"type,noindex"`
+	Datetime time.Time `datastore:"datetime,noindex"`
+}
