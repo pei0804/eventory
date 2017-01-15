@@ -103,7 +103,7 @@ type DoorkeeperEvent struct {
 }
 
 type UpdateInfo struct {
+	_kind    string    `goon:"kind,updateInfo"`
 	Id       int64     `datastore:"-" goon:"id"`
-	Type     string    `datastore:"type,noindex"`
 	Datetime time.Time `datastore:"datetime,noindex"`
 }
