@@ -15,7 +15,8 @@ import (
 )
 
 type Server struct {
-	db *sql.DB
+	db   *sql.DB
+	echo *echo.Echo
 }
 
 func New() *Server {
@@ -38,17 +39,17 @@ func (s *Server) Run() {
 
 	api := &api.Inserter{DB: s.db}
 
-	e := echo.New()
+	s.echo = echo.New()
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	e.Use(middleware.CORS())
+	s.echo.Use(middleware.Logger())
+	s.echo.Use(middleware.Recover())
+	s.echo.Use(middleware.CORS())
 
-	e.GET("/api/smt/events", api.GetEvent)
-	e.GET("/api/events/admin", api.EventFetch)
+	s.echo.GET("/api/smt/events", api.GetEvent)
+	s.echo.GET("/api/events/admin", api.EventFetch)
 
-	e.Pre(middleware.RemoveTrailingSlash())
-	http.Handle("/", e)
+	s.echo.Pre(middleware.RemoveTrailingSlash())
+	http.Handle("/", s.echo)
 }
 
 func init() {
