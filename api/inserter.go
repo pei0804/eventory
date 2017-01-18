@@ -134,10 +134,8 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore -> time] %s", err))
 	}
-	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
-	sut := u.Datetime.In(jst)
 
-	if uut.Unix() >= sut.Unix() {
+	if uut.Unix() >= u.Datetime.Unix() {
 		return c.JSON(http.StatusNotModified, fmt.Sprintf("lastUpdate %s", u.Datetime))
 	}
 
