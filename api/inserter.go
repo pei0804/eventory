@@ -26,6 +26,11 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]"))
 	}
 
+	err := dataStoreCheck(c)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore init] %s", err))
+	}
+
 	receiver := communication(c)
 
 	for {
@@ -110,14 +115,18 @@ func communication(c echo.Context) <-chan []model.Event {
 
 func (i *Inserter) GetEvent(c echo.Context) error {
 
+	err := dataStoreCheck(c)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore init] %s", err))
+	}
+
 	updatedAt := c.QueryParam("updated_at")
 	layout := "2006-01-02 15:04:05"
-	t, err := time.Parse(layout, updatedAt)
+
+	uut, err := time.Parse(layout, updatedAt)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][ios -> updateAt] %s", err))
+		uut, _ = time.Parse(layout, "2000-01-01 00:00:00")
 	}
-	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
-	updateTime := t.In(jst)
 
 	g := goon.NewGoon(c.Request())
 	u := model.UpdateInfo{Id: define.PRODUCTION}
@@ -125,8 +134,10 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore -> time] %s", err))
 	}
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	sut := u.Datetime.In(jst)
 
-	if !u.Datetime.After(updateTime) {
+	if uut.Unix() >= sut.Unix() {
 		return c.JSON(http.StatusNotModified, fmt.Sprintf("lastUpdate %s", u.Datetime))
 	}
 
@@ -136,4 +147,19 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 	}
 	c.Response().Header().Set("Content-Type", "application/json")
 	return c.JSON(http.StatusOK, event)
+}
+
+func dataStoreCheck(c echo.Context) error {
+
+	g := goon.NewGoon(c.Request())
+	u := model.UpdateInfo{Id: define.PRODUCTION}
+	err := g.Get(&u)
+	if err != nil {
+		u := model.UpdateInfo{Id: define.PRODUCTION, Datetime: time.Now()}
+		_, err = g.Put(&u)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
