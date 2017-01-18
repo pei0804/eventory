@@ -10,6 +10,7 @@ import (
 	"database/sql"
 
 	"github.com/labstack/echo"
+	"github.com/mjibson/goon"
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/model"
 )
@@ -21,7 +22,9 @@ type Inserter struct {
 
 func (i *Inserter) EventFetch(c echo.Context) error {
 
-	if c.Request().Header.Get("X-Appengine-Cron")[0] == 0 { return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]")) }
+	if c.Request().Header.Get("X-Appengine-Cron")[0] == 0 {
+		return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]"))
+	}
 
 	receiver := communication(c)
 
@@ -53,6 +56,10 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	//if err != nil {
 	//	return c.JSON(http.StatusBadRequest, fmt.Sprintf("[err][doorkeeper cant access] %s", err))
 	//}
+
+	g := goon.NewGoon(c.Request())
+	u := model.UpdateInfo{Id: define.PRODUCTION, Datetime: time.Now()}
+	g.Put(&u)
 
 	return c.JSON(http.StatusOK, "OK")
 }
@@ -104,6 +111,25 @@ func communication(c echo.Context) <-chan []model.Event {
 func (i *Inserter) GetEvent(c echo.Context) error {
 
 	updatedAt := c.QueryParam("updated_at")
+	layout := "2006-01-02 15:04:05"
+	t, err := time.Parse(layout, updatedAt)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][ios -> updateAt] %s", err))
+	}
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	updateTime := t.In(jst)
+
+	g := goon.NewGoon(c.Request())
+	u := model.UpdateInfo{Id: define.PRODUCTION}
+	err = g.Get(&u)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore -> time] %s", err))
+	}
+
+	if !u.Datetime.After(updateTime) {
+		return c.JSON(http.StatusNotModified, fmt.Sprintf("lastUpdate %s", u.Datetime))
+	}
+
 	event, err := model.EventAllNew(i.DB, updatedAt)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)

@@ -17,6 +17,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.becomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,7 +38,7 @@ class BaseViewController: UIViewController {
             }
             refreshControl.bounds.origin.y = -self.refreshControlY
             scrollView.alwaysBounceVertical = true
-            scrollView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height-20), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height-10), animated: true)
             self.refreshControl = refreshControl
         }
     }
@@ -45,7 +46,10 @@ class BaseViewController: UIViewController {
     
     func handleRefresh() {
     }
-    
+
+    func becomeActive(notification: NSNotification) {
+    }
+
     @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
         
         self.handleRefresh()
@@ -59,6 +63,10 @@ class BaseViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             completed?()
         }
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
