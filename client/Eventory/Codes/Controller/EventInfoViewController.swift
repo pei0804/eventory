@@ -39,30 +39,6 @@ class EventInfoViewController: BaseViewController {
         
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
     }
-    
-    var onceTokenViewWillAppear: dispatch_once_t = 0
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        dispatch_once(&onceTokenViewWillAppear) {
-            dispatch_async(dispatch_get_main_queue()) {
-                let task = [EventManager.sharedInstance.fetchNewEvent()]
-                SVProgressHUD.showWithStatus(ServerConnectionMessage)
-                Task.all(task).success { _ in
-                    self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
-                    self.tableView.reloadData()
-                    SVProgressHUD.dismiss()
-                    }.failure { _ in
-                        let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
-                        let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
-                        alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
-                        SVProgressHUD.dismiss()
-                }
-            }
-        }
-    }
 
     override func viewWillDisappear(animated:Bool) {
         
@@ -73,15 +49,22 @@ class EventInfoViewController: BaseViewController {
         
         super.didReceiveMemoryWarning()
     }
+
+    override func becomeActive(notification: NSNotification) {
+
+        self.refresh()
+    }
     
     override func refresh(completed: (() -> Void)? = nil) {
-        
         dispatch_async(dispatch_get_main_queue()) {
+            SVProgressHUD.showWithStatus(ServerConnectionMessage)
             let task = [EventManager.sharedInstance.fetchNewEvent()]
             Task.all(task).success { _ in
                 self.eventSummaries = EventManager.sharedInstance.getSelectNewEventAll()
+                SVProgressHUD.dismiss()
                 completed?()
                 }.failure { _ in
+                    SVProgressHUD.dismiss()
                     let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
                     let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                     alert.addAction(cancelAction)

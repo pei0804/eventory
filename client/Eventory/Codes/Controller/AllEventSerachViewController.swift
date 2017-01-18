@@ -53,6 +53,11 @@ class AllEventSerachViewController: BaseViewController {
         
         super.didReceiveMemoryWarning()
     }
+
+    override func becomeActive(notification: NSNotification) {
+
+        self.refresh()
+    }
     
     override func refresh(completed: (() -> Void)? = nil) {
         
