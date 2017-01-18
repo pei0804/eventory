@@ -2,6 +2,10 @@ DBNAME:=eventory
 ENV:=development
 
 setup:
+	which glide || go get -v github.com/Masterminds/glide
+	glide install
+
+devSetup:
 	which sql-migrate || go get github.com/rubenv/sql-migrate/...
 	which scaneo || go get github.com/variadico/scaneo
 	which scaneo glide || go get -v github.com/Masterminds/glide
