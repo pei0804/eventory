@@ -27,6 +27,7 @@ class MainMenuTabBarController: UITabBarController {
         super.viewDidLoad()
         self.selectedIndex = 2
         self.tabBar.tintColor = Colors.main
+        self.tabBar.backgroundColor = UIColor.whiteColor()
         self.updateBadge(EventManager.sharedInstance.getSelectNewEventAll().count)
         
         guard let items = self.tabBar.items else {
