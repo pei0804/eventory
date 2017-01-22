@@ -10,10 +10,15 @@ import UIKit
 import DZNEmptyDataSet
 import SafariServices
 import SVProgressHUD
+import SwiftTask
 
 class BaseTableViewController: UITableViewController, SFSafariViewControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView?
+    
+    var viewPageClass: CheckStatus {
+        return CheckStatus.None
+    }
 
     var eventSummaries: [EventSummary]? {
         didSet {
@@ -90,7 +95,32 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
 
     func refresh(completed: (() -> Void)? = nil) {
         dispatch_async(dispatch_get_main_queue()) {
-            completed?()
+            let task = [EventManager.sharedInstance.fetchNewEvent()]
+            Task.all(task).success { _ in
+                self.eventSummaries = self.getEventInfo(self.viewPageClass)
+                completed?()
+                }.failure { _ in
+                    let alert: UIAlertController = UIAlertController(title: NetworkErrorTitle,message: NetworkErrorMessage, preferredStyle: .Alert)
+                    let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    completed?()
+            }
+        }
+    }
+
+    func getEventInfo(viewPageClass: CheckStatus) -> [EventSummary]? {
+        switch viewPageClass {
+        case .NoCheck:
+            return EventManager.sharedInstance.getSelectNewEventAll()
+        case .Keep:
+            return EventManager.sharedInstance.getKeepEventAll()
+        case .Search:
+            return EventManager.sharedInstance.getNewEventAll("")
+        case .NoKeep:
+            return EventManager.sharedInstance.getNoKeepEventAll()
+        case .None:
+            return eventSummaries
         }
     }
 
@@ -109,6 +139,16 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return EventInfoCellHeight
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if let cell = self.tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
+            if let eventSummaries = self.eventSummaries {
+                cell.bind(eventSummaries[indexPath.row], indexPath: indexPath)
+                return cell
+            }
+        }
+        return UITableViewCell()
     }
 
 

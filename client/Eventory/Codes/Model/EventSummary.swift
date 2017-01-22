@@ -93,6 +93,7 @@ enum CheckStatus: Int {
     case NoCheck = 0
     case Keep = 1
     case NoKeep = 2
+    case Search = 3
     case None = 5
     
     func getName() -> String {
@@ -100,6 +101,7 @@ enum CheckStatus: Int {
         case .NoCheck:   return ""
         case .Keep:      return "キープ"
         case .NoKeep:    return "興味なし"
+        case .Search:    return ""
         case .None:      return ""
         }
     }
