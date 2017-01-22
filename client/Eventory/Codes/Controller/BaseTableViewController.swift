@@ -2,22 +2,40 @@
 //  BaseTableViewController.swift
 //  Eventory
 //
-//  Created by jumpei on 2016/09/25.
-//  Copyright © 2016年 jumpei. All rights reserved.
+//  Created by jumpei on 2017/01/22.
+//  Copyright © 2017年 jumpei. All rights reserved.
 //
 
 import UIKit
+import DZNEmptyDataSet
+import SafariServices
+import SVProgressHUD
 
-class BaseTableViewController: UITableViewController {
+class BaseTableViewController: UITableViewController, SFSafariViewControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+
+    @IBOutlet weak var scrollView: UIScrollView?
+
+    var eventSummaries: [EventSummary]? {
+        didSet {
+            if let eventSummaries = self.eventSummaries where eventSummaries.count == 0 {
+                self.tableView.setContentOffset(CGPointZero, animated: false)
+            }
+            self.tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.scrollView = tableView
+        self.addRefreshControl()
+        self.refresh()
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.becomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,71 +43,124 @@ class BaseTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    deinit {
+        self.tableView.delegate = nil
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    var refreshControlY: CGFloat = 3.0
+
+    func addRefreshControl() {
+        if let scrollView = self.scrollView {
+            let refreshControl = UIRefreshControl()
+            refreshControl.attributedTitle = NSAttributedString(string: "更新")
+            refreshControl.addTarget(self, action: #selector(BaseViewController.pullRefresh(_:)), forControlEvents: .ValueChanged)
+            if let tableView = scrollView as? UITableView {
+                tableView.backgroundView = refreshControl
+                tableView.alwaysBounceVertical = true
+            }
+            refreshControl.bounds.origin.y = -self.refreshControlY
+            scrollView.alwaysBounceVertical = true
+            scrollView.setContentOffset(CGPoint(x: 0, y: -refreshControl.frame.size.height-10), animated: true)
+            self.refreshControl = refreshControl
+        }
+    }
+
+    func handleRefresh() {
+    }
+
+    func becomeActive(notification: NSNotification) {
+        SVProgressHUD.showWithStatus(ServerConnectionMessage)
+        self.refresh() {
+            SVProgressHUD.dismiss()
+        }
+    }
+
+    @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
+
+        SVProgressHUD.showWithStatus(ServerConnectionMessage)
+        self.handleRefresh()
+        self.refresh() {
+            SVProgressHUD.dismiss()
+            refreshControl.endRefreshing()
+        }
+    }
+
+    func refresh(completed: (() -> Void)? = nil) {
+        dispatch_async(dispatch_get_main_queue()) {
+            completed?()
+        }
+    }
+
+    // MARK: - UITableViewDataSource
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+
+        if let eventSummaries = self.eventSummaries {
+            return eventSummaries.count
+        }
         return 0
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        // Configure the cell...
-
-        return cell
+        return EventInfoCellHeight
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath:NSIndexPath) {
+
+        guard let eventSummaries = self.eventSummaries else {
+            return
+        }
+        let url: String = eventSummaries[indexPath.row].url
+        if !url.lowercaseString.hasPrefix("http://") && !url.lowercaseString.hasPrefix("https://") {
+            let alert: UIAlertController = UIAlertController(title: "不正なリンクを検出しました", message: "このイベントに設定されているリンクに問題がありました。", preferredStyle: .Alert)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            return
+        }
+        let brow = SFSafariViewController(URL: NSURL(string: url)!, entersReaderIfAvailable: false)
+        brow.delegate = self
+        presentViewController(brow, animated: true, completion: nil)
+    }
+
+    // MARK: - DZNEmptyDataSetSource
+
+    func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "条件に合致する情報がありません"
+        let attribs = [
+            NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
+            NSForegroundColorAttributeName: UIColor.darkGrayColor()
+        ]
+
+        return NSAttributedString(string: text, attributes: attribs)
+    }
+
+    // MARK: - DZNEmptyDataSetDelegate
+
+    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    func emptyDataSetWillAppear(scrollView: UIScrollView!) {
+        if let tableView = self.scrollView as? UITableView {
+            tableView.separatorColor = UIColor.clearColor();
+        }
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    func emptyDataSetDidDisappear(scrollView: UIScrollView!) {
+        if let tableView = self.scrollView as? UITableView {
+            tableView.separatorColor = UIColor.grayColor();
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
