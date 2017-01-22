@@ -16,7 +16,6 @@ class UserRegister {
     private var ud: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     func getSettingStatus() -> Bool {
-        
         guard let isSetting = self.ud.objectForKey(SettingClass.Status.getUserSettingKey()) as? Bool else {
             return false
         }
@@ -24,7 +23,6 @@ class UserRegister {
     }
     
     func setDefaultSettingStatus(isSetting: Bool) {
-        
         if isSetting {
             NSUserDefaults.standardUserDefaults().setObject(true, forKey: SettingClass.Status.getUserSettingKey());
             NSUserDefaults.standardUserDefaults().synchronize();
@@ -32,7 +30,6 @@ class UserRegister {
     }
     
     func getUserEventInfoUpdateTime() -> String {
-        
         guard let updatedAt = self.ud.objectForKey(userEventInfoUpdatedAt) as? String else {
             return ""
         }
@@ -40,7 +37,6 @@ class UserRegister {
     }
     
     func setUserEventInfoUpdateTime() -> Void {
-        
         let now = NSDate()
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -51,7 +47,6 @@ class UserRegister {
     }
     
     func getUserSettingGenres() -> [String] {
-       
         guard let userSettingGenres = self.ud.objectForKey(SettingClass.Genre.getUserSettingKey()) as? [String] else {
            return [String]()
         }
@@ -59,12 +54,10 @@ class UserRegister {
     }
     
     func getSettingGenres() -> [Dictionary<String, AnyObject>] {
-        
         return self.ud.objectForKey(SettingClass.Genre.getSettingKey()) as! [Dictionary<String, AnyObject>]
     }
     
     func getUserSettingPlaces() -> [String] {
-        
         guard let userSettingPlaces = self.ud.objectForKey(SettingClass.Place.getUserSettingKey()) as? [String] else {
             return [String]()
         }
@@ -72,12 +65,10 @@ class UserRegister {
     }
     
     func getSettingPlaces() -> [Dictionary<String, AnyObject>] {
-        
         return self.ud.objectForKey(SettingClass.Place.getSettingKey()) as! [Dictionary<String, AnyObject>]
     }
     
     func setUserSettingRegister(ragisterSetting: [Dictionary<String, AnyObject>]?, settingClass: SettingClass) {
-        
         var userRegisterSetting: [String] = []
         
         guard let ragisterSetting = ragisterSetting else {
@@ -115,7 +106,6 @@ class UserRegister {
     }
     
     func insertNewSetting(inout ragisterSetting: [Dictionary<String, AnyObject>]?, newSetting: String) {
-        
         guard (ragisterSetting != nil) else {
             return
         }
@@ -123,7 +113,6 @@ class UserRegister {
     }
     
     func deleteSetting(inout ragisterSetting: [Dictionary<String, AnyObject>]?, index: Int) {
-        
         guard (ragisterSetting != nil) else {
             return
         }

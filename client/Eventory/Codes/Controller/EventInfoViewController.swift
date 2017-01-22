@@ -37,7 +37,6 @@ class EventInfoViewController: BaseTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
         if let cell = self.tableView.dequeueReusableCellWithIdentifier(EventInfoTableViewCellIdentifier, forIndexPath: indexPath) as? EventInfoTableViewCell {
             if let eventSummaries = self.eventSummaries {
                 cell.bind(eventSummaries[indexPath.row], viewPageClass: CheckStatus.Keep,indexPath: indexPath)

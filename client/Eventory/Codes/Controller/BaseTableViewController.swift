@@ -97,12 +97,10 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
     // MARK: - UITableViewDataSource
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if let eventSummaries = self.eventSummaries {
             return eventSummaries.count
         }
@@ -110,7 +108,6 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
         return EventInfoCellHeight
     }
 

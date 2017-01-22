@@ -27,7 +27,6 @@ class RegisterPlaceViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.searchBar.delegate = self
@@ -38,7 +37,6 @@ class RegisterPlaceViewController: UIViewController {
     }
     
     override func viewWillAppear(animated:Bool) {
-        
         super.viewWillAppear(animated)
         if self.settingStatus {
             self.leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
@@ -55,23 +53,19 @@ class RegisterPlaceViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated:Bool) {
-        
         super.viewWillDisappear(animated)
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
     }
     
     @IBAction func goBack(sender: AnyObject) {
-        
         self.navigationController?.popToRootViewControllerAnimated(true)
 
     }
     
     @IBAction func pushEditModeBtn(sender: AnyObject) {
-        
         if self.tableView.editing == false {
             self.tableView.editing = true
         } else {
@@ -80,7 +74,6 @@ class RegisterPlaceViewController: UIViewController {
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
-        
         UserRegister.sharedInstance.setUserSettingRegister(self.places, settingClass: SettingClass.Place)
         UserRegister.sharedInstance.setDefaultSettingStatus(true)
         if self.settingStatus {
@@ -112,12 +105,10 @@ class RegisterPlaceViewController: UIViewController {
 extension RegisterPlaceViewController: UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if let places = self.places {
             return places.count
         }
@@ -125,7 +116,6 @@ extension RegisterPlaceViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         if let cell = self.tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
             if let places = self.places {
                 cell.bind(places[indexPath.row])
@@ -136,7 +126,6 @@ extension RegisterPlaceViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         if editingStyle == UITableViewCellEditingStyle.Delete {
             UserRegister.sharedInstance.deleteSetting(&self.places, index: indexPath.row)
         }
@@ -178,7 +167,6 @@ extension RegisterPlaceViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
     }

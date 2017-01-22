@@ -11,7 +11,6 @@ import UIKit
 class EventInfoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
-
         super.awakeFromNib()
         self.separatorInset = UIEdgeInsetsZero
         self.layoutMargins = UIEdgeInsetsZero
@@ -19,7 +18,6 @@ class EventInfoTableViewCell: UITableViewCell {
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
-        
         super.setSelected(selected, animated: animated)
     }
     
@@ -38,42 +36,36 @@ class EventInfoTableViewCell: UITableViewCell {
     let apiFromMessage = "情報提供元："
     
     private func keepEvent() {
-        
         self.titileLbl.textColor = Colors.main
         self.keepButton.active()
         self.noKeepButton.noActive()
     }
     
     private func noKeepEvent() {
-        
         self.titileLbl.textColor = Colors.noKeep
         self.noKeepButton.active()
         self.keepButton.noActive()
     }
     
     private func noCheckEvent() {
-        
         self.titileLbl.textColor = Colors.noCheck
         self.noKeepButton.noActive()
         self.keepButton.noActive()
     }
     
     @IBAction func keepButton(sender: AnyObject) {
-        
         EventManager.sharedInstance.keepAction(id, isKeep: true)
         self.eventSummary.checkStatus = CheckStatus.Keep.rawValue
         self.keepEvent()
     }
     
     @IBAction func noKeepButton(sender: AnyObject) {
-        
         EventManager.sharedInstance.keepAction(id, isKeep: false)
         self.eventSummary.checkStatus = CheckStatus.NoKeep.rawValue
         self.noKeepEvent()
     }
     
     func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
-        
         self.eventSummary = eventSummary
         
         // 開いている画面

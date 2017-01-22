@@ -58,13 +58,11 @@ class Event: Object, Mappable {
     }
     
     required convenience init?(_ map: Map) {
-        
         self.init()
         mapping(map)
     }
     
     func mapping(map: Map) {
-        
         id              <- map["id"]
         eventId         <- map["event_id"]
         apiId           <- map["api_id"]

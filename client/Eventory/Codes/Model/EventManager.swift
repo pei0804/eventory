@@ -26,7 +26,6 @@ class EventManager {
     }
     
     func getSelectNewEventAll() -> [EventSummary] {
-        
         let genres: [String]! = UserRegister.sharedInstance.getUserSettingGenres()
         let places: [String]! = UserRegister.sharedInstance.getUserSettingPlaces()
         var selectGenre: String = ""
@@ -63,7 +62,6 @@ class EventManager {
     }
     
     func getNewEventAll(term: String) -> [EventSummary] {
-        
         let termArr: [String] = term.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         var selectGenre: String = ""
         
@@ -88,19 +86,16 @@ class EventManager {
     }
     
     func getKeepEventAll() -> [EventSummary] {
-        
         let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.Keep.rawValue)").sorted("stratAt")
         return setEventInfo(events)
     }
     
     func getNoKeepEventAll() -> [EventSummary] {
-        
         let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoKeep.rawValue)").sorted("stratAt")
         return setEventInfo(events)
     }
     
     func setEventInfo(searchEvents: Results<Event>) -> [EventSummary] {
-        
         var eventSummaries: [EventSummary] = [EventSummary]()
         for event in searchEvents {
             let eventSummary: EventSummary = EventSummary()
@@ -124,7 +119,6 @@ class EventManager {
     }
     
     func eventInitializer() {
-        
         guard let event: Results<Event> = self.realm.objects(Event) else {
             return
         }
@@ -145,7 +139,6 @@ class EventManager {
     }
     
     func keepAction(id: Int, isKeep: Bool) {
-        
         if let thisEvent = self.realm.objects(Event).filter("id == \(id)").first {
             if isKeep {
                 
@@ -173,7 +166,6 @@ class EventManager {
     }
     
     func fetchNewEvent() -> Task<Float, String, NSError?> {
-        
         var updatedAt = UserRegister.sharedInstance.getUserEventInfoUpdateTime()
         let result = self.realm.objects(Event)
 
@@ -231,7 +223,6 @@ class EventManager {
     }
     
     func genreInitializer() ->  [Dictionary<String, AnyObject>] {
-        
         let genreArray: [Dictionary<String, AnyObject>] = [
             [
                 "name": "Javascript",
@@ -295,7 +286,6 @@ class EventManager {
     
     
     func placesInitializer() ->  [Dictionary<String, AnyObject>] {
-        
         let place: [Dictionary<String, AnyObject>] = [
             [
                 "name": "北海道",

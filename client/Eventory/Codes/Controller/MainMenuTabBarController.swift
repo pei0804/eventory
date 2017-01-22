@@ -23,7 +23,6 @@ class MainMenuTabBarController: UITabBarController {
     let tabBarImages: [String] = ["search", "noKeep", "new", "keep", "setting"]
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.selectedIndex = 2
         self.tabBar.tintColor = Colors.main
@@ -45,17 +44,14 @@ class MainMenuTabBarController: UITabBarController {
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
     }
     
     override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
-        
         self.updateBadge(EventManager.sharedInstance.getSelectNewEventAll().count)
     }
     
     func updateBadge(newEvent: Int) {
-        
         self.newEvent = newEvent
     }
 }
