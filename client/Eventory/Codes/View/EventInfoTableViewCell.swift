@@ -65,15 +65,8 @@ class EventInfoTableViewCell: UITableViewCell {
         self.noKeepEvent()
     }
     
-    func bind(eventSummary: EventSummary, viewPageClass: CheckStatus, indexPath: NSIndexPath) {
+    func bind(eventSummary: EventSummary, indexPath: NSIndexPath) {
         self.eventSummary = eventSummary
-        
-        // 開いている画面
-        if CheckStatus.Keep.rawValue == viewPageClass.rawValue {
-            self.keepEvent()
-        } else if CheckStatus.NoKeep.rawValue == viewPageClass.rawValue {
-            self.noKeepEvent()
-        }
         
         // イベントの情報
         if self.eventSummary.checkStatus == CheckStatus.NoCheck.rawValue {
