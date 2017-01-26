@@ -12,10 +12,6 @@ class KeepButton: UIButton {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setup()
-    }
-    
-    private func setup() {
         self.layer.cornerRadius = 4.0
     }
     

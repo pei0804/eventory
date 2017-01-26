@@ -121,7 +121,7 @@ extension RegisterGenreViewController: UITableViewDelegate {
         if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
             cell.checkAction(&self.genres, indexPath: indexPath, checkCount: &self.checkCount)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

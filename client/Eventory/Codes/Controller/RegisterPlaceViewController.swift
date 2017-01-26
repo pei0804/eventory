@@ -25,7 +25,7 @@ class RegisterPlaceViewController: UIViewController {
     var rightBarButton: UIBarButtonItem = UIBarButtonItem()
     var settingStatus: Bool = false
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: BaseSearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -135,6 +135,7 @@ extension RegisterPlaceViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension RegisterPlaceViewController: UITableViewDelegate {
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
             cell.checkAction(&self.places, indexPath: indexPath, checkCount: &self.checkCount)

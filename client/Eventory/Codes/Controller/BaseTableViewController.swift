@@ -41,6 +41,9 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
 
         self.edgesForExtendedLayout = UIRectEdge.None
 
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(20, 0, 0, 0);
+
         self.tableView.registerNib(UINib(nibName: EventInfoTableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: EventInfoTableViewCellIdentifier)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.becomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
@@ -104,6 +107,7 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
                     let cancelAction: UIAlertAction = UIAlertAction(title: NetworkErrorButton, style: .Cancel, handler: nil)
                     alert.addAction(cancelAction)
                     self.presentViewController(alert, animated: true, completion: nil)
+                    self.eventSummaries = self.getEventInfo(self.viewPageClass)
                     completed?()
             }
         }
@@ -165,7 +169,6 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
             let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             self.presentViewController(alert, animated: true, completion: nil)
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             return
         }
         let brow = SFSafariViewController(URL: NSURL(string: url)!, entersReaderIfAvailable: false)

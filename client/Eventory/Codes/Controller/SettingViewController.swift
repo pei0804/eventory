@@ -31,6 +31,10 @@ class SettingViewController: UIViewController {
     
     override func viewWillAppear(animated:Bool) {
         super.viewWillAppear(animated)
+
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            self.tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
