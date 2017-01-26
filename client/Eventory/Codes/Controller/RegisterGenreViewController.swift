@@ -38,7 +38,6 @@ class RegisterGenreViewController: UIViewController {
     }
     
     override func viewWillAppear(animated:Bool) {
-        
         super.viewWillAppear(animated)
         if self.settingStatus {
             self.leftBarButton = UIBarButtonItem(title: "戻る", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.goBack(_:)))
@@ -54,12 +53,10 @@ class RegisterGenreViewController: UIViewController {
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
     }
     
     @IBAction func pushEditModeBtn(sender: AnyObject) {
-        
         if self.tableView.editing == false {
             self.tableView.editing = true
         } else {
@@ -74,7 +71,6 @@ class RegisterGenreViewController: UIViewController {
     }
     
     @IBAction func pushSubmitBtn(sender: AnyObject) {
-        
         UserRegister.sharedInstance.setUserSettingRegister(self.genres, settingClass: SettingClass.Genre)
         if self.settingStatus {
             self.navigationController?.popToRootViewControllerAnimated(true)
@@ -90,12 +86,10 @@ class RegisterGenreViewController: UIViewController {
 extension RegisterGenreViewController: UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if let genres = self.genres {
             return genres.count
         }
@@ -103,7 +97,6 @@ extension RegisterGenreViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         if let cell = self.tableView.dequeueReusableCellWithIdentifier(CheckListTableViewCellIdentifier, forIndexPath: indexPath) as? CheckListTableViewCell {
             if let genres = self.genres {
                 cell.bind(genres[indexPath.row])
@@ -114,7 +107,6 @@ extension RegisterGenreViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         if editingStyle == UITableViewCellEditingStyle.Delete {
             UserRegister.sharedInstance.deleteSetting(&self.genres, index: indexPath.row)
         }
@@ -129,7 +121,7 @@ extension RegisterGenreViewController: UITableViewDelegate {
         if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? CheckListTableViewCell {
             cell.checkAction(&self.genres, indexPath: indexPath, checkCount: &self.checkCount)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -155,7 +147,6 @@ extension RegisterGenreViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
     }

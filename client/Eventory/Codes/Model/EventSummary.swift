@@ -58,7 +58,6 @@ class EventSummary {
     var eventDate: String = ""
     
     func updateWithEvent(event: Event) {
-        
         self.eventId        = event.eventId
         self.title          = event.title
         self.apiId          = event.apiId
@@ -75,14 +74,12 @@ class EventSummary {
 }
 
 enum Api: Int {
-    
     case Atdn = 0
     case Connpass = 1
     case Doorkeeper = 2
     case None = 5
     
     func getName() -> String {
-        
         switch self {
         case .Atdn:         return "ATDN"
         case .Connpass:     return "Connpass"
@@ -93,18 +90,18 @@ enum Api: Int {
 }
 
 enum CheckStatus: Int {
-    
     case NoCheck = 0
     case Keep = 1
     case NoKeep = 2
+    case Search = 3
     case None = 5
     
     func getName() -> String {
-        
         switch self {
         case .NoCheck:   return ""
         case .Keep:      return "キープ"
         case .NoKeep:    return "興味なし"
+        case .Search:    return ""
         case .None:      return ""
         }
     }

@@ -14,7 +14,6 @@ class ViewFormaatter {
     private init() {}
     
     func setEventDate(eventSummary: EventSummary) -> String {
-        
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm"

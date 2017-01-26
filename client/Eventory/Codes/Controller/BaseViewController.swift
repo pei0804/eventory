@@ -15,20 +15,17 @@ class BaseViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.becomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
     }
     
     var refreshControlY: CGFloat = 3.0
     
     func addRefreshControl() {
-        
         if let scrollView = self.scrollView {
             let refreshControl = UIRefreshControl()
             refreshControl.attributedTitle = NSAttributedString(string: "更新")
@@ -51,7 +48,6 @@ class BaseViewController: UIViewController {
     }
 
     @IBAction func pullRefresh(refreshControl: UIRefreshControl) {
-        
         self.handleRefresh()
         self.refresh() {
             refreshControl.endRefreshing()
@@ -59,7 +55,6 @@ class BaseViewController: UIViewController {
     }
     
     func refresh(completed: (() -> Void)? = nil) {
-        
         dispatch_async(dispatch_get_main_queue()) {
             completed?()
         }
@@ -75,7 +70,6 @@ class BaseViewController: UIViewController {
 extension BaseViewController: DZNEmptyDataSetSource {
     
     func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        
         let text = "条件に合致する情報がありません"
         let attribs = [
             NSFontAttributeName: UIFont.boldSystemFontOfSize(18),
@@ -91,19 +85,16 @@ extension BaseViewController: DZNEmptyDataSetSource {
 extension BaseViewController: DZNEmptyDataSetDelegate {
     
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView!) -> Bool {
-        
         return true
     }
     
     func emptyDataSetWillAppear(scrollView: UIScrollView!) {
-        
         if let tableView = self.scrollView as? UITableView {
             tableView.separatorColor = UIColor.clearColor();
         }
     }
     
     func emptyDataSetDidDisappear(scrollView: UIScrollView!) {
-        
         if let tableView = self.scrollView as? UITableView {
             tableView.separatorColor = UIColor.grayColor();
         }
