@@ -27,6 +27,7 @@ class SettingViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(animated:Bool) {
