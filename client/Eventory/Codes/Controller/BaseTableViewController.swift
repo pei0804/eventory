@@ -41,6 +41,7 @@ class BaseTableViewController: UITableViewController, SFSafariViewControllerDele
 
         self.edgesForExtendedLayout = UIRectEdge.None
 
+        self.tableView.tableFooterView = UIView()
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(20, 0, 0, 0);
 
