@@ -31,3 +31,9 @@ migrate/dry:
 
 gen:
 	cd model && go generate
+
+deployS:
+	goapp deploy -application eventory-staging ./app
+
+curl:
+	curl https://eventory-staging.appspot.com/api/smt/events
