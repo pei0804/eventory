@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Eventory/Codes/Controller/BaseTableViewController.swift"
-            timestampString = "507117070.416239"
+            timestampString = "507118889.433607"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "BaseTableViewController"
             landmarkType = "3">
          </BreakpointContent>
