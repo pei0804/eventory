@@ -176,8 +176,10 @@ class EventManager {
             updatedAt = ""
         }
 
+        let API = APISetting.scheme + APISetting.host
+
         return Task<Float, String, NSError?> { progress, fulfill, reject, configure in
-            Alamofire.request(.GET, "https://eventory-155000.appspot.com/api/smt/events", parameters: ["updated_at": updatedAt]).responseJSON { response in
+            Alamofire.request(.GET, "\(API)/api/smt/events", parameters: ["updated_at": updatedAt]).responseJSON { response in
                 //            Alamofire.request(.GET, "http://ganbaruman.xyz:8080/api/smt/events").responseJSON { response in
 
                 if let statusCode = response.response?.statusCode {
