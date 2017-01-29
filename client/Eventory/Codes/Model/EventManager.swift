@@ -57,7 +57,7 @@ class EventManager {
             selectGenre += ")"
         }
         
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("startAt")
         return setEventInfo(events)
     }
     
@@ -81,17 +81,17 @@ class EventManager {
             }
         }
         
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoCheck.rawValue) \(selectGenre.realmEscaped)").sorted("startAt")
         return setEventInfo(events)
     }
     
     func getKeepEventAll() -> [EventSummary] {
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.Keep.rawValue)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.Keep.rawValue)").sorted("startAt")
         return setEventInfo(events)
     }
     
     func getNoKeepEventAll() -> [EventSummary] {
-        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoKeep.rawValue)").sorted("stratAt")
+        let events: Results<Event> = self.realm.objects(Event).filter("checkStatus == \(CheckStatus.NoKeep.rawValue)").sorted("startAt")
         return setEventInfo(events)
     }
     
@@ -110,7 +110,7 @@ class EventManager {
             //eventSummary.waitlisted = event.waitlisted
             eventSummary.address    = event.address
             eventSummary.place      = event.place
-            eventSummary.stratAt    = event.stratAt
+            eventSummary.startAt    = event.startAt
             eventSummary.endAt      = event.endAt
             eventSummary.checkStatus = event.checkStatus
             eventSummaries.append(eventSummary)
@@ -126,7 +126,7 @@ class EventManager {
             self.fetchNewEvent()
         } else {
             self.realm.beginWrite()
-            let oldLocations = self.realm.objects(Event).filter(NSPredicate(format:"stratAt < %@", NSDate().dateByAddingTimeInterval(-86400)))
+            let oldLocations = self.realm.objects(Event).filter(NSPredicate(format:"startAt < %@", NSDate().dateByAddingTimeInterval(-86400)))
             EventManager.sharedInstance.fetchNewEvent()
             self.realm.delete(oldLocations)
             do {
@@ -211,7 +211,7 @@ class EventManager {
                                     //"waitlisted" : event.waitlisted,
                                     "address"   : event.address,
                                     "place"     : event.place,
-                                    "stratAt"   : event.stratAt,
+                                    "startAt"   : event.startAt,
                                     "endAt"     : event.endAt
                                 ],
                                 update: true)

@@ -46,7 +46,7 @@ class EventSummary {
     var place: String = ""
     
     // 開催日時
-    var stratAt: NSDate = NSDate()
+    var startAt: NSDate = NSDate()
     
     // 終了日時
     var endAt: NSDate = NSDate()
@@ -68,7 +68,7 @@ class EventSummary {
         //self.waitlisted     = event.waitlisted
         self.address        = event.address
         self.place          = event.place
-        self.stratAt        = event.stratAt
+        self.startAt        = event.startAt
         self.endAt          = event.endAt
     }
 }
