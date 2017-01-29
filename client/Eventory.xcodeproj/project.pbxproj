@@ -49,7 +49,7 @@
 /* Begin PBXFileReference section */
 		6C064EE71E1742B700658318 /* NoKeepButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoKeepButton.swift; sourceTree = "<group>"; };
 		6C1DAFF71D8EBB9F00044A41 /* MainMenuTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuTabBarController.swift; sourceTree = "<group>"; };
-		6C1DAFF91D8FB7C800044A41 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = ../Etc/Color.swift; sourceTree = "<group>"; };
+		6C1DAFF91D8FB7C800044A41 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = Color.swift; sourceTree = "<group>"; };
 		6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		6C296B3A1E378E3200BBB8FC /* BaseSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSearchBar.swift; sourceTree = "<group>"; };
 		6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoKeepEventViewController.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		6CC5C15E1D90BB9B00683EBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6CCD65AB1E2509000017826B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6CCD65AD1E250A230017826B /* Eventory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Eventory.entitlements; sourceTree = "<group>"; };
-		6CD322C61D7EAB1B004B0851 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Define.swift; path = ../Etc/Define.swift; sourceTree = "<group>"; };
+		6CD322C61D7EAB1B004B0851 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Define.swift; path = Define.swift; sourceTree = "<group>"; };
 		6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
 		6CD322CC1D83F056004B0851 /* UserRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRegister.swift; sourceTree = "<group>"; };
 		6CD322CE1D83FBDA004B0851 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -126,21 +126,22 @@
 		6CA92BEC1E3B0D8800F0823F /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				6CD322C61D7EAB1B004B0851 /* Define.swift */,
-				6C1DAFF91D8FB7C800044A41 /* Color.swift */,
 				6CA92BED1E3B0DA300F0823F /* APISetting.swift */,
+				6C1DAFF91D8FB7C800044A41 /* Color.swift */,
+				6CD322C61D7EAB1B004B0851 /* Define.swift */,
 			);
 			name = Constants;
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		6CA95B001D6729BF00983152 = {
 			isa = PBXGroup;
 			children = (
-				6CCD65AB1E2509000017826B /* GoogleService-Info.plist */,
 				6CA95B0B1D6729BF00983152 /* Eventory */,
 				5885F7F918D04889CA56885E /* Frameworks */,
-				6CA95B0A1D6729BF00983152 /* Products */,
 				4CE8649E3AD8F1B8B7264449 /* Pods */,
+				6CA95B0A1D6729BF00983152 /* Products */,
+				6CCD65AB1E2509000017826B /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,10 +156,10 @@
 		6CA95B0B1D6729BF00983152 /* Eventory */ = {
 			isa = PBXGroup;
 			children = (
-				6CCD65AD1E250A230017826B /* Eventory.entitlements */,
 				6CA95B271D672DA000983152 /* Codes */,
 				6CA95B251D672CEF00983152 /* Etc */,
 				6CA95B281D672DBC00983152 /* Resources */,
+				6CCD65AD1E250A230017826B /* Eventory.entitlements */,
 				6CA95B181D6729BF00983152 /* Info.plist */,
 			);
 			path = Eventory;
@@ -167,12 +168,12 @@
 		6CA95B221D672CD100983152 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6CA95B2C1D67303400983152 /* EventInfoTableViewCell.swift */,
-				6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */,
+				6C296B3A1E378E3200BBB8FC /* BaseSearchBar.swift */,
 				6CD322C81D7EAFCF004B0851 /* CheckListTableViewCell.swift */,
+				6CA95B2C1D67303400983152 /* EventInfoTableViewCell.swift */,
 				6C88DF461E165BA000203C85 /* KeepButton.swift */,
 				6C064EE71E1742B700658318 /* NoKeepButton.swift */,
-				6C296B3A1E378E3200BBB8FC /* BaseSearchBar.swift */,
+				6C3026D21D698E7C00D73A90 /* ViewFormatter.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,17 +181,17 @@
 		6CA95B231D672CDD00983152 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6C1DAFF71D8EBB9F00044A41 /* MainMenuTabBarController.swift */,
+				6C6A26FE1D8E571D00F479CA /* AllEventSerachViewController.swift */,
+				6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */,
+				6C8FC9D51E34D1BD00A88A0A /* BaseTableViewController.swift */,
+				6C6A27001D8E614D00F479CA /* BaseViewController.swift */,
 				6CA95B2E1D67306C00983152 /* EventInfoViewController.swift */,
 				6C3026D41D69A13400D73A90 /* KeepEventViewController.swift */,
+				6C1DAFF71D8EBB9F00044A41 /* MainMenuTabBarController.swift */,
 				6C2BCA451D6A8A19005D16DA /* NoKeepEventViewController.swift */,
 				6C4E1F181D7D3A8600A2BE13 /* RegisterGenreViewController.swift */,
 				6C4E1F1A1D7D3AAE00A2BE13 /* RegisterPlaceViewController.swift */,
 				6CD322CE1D83FBDA004B0851 /* SettingViewController.swift */,
-				6C6A26FE1D8E571D00F479CA /* AllEventSerachViewController.swift */,
-				6C6A27001D8E614D00F479CA /* BaseViewController.swift */,
-				6C1DB0071D8FC1F300044A41 /* BaseNavigationViewController.swift */,
-				6C8FC9D51E34D1BD00A88A0A /* BaseTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,8 +202,8 @@
 				6CA95B1E1D672B9700983152 /* Event.swift */,
 				6CA95B301D67480A00983152 /* EventManager.swift */,
 				6CA95B321D6749EC00983152 /* EventSummary.swift */,
-				6CD322CC1D83F056004B0851 /* UserRegister.swift */,
 				6CFD6C351D854B7F00B6C37F /* PushNotificationManager.swift */,
+				6CD322CC1D83F056004B0851 /* UserRegister.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -210,8 +211,8 @@
 		6CA95B251D672CEF00983152 /* Etc */ = {
 			isa = PBXGroup;
 			children = (
-				6C5E463F1D92231F00AC9EC9 /* Eventory-Bridging-Header.h */,
 				6CA95B0C1D6729BF00983152 /* AppDelegate.swift */,
+				6C5E463F1D92231F00AC9EC9 /* Eventory-Bridging-Header.h */,
 				6CA95B1F1D672B9700983152 /* SwiftyJSON.swift */,
 			);
 			path = Etc;
@@ -252,8 +253,8 @@
 		6CA95B291D672DD200983152 /* xibs */ = {
 			isa = PBXGroup;
 			children = (
-				6CA95B2A1D672FDA00983152 /* EventInfoTableViewCell.xib */,
 				6C4E1F161D7D39BB00A2BE13 /* CheckListTableViewCell.xib */,
+				6CA95B2A1D672FDA00983152 /* EventInfoTableViewCell.xib */,
 			);
 			path = xibs;
 			sourceTree = "<group>";
