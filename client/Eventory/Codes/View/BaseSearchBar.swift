@@ -15,7 +15,6 @@ class BaseSearchBar: UISearchBar {
         self.layer.cornerRadius = 4.0
         self.frame = CGRectMake(0, 0, 320, 40)
         self.tintColor = Colors.main
-        self.showsCancelButton = true
     }
 }
 
