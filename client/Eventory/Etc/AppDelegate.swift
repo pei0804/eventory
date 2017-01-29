@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // TODO: パス確認用（削除必須）
-        print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
+//        print(NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true))
         PushNotificationManager.sharedInstance.registerRemote()
         
         // TODO ここらへんどうにかしたい
@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         } else {
+            EventManager.sharedInstance.eventInitializer()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateViewControllerWithIdentifier("MainMenu")
             self.window?.rootViewController = initialViewController

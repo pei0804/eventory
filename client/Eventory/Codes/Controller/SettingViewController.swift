@@ -22,21 +22,23 @@ class SettingViewController: UIViewController {
         ]
     ]
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(animated:Bool) {
-        
         super.viewWillAppear(animated)
+
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            self.tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
     }
 }
@@ -46,17 +48,14 @@ class SettingViewController: UIViewController {
 extension SettingViewController: UITableViewDataSource {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.settingClasses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = self.tableView.dequeueReusableCellWithIdentifier(SettingTableViewCellIdentifier, forIndexPath: indexPath)
         cell.textLabel?.text = self.settingClasses[indexPath.row]["name"]
         cell.accessoryType = .DisclosureIndicator
@@ -70,7 +69,6 @@ extension SettingViewController: UITableViewDataSource {
 extension SettingViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         if let nextVc = settingClasses[indexPath.row]["controller"] {
            
             // どのコントローラに遷移するか判定している
