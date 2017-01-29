@@ -17,7 +17,7 @@ class ViewFormaatter {
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm"
-        let startDate: String = dateFormatter.stringFromDate(eventSummary.stratAt)
+        let startDate: String = dateFormatter.stringFromDate(eventSummary.startAt)
         dateFormatter.dateFormat = "MM月dd日 HH:mm"
         let endDate: String = dateFormatter.stringFromDate(eventSummary.endAt)
         return "\(startDate)〜\(endDate)"

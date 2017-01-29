@@ -45,7 +45,7 @@ class Event: Object, Mappable {
     dynamic var place: String = ""
     
     // 開催日時
-    dynamic var stratAt: NSDate = NSDate()
+    dynamic var startAt: NSDate = NSDate()
     
     // 終了日時
     dynamic var endAt: NSDate = NSDate()
@@ -74,7 +74,7 @@ class Event: Object, Mappable {
 //        waitlisted      <- map["waitlisted"]
         address         <- map["address"]
         place           <- map["place"]
-        stratAt         <- (map["strat_at"], CustomDateFormatTransform())
+        startAt         <- (map["start_at"], CustomDateFormatTransform())
         endAt           <- (map["end_at"], CustomDateFormatTransform())
     }
     
