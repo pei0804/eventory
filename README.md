@@ -9,8 +9,11 @@
 
 ![イメージ図](https://github.com/tikasan/eventory/blob/master/doc/eventory_plan.png?raw=true)
 
-## 今後の計画
-[issue]("https://github.com/tikasan/eventory/issues")に上げています。  
+## リポジトリ
+
+- [Server](https://github.com/tikasan/eventory)
+- [iOS](https://github.com/tikasan/eventoryiOS)
+- [Android](https://github.com/KokiKono/Eventory)
 
 ## 使用技術
 
