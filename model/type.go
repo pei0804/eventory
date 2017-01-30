@@ -32,7 +32,7 @@ type Event struct {
 	Waitlisted int    `json:"waitlisted"`
 	Address    string `json:"address"`
 	Place      string `json:"place"`
-	StratAt    string `json:"strat_at"`
+	StartAt    string `json:"start_at"`
 	EndAt      string `json:"end_at"`
 	DataHash   string
 	ID         int `json:"id"`
@@ -49,7 +49,7 @@ type EventJson struct {
 	//Waitlisted int    `json:"waitlisted"`
 	Address string    `json:"address"`
 	Place   string    `json:"place"`
-	StratAt time.Time `json:"strat_at"`
+	StartAt time.Time `json:"start_at"`
 	EndAt   time.Time `json:"end_at"`
 	ID      int       `json:"id"`
 }
@@ -65,7 +65,7 @@ type AtdnEvent struct {
 	Waitlisted int    `json:"waiting"`
 	Address    string `json:"address"`
 	Place      string `json:"place"`
-	StratAt    string `json:"started_at"`
+	StartAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
 	DataHash   string
 }
@@ -81,7 +81,7 @@ type ConnpassEvent struct {
 	Waitlisted int    `json:"waiting"`
 	Address    string `json:"address"`
 	Place      string `json:"place"`
-	StratAt    string `json:"started_at"`
+	StartAt    string `json:"started_at"`
 	EndAt      string `json:"ended_at"`
 	DataHash   string
 }
@@ -97,7 +97,7 @@ type DoorkeeperEvent struct {
 	Waitlisted int    `json:"waitlisted"`
 	Address    string `json:"address"`
 	Place      string `json:"place"`
-	StratAt    string `json:"starts_at"`
+	StartAt    string `json:"starts_at"`
 	EndAt      string `json:"ends_at"`
 	DataHash   string
 }
