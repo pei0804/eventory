@@ -1,18 +1,19 @@
 package api
 
 import (
+	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"sync"
 	"time"
 
-	"database/sql"
-
 	"github.com/labstack/echo"
 	"github.com/mjibson/goon"
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/model"
+	"github.com/tikasan/eventory/db"
 )
 
 // TODO ネーミング変えるべきかも
@@ -20,7 +21,21 @@ type Inserter struct {
 	DB *sql.DB
 }
 
+func (i *Inserter) setup(c echo.Context) {
+
+	cs, err := db.NewConfigsFromFile(define.DB_CONFIG, c)
+	if err != nil {
+		log.Fatalf("cannot open database configuration. exit. %s", err)
+	}
+	i.DB, err = cs.Open()
+	if err != nil {
+		log.Fatalf("db initialization failed: %s", err)
+	}
+}
+
 func (i *Inserter) EventFetch(c echo.Context) error {
+
+	i.setup(c)
 
 	if c.Request().Header.Get("X-Appengine-Cron")[0] == 0 {
 		return c.JSON(http.StatusUnauthorized, fmt.Sprintf("[err][AuthError]"))
@@ -114,6 +129,8 @@ func communication(c echo.Context) <-chan []model.Event {
 }
 
 func (i *Inserter) GetEvent(c echo.Context) error {
+
+	i.setup(c)
 
 	err := dataStoreCheck(c)
 	if err != nil {
