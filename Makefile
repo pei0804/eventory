@@ -32,8 +32,17 @@ migrate/dry:
 gen:
 	cd model && go generate
 
-deployS:
+deploy:
 	goapp deploy -application eventory-staging ./app
 
-curl:
+rollback:
+	appcfg.py rollback ./app -A eventory-staging
+
+local:
+	goapp serve ./app
+
+curlFetch:
+	curl https://eventory-staging.appspot.com/api/events/admin
+
+curlGet:
 	curl https://eventory-staging.appspot.com/api/smt/events

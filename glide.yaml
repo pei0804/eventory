@@ -8,5 +8,6 @@ import:
   - middleware
 - package: github.com/yterajima/go-dtf
 - package: gopkg.in/yaml.v1
-- package: google.golang.org/appengine
+- package: google.golang.org/appengine/...
 - package: github.com/mjibson/goon
+- package: cloud.google.com/go/storage
