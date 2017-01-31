@@ -1,6 +1,13 @@
-hash: 93d776fa1c7f179b1dbac0e62dad924c8ffcda7a2a4ae547e38b40c28bfb1806
-updated: 2017-01-17T15:37:20.748856901+09:00
+hash: cb999d51731817e5fe67596aa5ccf2b6d6f6691718a9a8b39fa955384b99ef6c
+updated: 2017-01-31T17:19:01.843430985+09:00
 imports:
+- name: cloud.google.com/go
+  version: 38283be819556e2c5abdaec830f5b100b6ae9595
+  subpackages:
+  - compute/metadata
+  - internal
+  - internal/optional
+  - storage
 - name: github.com/dgrijalva/jwt-go
   version: 9ed569b5d1ac936e6494082958d63a6aa4fff99a
 - name: github.com/go-sql-driver/mysql
@@ -9,6 +16,8 @@ imports:
   version: 8ee79997227bf9b34611aee7946ae64735e6fd93
   subpackages:
   - proto
+- name: github.com/googleapis/gax-go
+  version: da06d194a00e19ce00d9011a13931c3f6f6887c7
 - name: github.com/labstack/echo
   version: 8d504c1b699c757b267255c53b3e5219f9974abc
   subpackages:
@@ -25,7 +34,7 @@ imports:
 - name: github.com/mattn/go-isatty
   version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/mjibson/goon
-  version: 0ed1ebf48a18375ca62c5a033a6f5bc4c59997f4
+  version: a9ac1d26f6dbfd9538f4e1e02a04061ef41c1c17
 - name: github.com/tylerb/graceful
   version: 4df1190835320af7076dfcf27b3d071fd3612caf
 - name: github.com/valyala/fasttemplate
@@ -42,14 +51,41 @@ imports:
   subpackages:
   - context
   - context/ctxhttp
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - lex/httplex
+  - trace
+- name: golang.org/x/oauth2
+  version: 314dd2c0bf3ebd592ec0d20847d27e79d0dbe8dd
+  subpackages:
+  - google
+  - internal
+  - jws
+  - jwt
 - name: golang.org/x/sys
   version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
   subpackages:
   - unix
-- name: google.golang.org/appengine
-  version: 9e2ad0873f358c54296ccdc5116b0652c98226d1
+- name: google.golang.org/api
+  version: dfa61ae24628a06502b9c2805d983b57e89399b5
   subpackages:
+  - gensupport
+  - googleapi
+  - googleapi/internal/uritemplates
+  - googleapi/transport
+  - internal
+  - iterator
+  - option
+  - storage/v1
+  - transport
+- name: google.golang.org/appengine
+  version: a2c54d2174c17540446e0ced57d9d459af61bc1c
+  subpackages:
+  - '...'
   - datastore
+  - file
   - internal
   - internal/app_identity
   - internal/base
@@ -58,10 +94,26 @@ imports:
   - internal/memcache
   - internal/modules
   - internal/remote_api
+  - internal/socket
   - internal/urlfetch
   - log
   - memcache
+  - socket
   - urlfetch
+- name: google.golang.org/grpc
+  version: 21f8ed309495401e6fd79b3a9fd549582aed1b4c
+  subpackages:
+  - codes
+  - credentials
+  - credentials/oauth
+  - grpclog
+  - internal
+  - metadata
+  - naming
+  - peer
+  - stats
+  - tap
+  - transport
 - name: gopkg.in/yaml.v1
   version: 9f9df34309c04878acc86042b16630b0f696e1de
 testImports: []
