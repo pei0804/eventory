@@ -21,4 +21,4 @@ const (
 
 // data
 const UPDATE_INFO = "updateInfo"
-const DB_CONFIG = "eventory-production-setting/dbconfig.yml"
+const DB_CONFIG = "dbconfig.yml"

@@ -4,15 +4,19 @@ import (
 	"database/sql"
 	"io"
 	"io/ioutil"
-	"os"
+
+	"cloud.google.com/go/storage"
+	"github.com/labstack/echo"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/file"
 
 	yaml "gopkg.in/yaml.v1"
 )
 
 type Configs map[string]*Config
 
-func (cs Configs) Open(env string) (*sql.DB, error) {
-	config, ok := cs[env]
+func (cs Configs) Open() (*sql.DB, error) {
+	config, ok := cs["setting"]
 	if !ok {
 		return nil, nil
 	}
@@ -31,13 +35,23 @@ func (c *Config) Open() (*sql.DB, error) {
 	return sql.Open("mysql", c.DSN())
 }
 
-func NewConfigsFromFile(path string) (Configs, error) {
-	f, err := os.Open(path)
+func NewConfigsFromFile(FileName string, c echo.Context) (Configs, error) {
+
+	ctx := appengine.NewContext(c.Request())
+	bucketname, err := file.DefaultBucketName(ctx)
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
-	return NewConfigs(f)
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	reader, err := client.Bucket(bucketname).Object(FileName).NewReader(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer reader.Close()
+	return NewConfigs(reader)
 }
 
 func NewConfigs(r io.Reader) (Configs, error) {
