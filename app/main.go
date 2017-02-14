@@ -22,7 +22,6 @@ func New() *Server {
 }
 
 func (s *Server) Run() {
-
 	api := &api.Inserter{DB: s.db}
 
 	s.echo = echo.New()
