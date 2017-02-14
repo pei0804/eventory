@@ -28,7 +28,7 @@ func DateTime(timeStr string) string {
 }
 
 // 郵便番号削除
-var RePoscode = regexp.MustCompile(`(^|\s)〒\d{3}-\d{4}($|\s)`)
+var RePoscode = regexp.MustCompile(`〒\d{3}-\d{4}($|\s)`)
 
 func RemovePoscode(str string) string {
 	str = RePoscode.ReplaceAllString(str, "")
