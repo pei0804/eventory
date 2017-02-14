@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/formater"
 )
 
@@ -14,6 +15,9 @@ func Insert(db *sql.DB, Events []Event) error {
 
 	insert := `INSERT INTO m_event (event_id, api_id, title, description, url, limit_count, waitlisted, accepted, address, place, start_at, end_at, data_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 	for _, ev := range Events {
+		if ev.ApiId == define.DOORKEEPER {
+			ev.Address = formater.RemovePoscode(ev.Address)
+		}
 		dataHashAgo := formater.ConcatenateString(ev.Title, ev.Desc, ev.Url, ev.Address, string(ev.Limit), string(ev.Accepted), ev.Place, ev.StartAt, ev.EndAt)
 		dataHashed := sha256.Sum256([]byte(dataHashAgo))
 		ev.DataHash = hex.EncodeToString(dataHashed[:])
