@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"io"
 	"io/ioutil"
+	"os"
 
 	"cloud.google.com/go/storage"
 	"github.com/labstack/echo"
@@ -48,7 +49,12 @@ func NewConfigsFromFile(FileName string, c echo.Context) (Configs, error) {
 	}
 	reader, err := client.Bucket(bucketname).Object(FileName).NewReader(ctx)
 	if err != nil {
-		return nil, err
+		f, err := os.Open("dbconfig.yml")
+		if err != nil {
+			return nil, err
+		}
+		defer f.Close()
+		return NewConfigs(f)
 	}
 	defer reader.Close()
 	return NewConfigs(reader)
