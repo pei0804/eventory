@@ -41,6 +41,9 @@ rollback:
 local:
 	goapp serve ./app
 
+school:
+	dev_appserver.py --port=8001 ./app
+
 curlFetch:
 	curl https://eventory-staging.appspot.com/api/events/admin
 
