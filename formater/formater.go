@@ -27,6 +27,14 @@ func DateTime(timeStr string) string {
 	return parsedTime.Format("2006-01-02 15:04:05")
 }
 
+// 郵便番号削除
+var RePoscode = regexp.MustCompile(`(^|\s)〒\d{3}-\d{4}($|\s)`)
+
+func RemovePoscode(str string) string {
+	str = RePoscode.ReplaceAllString(str, "")
+	return str
+}
+
 // 関数内に書くと毎度メモリを消費するので外に書いた
 var ReTag = regexp.MustCompile(`<("[^"]*"|'[^']*'|[^'">])*>`)
 
