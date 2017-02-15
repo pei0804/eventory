@@ -1,11 +1,13 @@
 package model
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"database/sql"
 	"encoding/hex"
 	"fmt"
 	"os"
+	"unicode/utf8"
 
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/formater"
@@ -70,9 +72,24 @@ func EventAll(db *sql.DB) ([]Event, error) {
 	return ScanEvents(rows)
 }
 
-func EventAllNew(db *sql.DB, updatedAt string) ([]EventJson, error) {
+func EventAllNew(db *sql.DB, updatedAt string, places []string) ([]EventJson, error) {
 
-	stmtIns, err := db.Prepare("select event_id, api_id,title, url, limit_count, accepted, address ,place, start_at, end_at, id from m_event where end_at > now() AND updated_at > ?")
+	pb := bytes.NewBuffer(make([]byte, 0, 800))
+	pb.WriteString("(")
+	for _, p := range places {
+		if utf8.RuneCountInString(p) <= 4 {
+			pb.WriteString("address LIKE '")
+			pb.WriteString(p)
+			pb.WriteString("%' ")
+			if p != places[len(places)-1] {
+				pb.WriteString("OR ")
+			}
+		}
+	}
+	pb.WriteString(") AND ")
+	sql := fmt.Sprintf("select event_id, api_id,title, url, limit_count, accepted, address ,place, start_at, end_at, id from m_event where %s end_at > now() AND updated_at > ?", pb.String())
+
+	stmtIns, err := db.Prepare(sql)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		return nil, err

@@ -6,14 +6,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/labstack/echo"
 	"github.com/mjibson/goon"
-	"github.com/tikasan/eventory/define"
-	"github.com/tikasan/eventory/model"
 	"github.com/tikasan/eventory/db"
+	"github.com/tikasan/eventory/define"
+	"github.com/tikasan/eventory/formater"
+	"github.com/tikasan/eventory/model"
 )
 
 // TODO ネーミング変えるべきかも
@@ -132,7 +134,13 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 
 	i.setup(c)
 
-	err := dataStoreCheck(c)
+	decodePlaces, err := formater.DecodeUriCompontent(c.QueryParam("places"))
+	if err != nil {
+		decodePlaces = ""
+	}
+	places := strings.Split(decodePlaces, ",")
+
+	err = dataStoreCheck(c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("[err][datastore init] %s", err))
 	}
@@ -156,7 +164,7 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 		return c.JSON(http.StatusNotModified, fmt.Sprintf("lastUpdate %s", u.Datetime))
 	}
 
-	event, err := model.EventAllNew(i.DB, updatedAt)
+	event, err := model.EventAllNew(i.DB, updatedAt, places)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 	}
