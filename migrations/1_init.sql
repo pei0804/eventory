@@ -22,6 +22,11 @@ CREATE TABLE `m_event` (
   UNIQUE (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `m_event`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `event_id` (`event_id`),
+  ADD KEY `search_index` (`end_at`,`updated_at`,`address`(3));
+
 
 -- +migrate Down
 DROP TABLE m_event;
