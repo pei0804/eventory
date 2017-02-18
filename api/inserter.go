@@ -33,7 +33,6 @@ func (i *Inserter) setup(c echo.Context) {
 	if err != nil {
 		log.Fatalf("db initialization failed: %s", err)
 	}
-	defer i.DB.Close()
 }
 
 func (i *Inserter) EventFetch(c echo.Context) error {
@@ -83,6 +82,7 @@ func (i *Inserter) EventFetch(c echo.Context) error {
 	g := goon.NewGoon(c.Request())
 	u := model.UpdateInfo{Id: define.PRODUCTION, Datetime: time.Now()}
 	g.Put(&u)
+	i.DB.Close()
 
 	return c.JSON(http.StatusOK, "OK")
 }
@@ -170,6 +170,7 @@ func (i *Inserter) GetEvent(c echo.Context) error {
 		fmt.Fprint(os.Stderr, err)
 	}
 	c.Response().Header().Set("Content-Type", "application/json")
+	i.DB.Close()
 	return c.JSON(http.StatusOK, event)
 }
 
