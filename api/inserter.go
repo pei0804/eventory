@@ -33,6 +33,7 @@ func (i *Inserter) setup(c echo.Context) {
 	if err != nil {
 		log.Fatalf("db initialization failed: %s", err)
 	}
+	defer i.DB.Close()
 }
 
 func (i *Inserter) EventFetch(c echo.Context) error {
