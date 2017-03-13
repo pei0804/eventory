@@ -14,7 +14,6 @@ import (
 )
 
 func Insert(db *sql.DB, Events []Event) error {
-
 	insert := `INSERT INTO m_event (event_id, api_id, title, description, url, limit_count, waitlisted, accepted, address, place, start_at, end_at, data_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 	for _, ev := range Events {
 		if ev.ApiId == define.DOORKEEPER {
@@ -73,7 +72,6 @@ func EventAll(db *sql.DB) ([]Event, error) {
 }
 
 func EventAllNew(db *sql.DB, updatedAt string, places []string) ([]EventJson, error) {
-
 	pb := bytes.NewBuffer(make([]byte, 0, 800))
 	pb.WriteString("(")
 	for _, p := range places {
