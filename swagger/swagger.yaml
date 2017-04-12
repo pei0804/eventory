@@ -1,0 +1,842 @@
+basePath: /api/v2
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+definitions:
+  Event:
+    description: イベント情報 (default view)
+    example:
+      ID: 1
+      accepte: 10
+      address: 東京都渋谷区3-31-205
+      apiType: ATDN
+      endAt: 1990-08-01T04:03:55+09:00
+      identifier: 3-12313
+      limits: 10
+      startAt: 1984-03-14T21:11:03+09:00
+      title: アジャイル開発勉強会
+      url: 2016-01-01 10:10:12
+      wait: 5
+    properties:
+      ID:
+        description: ID
+        example: 1
+        format: int64
+        type: integer
+      accepte:
+        description: 参加登録済み人数
+        example: 10
+        format: int64
+        type: integer
+      address:
+        description: 住所
+        example: 東京都渋谷区3-31-205
+        type: string
+      apiType:
+        description: APIの種類 enum('atdn','connpass','doorkeeper')
+        example: ATDN
+        type: string
+      endAt:
+        description: 終了日時
+        example: 1990-08-01T04:03:55+09:00
+        format: date-time
+        type: string
+      identifier:
+        description: 識別子(api-event_id)
+        example: 3-12313
+        type: string
+      limits:
+        description: 参加人数上限
+        example: 10
+        format: int64
+        type: integer
+      startAt:
+        description: 開催日時
+        example: 1984-03-14T21:11:03+09:00
+        format: date-time
+        type: string
+      title:
+        description: イベント名
+        example: アジャイル開発勉強会
+        type: string
+      url:
+        description: イベントページURL
+        example: 2016-01-01 10:10:12
+        type: string
+      wait:
+        description: キャンセル待ち人数
+        example: 5
+        format: int64
+        type: integer
+    required:
+    - ID
+    - identifier
+    - apiType
+    - title
+    - url
+    - limits
+    - accepte
+    - wait
+    - address
+    - startAt
+    - endAt
+    title: 'Mediatype identifier: application/vnd.event+json; view=default'
+    type: object
+  EventCollection:
+    description: EventCollection is the media type for an array of Event (default
+      view)
+    example:
+    - ID: 1
+      accepte: 10
+      address: 東京都渋谷区3-31-205
+      apiType: ATDN
+      endAt: 1990-08-01T04:03:55+09:00
+      identifier: 3-12313
+      limits: 10
+      startAt: 1984-03-14T21:11:03+09:00
+      title: アジャイル開発勉強会
+      url: 2016-01-01 10:10:12
+      wait: 5
+    - ID: 1
+      accepte: 10
+      address: 東京都渋谷区3-31-205
+      apiType: ATDN
+      endAt: 1990-08-01T04:03:55+09:00
+      identifier: 3-12313
+      limits: 10
+      startAt: 1984-03-14T21:11:03+09:00
+      title: アジャイル開発勉強会
+      url: 2016-01-01 10:10:12
+      wait: 5
+    items:
+      $ref: '#/definitions/Event'
+    title: 'Mediatype identifier: application/vnd.event+json; type=collection; view=default'
+    type: array
+  Genre:
+    description: ジャンル (default view)
+    example:
+      ID: 1
+      name: javascript
+    properties:
+      ID:
+        description: ジャンルID
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: ジャンル名
+        example: javascript
+        type: string
+    title: 'Mediatype identifier: application/vnd.genre+json; view=default'
+    type: object
+  GenreCollection:
+    description: GenreCollection is the media type for an array of Genre (default
+      view)
+    example:
+    - ID: 1
+      name: javascript
+    - ID: 1
+      name: javascript
+    - ID: 1
+      name: javascript
+    items:
+      $ref: '#/definitions/Genre'
+    title: 'Mediatype identifier: application/vnd.genre+json; type=collection; view=default'
+    type: array
+  Message:
+    description: ユーザー情報 (default view)
+    example:
+      message: created
+    properties:
+      message:
+        description: トークン
+        example: created
+        type: string
+    title: 'Mediatype identifier: application/vnd.message+json; view=default'
+    type: object
+  Token:
+    description: ユーザー情報 (default view)
+    example:
+      token: az31e85g219491271529068e996f763d2924fbfw947211ffa8c4daafa5ce23b5
+    properties:
+      token:
+        description: トークン
+        example: az31e85g219491271529068e996f763d2924fbfw947211ffa8c4daafa5ce23b5
+        type: string
+    title: 'Mediatype identifier: application/vnd.token+json; view=default'
+    type: object
+  error:
+    description: Error response media type (default view)
+    example:
+      code: invalid_value
+      detail: Value of ID must be an integer
+      id: 3F1FKVRR
+      meta:
+        timestamp: 1.458609e+09
+      status: "400"
+    properties:
+      code:
+        description: an application-specific error code, expressed as a string value.
+        example: invalid_value
+        type: string
+      detail:
+        description: a human-readable explanation specific to this occurrence of the
+          problem.
+        example: Value of ID must be an integer
+        type: string
+      id:
+        description: a unique identifier for this particular occurrence of the problem.
+        example: 3F1FKVRR
+        type: string
+      meta:
+        additionalProperties: true
+        description: a meta object containing non-standard meta-information about
+          the error.
+        example:
+          timestamp: 1.458609e+09
+        type: object
+      status:
+        description: the HTTP status code applicable to this problem, expressed as
+          a string value.
+        example: "400"
+        type: string
+    title: 'Mediatype identifier: application/vnd.goa.error; view=default'
+    type: object
+externalDocs:
+  description: eventory guide
+  url: https://github.com/tikasan/eventory/wiki
+host: localhost:8080
+info:
+  description: 'ITイベント情報集アプリAPI '
+  license:
+    name: MIT
+    url: https://github.com/tikasan/eventory/blob/master/LICENSE
+  title: 'eventory: ITイベント収集アプリ'
+  version: ""
+paths:
+  /events/{eventID}/keep:
+    put:
+      description: イベントのお気に入り操作
+      operationId: events#keep event
+      parameters:
+      - description: イベントID
+        in: path
+        name: eventID
+        required: true
+        type: integer
+      - description: キープ操作
+        in: query
+        name: isKeep
+        required: true
+        type: boolean
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: keep event events
+      tags:
+      - events
+  /events/genre/{id}:
+    get:
+      description: イベント情報取得
+      operationId: events#list
+      parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /events/keep:
+    get:
+      description: イベント情報取得
+      operationId: events#list#2
+      parameters:
+      - in: query
+        name: id
+        required: false
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /events/new:
+    get:
+      description: イベント情報取得
+      operationId: events#list#1
+      parameters:
+      - in: query
+        name: id
+        required: false
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /events/nokeep:
+    get:
+      description: イベント情報取得
+      operationId: events#list#3
+      parameters:
+      - in: query
+        name: id
+        required: false
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /events/popular:
+    get:
+      description: イベント情報取得
+      operationId: events#list#4
+      parameters:
+      - in: query
+        name: id
+        required: false
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /events/recommend:
+    get:
+      description: イベント情報取得
+      operationId: events#list#5
+      parameters:
+      - in: query
+        name: id
+        required: false
+        type: string
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
+      - default: ""
+        description: キーワード検索
+        in: query
+        name: q
+        required: false
+        type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/EventCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list events
+      tags:
+      - events
+  /genres:
+    get:
+      description: ジャンル取得
+      operationId: genres#list
+      parameters:
+      - default: ""
+        description: ジャンル名検索に使うキーワード
+        in: query
+        maxLength: 30
+        minLength: 0
+        name: q
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GenreCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: list genres
+      tags:
+      - genres
+  /genres/{genreID}/follow:
+    delete:
+      description: ジャンルお気に入り操作
+      operationId: genres#follow genre#1
+      parameters:
+      - description: ジャンルID
+        in: path
+        name: genreID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: follow genre genres
+      tags:
+      - genres
+    put:
+      description: ジャンルお気に入り操作
+      operationId: genres#follow genre
+      parameters:
+      - description: ジャンルID
+        in: path
+        name: genreID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: follow genre genres
+      tags:
+      - genres
+  /genres/new:
+    post:
+      description: ジャンルの新規作成
+      operationId: genres#create
+      parameters:
+      - description: ジャンル名
+        in: query
+        maxLength: 30
+        minLength: 1
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Genre'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: create genres
+      tags:
+      - genres
+  /prefs/{prefID}/follow:
+    delete:
+      description: ジャンルお気に入り操作
+      operationId: prefs#pref follow#1
+      parameters:
+      - description: 都道府県ID
+        in: path
+        name: prefID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: pref follow prefs
+      tags:
+      - prefs
+    put:
+      description: ジャンルお気に入り操作
+      operationId: prefs#pref follow
+      parameters:
+      - description: 都道府県ID
+        in: path
+        name: prefID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: pref follow prefs
+      tags:
+      - prefs
+  /users/new:
+    post:
+      description: 正規ユーザーの作成
+      operationId: users#account create
+      parameters:
+      - description: メールアドレス
+        format: email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: 識別子(android:Android_ID, ios:IDFV)
+        in: query
+        name: identifier
+        pattern: (^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: account create users
+      tags:
+      - users
+  /users/status:
+    put:
+      description: 一時ユーザーの作成
+      operationId: users#account terminal status update
+      parameters:
+      - description: アプリのバージョン
+        in: query
+        name: client_version
+        required: true
+        type: string
+      - description: OSとバージョン
+        in: query
+        name: platform
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: account terminal status update users
+      tags:
+      - users
+  /users/tmp:
+    post:
+      description: 一時ユーザーの作成
+      operationId: users#tmp account create
+      parameters:
+      - description: アプリのバージョン
+        in: query
+        name: client_version
+        required: true
+        type: string
+      - description: 識別子(android:Android_ID, ios:IDFV)
+        in: query
+        name: identifier
+        pattern: (^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)
+        required: true
+        type: string
+      - description: OSとバージョン
+        in: query
+        name: platform
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Token'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      summary: tmp account create users
+      tags:
+      - users
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+responses:
+  NotFound:
+    description: Not Found
+  OK:
+    description: OK
+  Unauthorized:
+    description: Unauthorized
+schemes:
+- http
+securityDefinitions:
+  key:
+    description: ユーザートークン
+    in: header
+    name: X-Authorization
+    type: apiKey
+swagger: "2.0"

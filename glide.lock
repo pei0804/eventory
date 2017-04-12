@@ -1,51 +1,66 @@
-hash: cb999d51731817e5fe67596aa5ccf2b6d6f6691718a9a8b39fa955384b99ef6c
-updated: 2017-01-31T17:19:01.843430985+09:00
+hash: b65ced966c032664be41d4851a4be45ebe934f6a8435e0576bcd1d7221e1ec0d
+updated: 2017-04-12T23:37:12.683752697+09:00
 imports:
+- name: bitbucket.org/pkg/inflect
+  version: 8961c3750a47b8c0b3e118d52513b97adf85a7e8
 - name: cloud.google.com/go
-  version: 38283be819556e2c5abdaec830f5b100b6ae9595
+  version: ce650573d812270c64426f3df9fd220324d24b2f
   subpackages:
-  - compute/metadata
-  - internal
-  - internal/optional
   - storage
-- name: github.com/dgrijalva/jwt-go
-  version: 9ed569b5d1ac936e6494082958d63a6aa4fff99a
+- name: github.com/armon/go-metrics
+  version: 93f237eba9b0602f3e73710416558854a81d9337
+- name: github.com/dimfeld/httppath
+  version: c8e499c3ef3c3e272ed8bdcc1ccf39f73c88debc
+- name: github.com/dimfeld/httptreemux
+  version: 86f7c217d9043ebc6adfd8e2ed04a0bb1e1db651
+- name: github.com/go-openapi/errors
+  version: fc3f73a224499b047eda7191e5d22e1e9631e86f
 - name: github.com/go-sql-driver/mysql
   version: a197e5d40516f2e9f74dcee085a5f2d4604e94df
-- name: github.com/golang/protobuf
-  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+- name: github.com/goadesign/goa
+  version: 8f0fdca409904318050f9e03579c3878f8928826
   subpackages:
-  - proto
-- name: github.com/googleapis/gax-go
-  version: da06d194a00e19ce00d9011a13931c3f6f6887c7
-- name: github.com/labstack/echo
-  version: 8d504c1b699c757b267255c53b3e5219f9974abc
-  subpackages:
+  - client
+  - cors
+  - design
+  - design/apidsl
+  - dslengine
+  - goagen/codegen
+  - goagen/utils
+  - goatest
   - middleware
-- name: github.com/labstack/gommon
-  version: 9a43ff0d261e0e65594422e9eee08cf301aabbe7
+  - uuid
+  - version
+- name: github.com/goadesign/gorma
+  version: 37e02c0e3b7b779b3e981ec729e4015ea2b9ee29
   subpackages:
-  - bytes
-  - color
-  - log
-  - random
-- name: github.com/mattn/go-colorable
-  version: d228849504861217f796da67fae4f6e347643f15
-- name: github.com/mattn/go-isatty
-  version: 30a891c33c7cde7b02a981314b4228ec99380cca
+  - dsl
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/jinzhu/gorm
+  version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  subpackages:
+  - dialects/mysql
+- name: github.com/jinzhu/inflection
+  version: 1c35d901db3da928c72a72d8458480cc9ade058f
+- name: github.com/kr/pretty
+  version: cfb55aafdaf3ec08f0db22699ab822c50091b1c4
+- name: github.com/kr/text
+  version: 7cafcd837844e784b526369c9bce262804aebc60
+- name: github.com/manveru/faker
+  version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
 - name: github.com/mjibson/goon
   version: a9ac1d26f6dbfd9538f4e1e02a04061ef41c1c17
-- name: github.com/tylerb/graceful
-  version: 4df1190835320af7076dfcf27b3d071fd3612caf
-- name: github.com/valyala/fasttemplate
-  version: 3b874956e03f1636d171bda64b130f9135f42cff
-- name: github.com/yterajima/go-dtf
-  version: 9e54ad5c4b459faa158c3948c39b6378b0eba138
-- name: golang.org/x/crypto
-  version: ede567c8e044a5913dad1d1af3696d9da953104c
-  subpackages:
-  - acme
-  - acme/autocert
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
+- name: github.com/satori/go.uuid
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
+- name: github.com/spf13/cobra
+  version: 7aeaa2cce6ae7e18d2a6ee597b60ee137e999bd9
+- name: github.com/spf13/pflag
+  version: d16db1e50e33dff1b6cdf37596cef36742128670
+- name: github.com/zach-klippenstein/goregen
+  version: 795b5e3961ea1912fde60af417ad85e86acc0d6a
 - name: golang.org/x/net
   version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
@@ -57,63 +72,17 @@ imports:
   - internal/timeseries
   - lex/httplex
   - trace
-- name: golang.org/x/oauth2
-  version: 314dd2c0bf3ebd592ec0d20847d27e79d0dbe8dd
+  - websocket
+- name: golang.org/x/tools
+  version: 37a1062ad0bb70f026cd45d6b92cb37eacd927bb
   subpackages:
-  - google
-  - internal
-  - jws
-  - jwt
-- name: golang.org/x/sys
-  version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
-  subpackages:
-  - unix
-- name: google.golang.org/api
-  version: dfa61ae24628a06502b9c2805d983b57e89399b5
-  subpackages:
-  - gensupport
-  - googleapi
-  - googleapi/internal/uritemplates
-  - googleapi/transport
-  - internal
-  - iterator
-  - option
-  - storage/v1
-  - transport
+  - go/ast/astutil
 - name: google.golang.org/appengine
-  version: a2c54d2174c17540446e0ced57d9d459af61bc1c
+  version: 2e4a801b39fc199db615bfca7d0b9f8cd9580599
   subpackages:
   - '...'
-  - datastore
-  - file
-  - internal
-  - internal/app_identity
-  - internal/base
-  - internal/datastore
-  - internal/log
-  - internal/memcache
-  - internal/modules
-  - internal/remote_api
-  - internal/socket
-  - internal/urlfetch
-  - log
-  - memcache
-  - socket
-  - urlfetch
 - name: google.golang.org/grpc
-  version: 21f8ed309495401e6fd79b3a9fd549582aed1b4c
-  subpackages:
-  - codes
-  - credentials
-  - credentials/oauth
-  - grpclog
-  - internal
-  - metadata
-  - naming
-  - peer
-  - stats
-  - tap
-  - transport
+  version: 8050b9cbc271307e5a716a9d782803d09b0d6f2d
 - name: gopkg.in/yaml.v1
   version: 9f9df34309c04878acc86042b16630b0f696e1de
 testImports: []

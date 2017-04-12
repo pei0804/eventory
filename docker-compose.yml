@@ -1,0 +1,9 @@
+db:
+  build: .
+  container_name: eventory
+  command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+  environment:
+    MYSQL_ROOT_PASSWORD: eventory
+    TZ: "Asia/Tokyo"
+  ports:
+    - "3306:3306"
