@@ -5,7 +5,7 @@ build:
 
     - script:
         name: setup
-        code: make setup
+        code: make dev
 
     - script:
         name: test

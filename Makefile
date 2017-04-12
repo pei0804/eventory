@@ -1,18 +1,50 @@
-DBNAME:=eventory
-ENV:=development
+#! /usr/bin/make
+#
+# Targets:
+# - clean     delete all generated files
+# - generate  (re)generate all goagen-generated files.
+# - build     compile executable
+# - ae-build  build appengine
+# - ae-dev    deploy to local (dev) appengine
+# - ae-deploy deploy to appengine
+#
+# Meta targets:
+# - all is the default target, it runs all the targets in the order above.
+#
 
-setup:
-	which glide || go get -v github.com/Masterminds/glide
-	glide install
-
-devSetup:
-	which sql-migrate || go get github.com/rubenv/sql-migrate/...
-	which scaneo || go get github.com/variadico/scaneo
-	which scaneo glide || go get -v github.com/Masterminds/glide
-	glide install
+dev:
+	@which direnv || go get -v github.com/zimbatm/direnv
+	@direnv allow
+	@which glide || go get -v github.com/Masterminds/glide
+	@glide install
 
 test:
 	go test -v $(shell glide novendor)
+
+##### goa ######
+
+all: clean generate
+
+clean:
+	@rm -rf app
+	@rm -rf client
+	@rm -rf tool
+	@rm -rf swagger
+
+generate:
+	@goagen app     -d github.com/tikasan/eventory/design
+	@goagen swagger -d github.com/tikasan/eventory/design
+	@goagen client  -d github.com/tikasan/eventory/design
+
+model:
+	@rm -rf models
+	@goagen --design=github.com/tikasan/eventory/design gen --pkg-path=github.com/goadesign/gorma
+
+
+##### Database ######
+
+DBNAME:=eventory
+ENV:=development
 
 migrate/init:
 	mysql -u root -h localhost --protocol tcp -e "create database \`$(DBNAME)\`" -p
@@ -29,23 +61,32 @@ migrate/status:
 migrate/dry:
 	sql-migrate up -dryrun -env=$(ENV)
 
-gen:
-	cd model && go generate
+##### Docker ######
+
+docker/build: Dockerfile docker-compose.yml
+	docker-compose build
+
+docker/start:
+	docker-compose up -d
+
+docker/stop:
+	docker-compose down
+
+docker/logs:
+	docker-compose logs
+
+docker/clean:
+	docker-compose rm
+
+##### App engine ######
+
+PROJECT:=projectName
 
 deploy:
-	goapp deploy -application eventory-staging ./app
+	goapp deploy -application $(PROJECT) ./app
 
 rollback:
-	appcfg.py rollback ./app -A eventory-staging
+	appcfg.py rollback ./app -A $(PROJECT)
 
 local:
-	goapp serve ./app
-
-school:
-	dev_appserver.py --port=8001 ./app
-
-curlFetch:
-	curl https://eventory-staging.appspot.com/api/events/admin
-
-curlGet:
-	curl https://eventory-staging.appspot.com/api/smt/events
+	goapp serve ./server

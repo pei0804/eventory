@@ -1,5 +1,0 @@
-cron:
-- description: event fetch
-  url: /api/events/admin
-  schedule: every 8 hours
-  timezone: Asia/Tokyo

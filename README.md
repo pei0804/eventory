@@ -35,6 +35,3 @@
 
 - GAE(PaaS)
 - FireBase(mBaaS)
-
-**今後使用予定**
-- ElasticSearch
