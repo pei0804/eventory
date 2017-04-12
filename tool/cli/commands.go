@@ -1,19 +1,20 @@
 package cli
 
 import (
-	"../client"
 	"encoding/json"
 	"fmt"
-	"github.com/goadesign/goa"
-	goaclient "github.com/goadesign/goa/client"
-	uuid "github.com/goadesign/goa/uuid"
-	"github.com/spf13/cobra"
-	"golang.org/x/net/context"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/goadesign/goa"
+	goaclient "github.com/goadesign/goa/client"
+	uuid "github.com/goadesign/goa/uuid"
+	"github.com/spf13/cobra"
+	"github.com/tikasan/eventory/client"
+	"golang.org/x/net/context"
 )
 
 type (

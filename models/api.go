@@ -21,38 +21,38 @@ type Dk struct {
 	Event DoorkeeperEvent `json:"event"`
 }
 
-type Event struct {
-	EventId    int `json:"event_id"`
-	ApiId      int
-	Title      string `json:"title"`
-	Desc       string `json:"desc"`
-	Url        string `json:"url"`
-	Limit      int    `json:"limit"`
-	Accepted   int    `json:"accepted"`
-	Waitlisted int    `json:"waitlisted"`
-	Address    string `json:"address"`
-	Place      string `json:"place"`
-	StartAt    string `json:"start_at"`
-	EndAt      string `json:"end_at"`
-	DataHash   string
-	ID         int `json:"id"`
-}
-
-type EventJson struct {
-	EventId string `json:"event_id"`
-	ApiId   int    `json:"api_id"`
-	Title   string `json:"title"`
-	//Desc       string `json:"desc"`
-	Url      string `json:"url"`
-	Limit    int    `json:"limit"`
-	Accepted int    `json:"accepted"`
-	//Waitlisted int    `json:"waitlisted"`
-	Address string    `json:"address"`
-	Place   string    `json:"place"`
-	StartAt time.Time `json:"start_at"`
-	EndAt   time.Time `json:"end_at"`
-	ID      int       `json:"id"`
-}
+//type Event struct {
+//	EventId    int `json:"event_id"`
+//	ApiId      int
+//	Title      string `json:"title"`
+//	Desc       string `json:"desc"`
+//	Url        string `json:"url"`
+//	Limit      int    `json:"limit"`
+//	Accepted   int    `json:"accepted"`
+//	Waitlisted int    `json:"waitlisted"`
+//	Address    string `json:"address"`
+//	Place      string `json:"place"`
+//	StartAt    string `json:"start_at"`
+//	EndAt      string `json:"end_at"`
+//	DataHash   string
+//	ID         int `json:"id"`
+//}
+//
+//type EventJson struct {
+//	EventId string `json:"event_id"`
+//	ApiId   int    `json:"api_id"`
+//	Title   string `json:"title"`
+//	//Desc       string `json:"desc"`
+//	Url      string `json:"url"`
+//	Limit    int    `json:"limit"`
+//	Accepted int    `json:"accepted"`
+//	//Waitlisted int    `json:"waitlisted"`
+//	Address string    `json:"address"`
+//	Place   string    `json:"place"`
+//	StartAt time.Time `json:"start_at"`
+//	EndAt   time.Time `json:"end_at"`
+//	ID      int       `json:"id"`
+//}
 
 type AtdnEvent struct {
 	EventId    int `json:"event_id"`

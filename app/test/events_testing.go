@@ -11,18 +11,19 @@
 package test
 
 import (
-	"../app"
 	"bytes"
 	"fmt"
-	"github.com/goadesign/goa"
-	"github.com/goadesign/goa/goatest"
-	"golang.org/x/net/context"
 	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strconv"
+
+	"github.com/goadesign/goa"
+	"github.com/goadesign/goa/goatest"
+	"github.com/tikasan/eventory/app"
+	"golang.org/x/net/context"
 )
 
 // KeepEventEventsBadRequest runs the method KeepEvent of the given controller with the given parameters.

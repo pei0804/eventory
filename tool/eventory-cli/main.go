@@ -1,14 +1,15 @@
 package main
 
 import (
-	"../client"
-	"../tool/cli"
 	"fmt"
-	goaclient "github.com/goadesign/goa/client"
-	"github.com/spf13/cobra"
 	"net/http"
 	"os"
 	"time"
+
+	goaclient "github.com/goadesign/goa/client"
+	"github.com/spf13/cobra"
+	"github.com/tikasan/eventory/client"
+	"github.com/tikasan/eventory/tool/cli"
 )
 
 func main() {
