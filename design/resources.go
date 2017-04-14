@@ -84,6 +84,14 @@ var _ = Resource("genres", func() {
 				MaxLength(30)
 				Default("")
 			})
+			Param("sort", String, "ソート", func() {
+				Enum("created_asc", "created_desc", "")
+				Default("")
+			})
+			Param("page", Integer, "ページ(1->2->3->4)", func() {
+				Minimum(1)
+				Default(0)
+			})
 		})
 		Response(OK, CollectionOf(Genre))
 		Response(Unauthorized)

@@ -116,6 +116,17 @@ func (m *UserFollowGenreDB) Get(ctx context.Context, id int) (*UserFollowGenre, 
 	return &native, err
 }
 
+func (m *UserFollowGenreDB) GetByUserFollowGenre(ctx context.Context, userID int, genreID int) (*UserFollowGenre, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "get"}, time.Now())
+
+	var native UserFollowGenre
+	err := m.Db.Table(m.TableName()).Where("user_id = ?", userID).Where("genre_id = ?", genreID).Find(&native).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &native, err
+}
+
 // List returns an array of UserFollowGenre
 func (m *UserFollowGenreDB) List(ctx context.Context) ([]*UserFollowGenre, error) {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "list"}, time.Now())
@@ -142,11 +153,44 @@ func (m *UserFollowGenreDB) Add(ctx context.Context, model *UserFollowGenre) err
 	return nil
 }
 
+// User Follow Genre
+func (m *UserFollowGenreDB) UserFollowGenre(ctx context.Context, model *UserFollowGenre) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "follow"}, time.Now())
+
+	// 過去に一度でもフォロー操作をしたことがあるか
+	ufg, err := m.GetByUserFollowGenre(ctx, model.UserID, model.GenreID)
+	if err != nil {
+		// レコードが存在しないので、フォローレコードを追加する
+		err := m.Db.Create(model).Error
+		if err != nil {
+			goa.LogError(ctx, "error adding UserFollowGenre", "error", err.Error())
+			return err
+		}
+	}
+	// 過去に使ったレコードからdeleted_atをnullにして復活させる
+	ufg.DeletedAt = nil
+	err = m.Db.Model(ufg).Updates(model).Error
+	return nil
+}
+
+func (m *UserFollowGenreDB) UserUnfollowGenre(ctx context.Context, model *UserFollowGenre) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "unfollow"}, time.Now())
+
+	var obj UserFollowGenre
+	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("genre_id = ?", model.GenreID)).Error
+	if err != nil {
+		goa.LogError(ctx, "error deleting UserFollowGenre", "error", err.Error())
+		return err
+	}
+
+	return nil
+}
+
 // Update modifies a single record.
 func (m *UserFollowGenreDB) Update(ctx context.Context, model *UserFollowGenre) error {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "update"}, time.Now())
 
-	obj, err := m.Get(ctx, model.ID)
+	obj, err := m.Get(ctx, model.GenreID)
 	if err != nil {
 		goa.LogError(ctx, "error updating UserFollowGenre", "error", err.Error())
 		return err

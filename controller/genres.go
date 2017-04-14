@@ -1,9 +1,13 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/goadesign/goa"
 	"github.com/jinzhu/gorm"
 	"github.com/tikasan/eventory/app"
+	"github.com/tikasan/eventory/models"
+	"github.com/tikasan/eventory/utility"
 )
 
 // GenresController implements the genres resource.
@@ -25,10 +29,19 @@ func (c *GenresController) Create(ctx *app.CreateGenresContext) error {
 	// GenresController_Create: start_implement
 
 	// Put your logic here
+	genre := &models.Genre{}
+	genre.Name = ctx.Name
+	genre.Keyword = ctx.Name
+	genreDB := models.NewGenreDB(c.db)
+	ID, err := genreDB.AddGetInsertID(ctx, genre)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
 
+	// 作成したGenreIDを返す
 	// GenresController_Create: end_implement
-	res := &app.Genre{}
-	return ctx.OK(res)
+	res := &app.GenreTiny{&ID}
+	return ctx.OKTiny(res)
 }
 
 // FollowGenre runs the follow genre action.
@@ -36,7 +49,21 @@ func (c *GenresController) FollowGenre(ctx *app.FollowGenreGenresContext) error 
 	// GenresController_FollowGenre: start_implement
 
 	// Put your logic here
+	ufg := &models.UserFollowGenre{}
+	ufg.GenreID = ctx.GenreID
+	userID, err := utility.GetToken(ctx.Context)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	ufg.UserID = userID
+	ufgDB := models.NewUserFollowGenreDB(c.db)
+	if "PUT" == ctx.Request.Method {
+		ufgDB.UserFollowGenre(ctx.Context, ufg)
+	}
 
+	if "DELETE" == ctx.Request.Method {
+		ufgDB.UserUnfollowGenre(ctx.Context, ufg)
+	}
 	// GenresController_FollowGenre: end_implement
 	return nil
 }
@@ -46,8 +73,11 @@ func (c *GenresController) List(ctx *app.ListGenresContext) error {
 	// GenresController_List: start_implement
 
 	// Put your logic here
-
+	genreDB := models.NewGenreDB(c.db)
+	genre, err := genreDB.ListByKeyword(ctx.Context, ctx.Q, ctx.Sort, ctx.Page)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
 	// GenresController_List: end_implement
-	res := app.GenreCollection{}
-	return ctx.OK(res)
+	return ctx.OK(genre)
 }

@@ -69,6 +69,9 @@ var Genre = MediaType("application/vnd.genre+json", func() {
 		Attribute("ID")
 		Attribute("name")
 	})
+	View("tiny", func() {
+		Attribute("ID")
+	})
 })
 
 var Pref = MediaType("application/vnd.pref+json", func() {

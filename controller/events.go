@@ -41,17 +41,11 @@ func (c *EventsController) List(ctx *app.ListEventsContext) error {
 	// EventsController_List: start_implement
 
 	// Put your logic here
-	var events []*app.Event
 	eventDB := models.NewEventDB(c.db)
-	err := c.db.Scopes(
-		models.CreatePagingQuery(ctx.Page),
-		models.CreateSortQuery("desc"),
-		models.CreateLikeQuery(ctx.Q, "description")).
-		Table(eventDB.TableName()).
-		Find(&events).Error
+	events, err := eventDB.ListByQ(ctx.Context, ctx.Q, ctx.Sort, ctx.Page)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-	return ctx.OK(events)
 	// EventsController_List: end_implement
+	return ctx.OK(events)
 }

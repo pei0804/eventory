@@ -156,6 +156,39 @@ func (m *UserFollowEventDB) Add(ctx context.Context, model *UserFollowEvent) err
 	return nil
 }
 
+// User Follow Genre
+func (m *UserFollowEventDB) UserFollowEvent(ctx context.Context, model *UserFollowEvent) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "follow"}, time.Now())
+
+	// 過去に一度でもフォロー操作をしたことがあるか
+	ufe, err := m.GetByUserAndEvent(ctx, model.UserID, model.EventID)
+	if err != nil {
+		// レコードが存在しないので、フォローレコードを追加する
+		err := m.Db.Create(model).Error
+		if err != nil {
+			goa.LogError(ctx, "error adding UserFollowGenre", "error", err.Error())
+			return err
+		}
+	}
+	// 過去に使ったレコードからdeleted_atをnullにして復活させる
+	ufe.DeletedAt = nil
+	err = m.Db.Model(ufe).Updates(model).Error
+	return nil
+}
+
+func (m *UserFollowEventDB) UserUnfollowEvent(ctx context.Context, model *UserFollowEvent) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "unfollow"}, time.Now())
+
+	var obj UserFollowGenre
+	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("genre_id = ?", model.EventID)).Error
+	if err != nil {
+		goa.LogError(ctx, "error deleting UserFollowGenre", "error", err.Error())
+		return err
+	}
+
+	return nil
+}
+
 // Update modifies a single record.
 func (m *UserFollowEventDB) Update(ctx context.Context, model *UserFollowEvent) error {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "update"}, time.Now())

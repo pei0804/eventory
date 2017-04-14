@@ -231,6 +231,9 @@ paths:
         name: isKeep
         required: true
         type: boolean
+      produces:
+      - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -281,6 +284,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -331,6 +337,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -381,6 +390,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.event+json; type=collection
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -431,6 +443,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -481,6 +496,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.event+json; type=collection
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -531,6 +549,9 @@ paths:
         name: sort
         required: false
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -554,6 +575,13 @@ paths:
       description: ジャンル取得
       operationId: genres#list
       parameters:
+      - default: 0
+        description: ページ(1->2->3->4)
+        in: query
+        minimum: 1
+        name: page
+        required: false
+        type: integer
       - default: ""
         description: ジャンル名検索に使うキーワード
         in: query
@@ -562,6 +590,19 @@ paths:
         name: q
         required: false
         type: string
+      - default: ""
+        description: ソート
+        enum:
+        - created_asc
+        - created_desc
+        - ""
+        in: query
+        name: sort
+        required: false
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.genre+json; type=collection
       responses:
         "200":
           description: OK
@@ -590,6 +631,9 @@ paths:
         name: genreID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -617,6 +661,9 @@ paths:
         name: genreID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -647,6 +694,9 @@ paths:
         name: name
         required: true
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.genre+json
       responses:
         "200":
           description: OK
@@ -675,6 +725,9 @@ paths:
         name: prefID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -702,6 +755,9 @@ paths:
         name: prefID
         required: true
         type: integer
+      produces:
+      - text/plain
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -737,6 +793,9 @@ paths:
         pattern: (^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)
         required: true
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.message+json
       responses:
         "200":
           description: OK
@@ -770,6 +829,9 @@ paths:
         name: platform
         required: true
         type: string
+      produces:
+      - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -805,6 +867,9 @@ paths:
         name: platform
         required: true
         type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.token+json
       responses:
         "200":
           description: OK
