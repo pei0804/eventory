@@ -24,9 +24,20 @@ func NewUsersController(service *goa.Service, db *gorm.DB) *UsersController {
 	}
 }
 
-// AccountCreate runs the account create action.
-func (c *UsersController) AccountCreate(ctx *app.AccountCreateUsersContext) error {
-	// UsersController_AccountCreate: start_implement
+// Login runs the login action.
+func (c *UsersController) Login(ctx *app.LoginUsersContext) error {
+	// UsersController_Login: start_implement
+
+	// Put your logic here
+
+	// UsersController_Login: end_implement
+	res := &app.Message{}
+	return ctx.OK(res)
+}
+
+// RegularCreate runs the regular create action.
+func (c *UsersController) RegularCreate(ctx *app.RegularCreateUsersContext) error {
+	// UsersController_RegularCreate: start_implement
 
 	// Put your logic here
 	// 使用している端末の仮ユーザーが存在するか
@@ -56,14 +67,14 @@ func (c *UsersController) AccountCreate(ctx *app.AccountCreateUsersContext) erro
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-	// UsersController_AccountCreate: end_implement
+	// UsersController_RegularCreate: end_implement
 	message := "ok"
 	return ctx.OK(&app.Message{&message})
 }
 
-// TmpAccountCreate runs the tmp account create action.
-func (c *UsersController) TmpAccountCreate(ctx *app.TmpAccountCreateUsersContext) error {
-	// UsersController_TmpAccountCreate: start_implement
+// TmpCreate runs the tmp create action.
+func (c *UsersController) TmpCreate(ctx *app.TmpCreateUsersContext) error {
+	// UsersController_TmpCreate: start_implement
 
 	// Put your logic here
 	// 既にユーザーが存在すればtoken情報を返す
@@ -94,13 +105,13 @@ func (c *UsersController) TmpAccountCreate(ctx *app.TmpAccountCreateUsersContext
 		return fmt.Errorf("%v", err)
 	}
 	t.Commit()
-	// UsersController_TmpAccountCreate: end_implement
+	// UsersController_TmpCreate: end_implement
 	return ctx.OK(&app.Token{&userTerminal.Token})
 }
 
-// AccountTerminalStatusUpdate runs the account terminal status update action.
-func (c *UsersController) AccountTerminalStatusUpdate(ctx *app.AccountTerminalStatusUpdateUsersContext) error {
-	// UsersController_AccountTerminalStatusUpdate: start_implement
+// Status runs the status action.
+func (c *UsersController) Status(ctx *app.StatusUsersContext) error {
+	// UsersController_Status: start_implement
 
 	// Put your logic here
 	userID, err := utility.GetToken(ctx.Context)
@@ -116,6 +127,6 @@ func (c *UsersController) AccountTerminalStatusUpdate(ctx *app.AccountTerminalSt
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-	// UsersController_AccountTerminalStatusUpdate: end_implement
+	// UsersController_Status: end_implement
 	return nil
 }

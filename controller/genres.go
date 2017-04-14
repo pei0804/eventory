@@ -37,16 +37,15 @@ func (c *GenresController) Create(ctx *app.CreateGenresContext) error {
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-
 	// 作成したGenreIDを返す
 	// GenresController_Create: end_implement
 	res := &app.GenreTiny{&ID}
 	return ctx.OKTiny(res)
 }
 
-// FollowGenre runs the follow genre action.
-func (c *GenresController) FollowGenre(ctx *app.FollowGenreGenresContext) error {
-	// GenresController_FollowGenre: start_implement
+// Follow runs the follow action.
+func (c *GenresController) Follow(ctx *app.FollowGenresContext) error {
+	// GenresController_Follow: start_implement
 
 	// Put your logic here
 	ufg := &models.UserFollowGenre{}
@@ -64,7 +63,7 @@ func (c *GenresController) FollowGenre(ctx *app.FollowGenreGenresContext) error 
 	if "DELETE" == ctx.Request.Method {
 		ufgDB.UserUnfollowGenre(ctx.Context, ufg)
 	}
-	// GenresController_FollowGenre: end_implement
+	// GenresController_Follow: end_implement
 	return nil
 }
 

@@ -23,16 +23,16 @@ func NewEventsController(service *goa.Service, db *gorm.DB) *EventsController {
 	}
 }
 
-// KeepEvent runs the keep event action.
-func (c *EventsController) KeepEvent(ctx *app.KeepEventEventsContext) error {
-	// EventsController_KeepEvent: start_implement
+// Keep runs the keep action.
+func (c *EventsController) Keep(ctx *app.KeepEventsContext) error {
+	// EventsController_Keep: start_implement
 
 	// Put your logic here
 	//ufeDB := models.NewUserFollowEventDB(c.db)
 	//ufe := models.UserFollowEvent{}
 	//ufe.EventID = ctx.EventID
 
-	// EventsController_KeepEvent: end_implement
+	// EventsController_Keep: end_implement
 	return nil
 }
 

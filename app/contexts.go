@@ -18,8 +18,8 @@ import (
 	"unicode/utf8"
 )
 
-// KeepEventEventsContext provides the events keep event action context.
-type KeepEventEventsContext struct {
+// KeepEventsContext provides the events keep action context.
+type KeepEventsContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
@@ -27,15 +27,15 @@ type KeepEventEventsContext struct {
 	IsKeep  bool
 }
 
-// NewKeepEventEventsContext parses the incoming request URL and body, performs validations and creates the
-// context used by the events controller keep event action.
-func NewKeepEventEventsContext(ctx context.Context, r *http.Request, service *goa.Service) (*KeepEventEventsContext, error) {
+// NewKeepEventsContext parses the incoming request URL and body, performs validations and creates the
+// context used by the events controller keep action.
+func NewKeepEventsContext(ctx context.Context, r *http.Request, service *goa.Service) (*KeepEventsContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := KeepEventEventsContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := KeepEventsContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramEventID := req.Params["eventID"]
 	if len(paramEventID) > 0 {
 		rawEventID := paramEventID[0]
@@ -60,7 +60,7 @@ func NewKeepEventEventsContext(ctx context.Context, r *http.Request, service *go
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *KeepEventEventsContext) OK(resp []byte) error {
+func (ctx *KeepEventsContext) OK(resp []byte) error {
 	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
@@ -68,19 +68,19 @@ func (ctx *KeepEventEventsContext) OK(resp []byte) error {
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *KeepEventEventsContext) BadRequest(r error) error {
+func (ctx *KeepEventsContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // Unauthorized sends a HTTP response with status code 401.
-func (ctx *KeepEventEventsContext) Unauthorized() error {
+func (ctx *KeepEventsContext) Unauthorized() error {
 	ctx.ResponseData.WriteHeader(401)
 	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
-func (ctx *KeepEventEventsContext) NotFound() error {
+func (ctx *KeepEventsContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
@@ -222,23 +222,23 @@ func (ctx *CreateGenresContext) Unauthorized() error {
 	return nil
 }
 
-// FollowGenreGenresContext provides the genres follow genre action context.
-type FollowGenreGenresContext struct {
+// FollowGenresContext provides the genres follow action context.
+type FollowGenresContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 	GenreID int
 }
 
-// NewFollowGenreGenresContext parses the incoming request URL and body, performs validations and creates the
-// context used by the genres controller follow genre action.
-func NewFollowGenreGenresContext(ctx context.Context, r *http.Request, service *goa.Service) (*FollowGenreGenresContext, error) {
+// NewFollowGenresContext parses the incoming request URL and body, performs validations and creates the
+// context used by the genres controller follow action.
+func NewFollowGenresContext(ctx context.Context, r *http.Request, service *goa.Service) (*FollowGenresContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := FollowGenreGenresContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := FollowGenresContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramGenreID := req.Params["genreID"]
 	if len(paramGenreID) > 0 {
 		rawGenreID := paramGenreID[0]
@@ -252,7 +252,7 @@ func NewFollowGenreGenresContext(ctx context.Context, r *http.Request, service *
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *FollowGenreGenresContext) OK(resp []byte) error {
+func (ctx *FollowGenresContext) OK(resp []byte) error {
 	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
@@ -260,19 +260,19 @@ func (ctx *FollowGenreGenresContext) OK(resp []byte) error {
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *FollowGenreGenresContext) BadRequest(r error) error {
+func (ctx *FollowGenresContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // Unauthorized sends a HTTP response with status code 401.
-func (ctx *FollowGenreGenresContext) Unauthorized() error {
+func (ctx *FollowGenresContext) Unauthorized() error {
 	ctx.ResponseData.WriteHeader(401)
 	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
-func (ctx *FollowGenreGenresContext) NotFound() error {
+func (ctx *FollowGenresContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
@@ -366,23 +366,23 @@ func (ctx *ListGenresContext) Unauthorized() error {
 	return nil
 }
 
-// PrefFollowPrefsContext provides the prefs pref follow action context.
-type PrefFollowPrefsContext struct {
+// FollowPrefsContext provides the prefs follow action context.
+type FollowPrefsContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 	PrefID int
 }
 
-// NewPrefFollowPrefsContext parses the incoming request URL and body, performs validations and creates the
-// context used by the prefs controller pref follow action.
-func NewPrefFollowPrefsContext(ctx context.Context, r *http.Request, service *goa.Service) (*PrefFollowPrefsContext, error) {
+// NewFollowPrefsContext parses the incoming request URL and body, performs validations and creates the
+// context used by the prefs controller follow action.
+func NewFollowPrefsContext(ctx context.Context, r *http.Request, service *goa.Service) (*FollowPrefsContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := PrefFollowPrefsContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := FollowPrefsContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramPrefID := req.Params["prefID"]
 	if len(paramPrefID) > 0 {
 		rawPrefID := paramPrefID[0]
@@ -396,7 +396,7 @@ func NewPrefFollowPrefsContext(ctx context.Context, r *http.Request, service *go
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *PrefFollowPrefsContext) OK(resp []byte) error {
+func (ctx *FollowPrefsContext) OK(resp []byte) error {
 	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
@@ -404,25 +404,81 @@ func (ctx *PrefFollowPrefsContext) OK(resp []byte) error {
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *PrefFollowPrefsContext) BadRequest(r error) error {
+func (ctx *FollowPrefsContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // Unauthorized sends a HTTP response with status code 401.
-func (ctx *PrefFollowPrefsContext) Unauthorized() error {
+func (ctx *FollowPrefsContext) Unauthorized() error {
 	ctx.ResponseData.WriteHeader(401)
 	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
-func (ctx *PrefFollowPrefsContext) NotFound() error {
+func (ctx *FollowPrefsContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
 
-// AccountCreateUsersContext provides the users account create action context.
-type AccountCreateUsersContext struct {
+// LoginUsersContext provides the users login action context.
+type LoginUsersContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+	Email    string
+	Password string
+}
+
+// NewLoginUsersContext parses the incoming request URL and body, performs validations and creates the
+// context used by the users controller login action.
+func NewLoginUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*LoginUsersContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	req.Request = r
+	rctx := LoginUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
+	paramEmail := req.Params["email"]
+	if len(paramEmail) == 0 {
+		err = goa.MergeErrors(err, goa.MissingParamError("email"))
+	} else {
+		rawEmail := paramEmail[0]
+		rctx.Email = rawEmail
+		if err2 := goa.ValidateFormat(goa.FormatEmail, rctx.Email); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`email`, rctx.Email, goa.FormatEmail, err2))
+		}
+	}
+	paramPassword := req.Params["password"]
+	if len(paramPassword) == 0 {
+		err = goa.MergeErrors(err, goa.MissingParamError("password"))
+	} else {
+		rawPassword := paramPassword[0]
+		rctx.Password = rawPassword
+		if utf8.RuneCountInString(rctx.Password) < 1 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`password`, rctx.Password, utf8.RuneCountInString(rctx.Password), 1, true))
+		}
+		if utf8.RuneCountInString(rctx.Password) > 255 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`password`, rctx.Password, utf8.RuneCountInString(rctx.Password), 255, false))
+		}
+	}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *LoginUsersContext) OK(r *Message) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.message+json")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *LoginUsersContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
+// RegularCreateUsersContext provides the users regular create action context.
+type RegularCreateUsersContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
@@ -430,15 +486,15 @@ type AccountCreateUsersContext struct {
 	Identifier string
 }
 
-// NewAccountCreateUsersContext parses the incoming request URL and body, performs validations and creates the
-// context used by the users controller account create action.
-func NewAccountCreateUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*AccountCreateUsersContext, error) {
+// NewRegularCreateUsersContext parses the incoming request URL and body, performs validations and creates the
+// context used by the users controller regular create action.
+func NewRegularCreateUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*RegularCreateUsersContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := AccountCreateUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := RegularCreateUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramEmail := req.Params["email"]
 	if len(paramEmail) == 0 {
 		err = goa.MergeErrors(err, goa.MissingParamError("email"))
@@ -463,25 +519,25 @@ func NewAccountCreateUsersContext(ctx context.Context, r *http.Request, service 
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *AccountCreateUsersContext) OK(r *Message) error {
+func (ctx *RegularCreateUsersContext) OK(r *Message) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.message+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *AccountCreateUsersContext) BadRequest(r error) error {
+func (ctx *RegularCreateUsersContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // Unauthorized sends a HTTP response with status code 401.
-func (ctx *AccountCreateUsersContext) Unauthorized() error {
+func (ctx *RegularCreateUsersContext) Unauthorized() error {
 	ctx.ResponseData.WriteHeader(401)
 	return nil
 }
 
-// AccountTerminalStatusUpdateUsersContext provides the users account terminal status update action context.
-type AccountTerminalStatusUpdateUsersContext struct {
+// StatusUsersContext provides the users status action context.
+type StatusUsersContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
@@ -489,15 +545,15 @@ type AccountTerminalStatusUpdateUsersContext struct {
 	Platform      string
 }
 
-// NewAccountTerminalStatusUpdateUsersContext parses the incoming request URL and body, performs validations and creates the
-// context used by the users controller account terminal status update action.
-func NewAccountTerminalStatusUpdateUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*AccountTerminalStatusUpdateUsersContext, error) {
+// NewStatusUsersContext parses the incoming request URL and body, performs validations and creates the
+// context used by the users controller status action.
+func NewStatusUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*StatusUsersContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := AccountTerminalStatusUpdateUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := StatusUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramClientVersion := req.Params["client_version"]
 	if len(paramClientVersion) == 0 {
 		err = goa.MergeErrors(err, goa.MissingParamError("client_version"))
@@ -516,7 +572,7 @@ func NewAccountTerminalStatusUpdateUsersContext(ctx context.Context, r *http.Req
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *AccountTerminalStatusUpdateUsersContext) OK(resp []byte) error {
+func (ctx *StatusUsersContext) OK(resp []byte) error {
 	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
@@ -524,13 +580,13 @@ func (ctx *AccountTerminalStatusUpdateUsersContext) OK(resp []byte) error {
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *AccountTerminalStatusUpdateUsersContext) BadRequest(r error) error {
+func (ctx *StatusUsersContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
-// TmpAccountCreateUsersContext provides the users tmp account create action context.
-type TmpAccountCreateUsersContext struct {
+// TmpCreateUsersContext provides the users tmp create action context.
+type TmpCreateUsersContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
@@ -539,15 +595,15 @@ type TmpAccountCreateUsersContext struct {
 	Platform      string
 }
 
-// NewTmpAccountCreateUsersContext parses the incoming request URL and body, performs validations and creates the
-// context used by the users controller tmp account create action.
-func NewTmpAccountCreateUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*TmpAccountCreateUsersContext, error) {
+// NewTmpCreateUsersContext parses the incoming request URL and body, performs validations and creates the
+// context used by the users controller tmp create action.
+func NewTmpCreateUsersContext(ctx context.Context, r *http.Request, service *goa.Service) (*TmpCreateUsersContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := TmpAccountCreateUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := TmpCreateUsersContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramClientVersion := req.Params["client_version"]
 	if len(paramClientVersion) == 0 {
 		err = goa.MergeErrors(err, goa.MissingParamError("client_version"))
@@ -576,13 +632,13 @@ func NewTmpAccountCreateUsersContext(ctx context.Context, r *http.Request, servi
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *TmpAccountCreateUsersContext) OK(r *Token) error {
+func (ctx *TmpCreateUsersContext) OK(r *Token) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.token+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *TmpAccountCreateUsersContext) BadRequest(r error) error {
+func (ctx *TmpCreateUsersContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }

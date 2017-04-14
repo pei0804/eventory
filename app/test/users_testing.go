@@ -24,11 +24,11 @@ import (
 	"net/url"
 )
 
-// AccountCreateUsersBadRequest runs the method AccountCreate of the given controller with the given parameters.
+// LoginUsersBadRequest runs the method Login of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func AccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, error) {
+func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, password string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -54,11 +54,11 @@ func AccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		query["identifier"] = sliceVal
+		sliceVal := []string{password}
+		query["password"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/api/v2/users/new"),
+		Path:     fmt.Sprintf("/api/v2/users/login"),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
@@ -71,20 +71,20 @@ func AccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		prms["identifier"] = sliceVal
+		sliceVal := []string{password}
+		prms["password"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	accountCreateCtx, _err := app.NewAccountCreateUsersContext(goaCtx, req, service)
+	loginCtx, _err := app.NewLoginUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.AccountCreate(accountCreateCtx)
+	_err = ctrl.Login(loginCtx)
 
 	// Validate response
 	if _err != nil {
@@ -106,11 +106,11 @@ func AccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 	return rw, mt
 }
 
-// AccountCreateUsersOK runs the method AccountCreate of the given controller with the given parameters.
+// LoginUsersOK runs the method Login of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func AccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, *app.Message) {
+func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, password string) (http.ResponseWriter, *app.Message) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -136,11 +136,11 @@ func AccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		query["identifier"] = sliceVal
+		sliceVal := []string{password}
+		query["password"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/api/v2/users/new"),
+		Path:     fmt.Sprintf("/api/v2/users/login"),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
@@ -153,20 +153,20 @@ func AccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		prms["identifier"] = sliceVal
+		sliceVal := []string{password}
+		prms["password"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	accountCreateCtx, _err := app.NewAccountCreateUsersContext(goaCtx, req, service)
+	loginCtx, _err := app.NewLoginUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.AccountCreate(accountCreateCtx)
+	_err = ctrl.Login(loginCtx)
 
 	// Validate response
 	if _err != nil {
@@ -188,11 +188,11 @@ func AccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 	return rw, mt
 }
 
-// AccountCreateUsersUnauthorized runs the method AccountCreate of the given controller with the given parameters.
-// It returns the response writer so it's possible to inspect the response headers.
+// RegularCreateUsersBadRequest runs the method RegularCreate of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func AccountCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) http.ResponseWriter {
+func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -242,13 +242,177 @@ func AccountCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, s
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	accountCreateCtx, _err := app.NewAccountCreateUsersContext(goaCtx, req, service)
+	regularCreateCtx, _err := app.NewRegularCreateUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.AccountCreate(accountCreateCtx)
+	_err = ctrl.RegularCreate(regularCreateCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 400 {
+		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
+	}
+	var mt error
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(error)
+		if !ok {
+			t.Fatalf("invalid response media: got %+v, expected instance of error", resp)
+		}
+	}
+
+	// Return results
+	return rw, mt
+}
+
+// RegularCreateUsersOK runs the method RegularCreate of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, *app.Message) {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{email}
+		query["email"] = sliceVal
+	}
+	{
+		sliceVal := []string{identifier}
+		query["identifier"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/api/v2/users/new"),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	prms := url.Values{}
+	{
+		sliceVal := []string{email}
+		prms["email"] = sliceVal
+	}
+	{
+		sliceVal := []string{identifier}
+		prms["identifier"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
+	regularCreateCtx, _err := app.NewRegularCreateUsersContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.RegularCreate(regularCreateCtx)
+
+	// Validate response
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
+	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
+	var mt *app.Message
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.Message)
+		if !ok {
+			t.Fatalf("invalid response media: got %+v, expected instance of app.Message", resp)
+		}
+	}
+
+	// Return results
+	return rw, mt
+}
+
+// RegularCreateUsersUnauthorized runs the method RegularCreate of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+// If ctx is nil then context.Background() is used.
+// If service is nil then a default service is created.
+func RegularCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) http.ResponseWriter {
+	// Setup service
+	var (
+		logBuf bytes.Buffer
+		resp   interface{}
+
+		respSetter goatest.ResponseSetterFunc = func(r interface{}) { resp = r }
+	)
+	if service == nil {
+		service = goatest.Service(&logBuf, respSetter)
+	} else {
+		logger := log.New(&logBuf, "", log.Ltime)
+		service.WithLogger(goa.NewLogger(logger))
+		newEncoder := func(io.Writer) goa.Encoder { return respSetter }
+		service.Encoder = goa.NewHTTPEncoder() // Make sure the code ends up using this decoder
+		service.Encoder.Register(newEncoder, "*/*")
+	}
+
+	// Setup request context
+	rw := httptest.NewRecorder()
+	query := url.Values{}
+	{
+		sliceVal := []string{email}
+		query["email"] = sliceVal
+	}
+	{
+		sliceVal := []string{identifier}
+		query["identifier"] = sliceVal
+	}
+	u := &url.URL{
+		Path:     fmt.Sprintf("/api/v2/users/new"),
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	prms := url.Values{}
+	{
+		sliceVal := []string{email}
+		prms["email"] = sliceVal
+	}
+	{
+		sliceVal := []string{identifier}
+		prms["identifier"] = sliceVal
+	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
+	regularCreateCtx, _err := app.NewRegularCreateUsersContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
+	}
+
+	// Perform action
+	_err = ctrl.RegularCreate(regularCreateCtx)
 
 	// Validate response
 	if _err != nil {
@@ -262,11 +426,11 @@ func AccountCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, s
 	return rw
 }
 
-// AccountTerminalStatusUpdateUsersBadRequest runs the method AccountTerminalStatusUpdate of the given controller with the given parameters.
+// StatusUsersBadRequest runs the method Status of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func AccountTerminalStatusUpdateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, platform string) (http.ResponseWriter, error) {
+func StatusUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, platform string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -316,13 +480,13 @@ func AccountTerminalStatusUpdateUsersBadRequest(t goatest.TInterface, ctx contex
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	accountTerminalStatusUpdateCtx, _err := app.NewAccountTerminalStatusUpdateUsersContext(goaCtx, req, service)
+	statusCtx, _err := app.NewStatusUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.AccountTerminalStatusUpdate(accountTerminalStatusUpdateCtx)
+	_err = ctrl.Status(statusCtx)
 
 	// Validate response
 	if _err != nil {
@@ -344,11 +508,11 @@ func AccountTerminalStatusUpdateUsersBadRequest(t goatest.TInterface, ctx contex
 	return rw, mt
 }
 
-// AccountTerminalStatusUpdateUsersOK runs the method AccountTerminalStatusUpdate of the given controller with the given parameters.
+// StatusUsersOK runs the method Status of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func AccountTerminalStatusUpdateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, platform string) http.ResponseWriter {
+func StatusUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, platform string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -398,13 +562,13 @@ func AccountTerminalStatusUpdateUsersOK(t goatest.TInterface, ctx context.Contex
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	accountTerminalStatusUpdateCtx, _err := app.NewAccountTerminalStatusUpdateUsersContext(goaCtx, req, service)
+	statusCtx, _err := app.NewStatusUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.AccountTerminalStatusUpdate(accountTerminalStatusUpdateCtx)
+	_err = ctrl.Status(statusCtx)
 
 	// Validate response
 	if _err != nil {
@@ -418,11 +582,11 @@ func AccountTerminalStatusUpdateUsersOK(t goatest.TInterface, ctx context.Contex
 	return rw
 }
 
-// TmpAccountCreateUsersBadRequest runs the method TmpAccountCreate of the given controller with the given parameters.
+// TmpCreateUsersBadRequest runs the method TmpCreate of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func TmpAccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, identifier string, platform string) (http.ResponseWriter, error) {
+func TmpCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, identifier string, platform string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -480,13 +644,13 @@ func TmpAccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	tmpAccountCreateCtx, _err := app.NewTmpAccountCreateUsersContext(goaCtx, req, service)
+	tmpCreateCtx, _err := app.NewTmpCreateUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.TmpAccountCreate(tmpAccountCreateCtx)
+	_err = ctrl.TmpCreate(tmpCreateCtx)
 
 	// Validate response
 	if _err != nil {
@@ -508,11 +672,11 @@ func TmpAccountCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, 
 	return rw, mt
 }
 
-// TmpAccountCreateUsersOK runs the method TmpAccountCreate of the given controller with the given parameters.
+// TmpCreateUsersOK runs the method TmpCreate of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func TmpAccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, identifier string, platform string) (http.ResponseWriter, *app.Token) {
+func TmpCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, clientVersion string, identifier string, platform string) (http.ResponseWriter, *app.Token) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -570,13 +734,13 @@ func TmpAccountCreateUsersOK(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "UsersTest"), rw, req, prms)
-	tmpAccountCreateCtx, _err := app.NewTmpAccountCreateUsersContext(goaCtx, req, service)
+	tmpCreateCtx, _err := app.NewTmpCreateUsersContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.TmpAccountCreate(tmpAccountCreateCtx)
+	_err = ctrl.TmpCreate(tmpCreateCtx)
 
 	// Validate response
 	if _err != nil {

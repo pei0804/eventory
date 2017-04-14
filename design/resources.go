@@ -37,7 +37,7 @@ var _ = Resource("events", func() {
 		Response(Unauthorized)
 		Response(BadRequest, ErrorMedia)
 	})
-	Action("keep event", func() {
+	Action("keep", func() {
 		Routing(
 			PUT("/:eventID/keep"),
 		)
@@ -97,7 +97,7 @@ var _ = Resource("genres", func() {
 		Response(Unauthorized)
 		Response(BadRequest, ErrorMedia)
 	})
-	Action("follow genre", func() {
+	Action("follow", func() {
 		Routing(
 			PUT("/:genreID/follow"),
 			DELETE("/:genreID/follow"),
@@ -117,7 +117,7 @@ var _ = Resource("genres", func() {
 var _ = Resource("users", func() {
 	BasePath("/users")
 	Security(UserAuth)
-	Action("tmp account create", func() {
+	Action("tmp create", func() {
 		Routing(
 			POST("/tmp"),
 		)
@@ -134,7 +134,25 @@ var _ = Resource("users", func() {
 		Response(OK, Token)
 		Response(BadRequest, ErrorMedia)
 	})
-	Action("account terminal status update", func() {
+	Action("login", func() {
+		Routing(
+			POST("/login"),
+		)
+		Params(func() {
+			Param("email", String, "メールアドレス", func() {
+				Format(goa.FormatEmail)
+			})
+			Param("password", String, "パスワード", func() {
+				MinLength(1)
+				MaxLength(255)
+			})
+			Required("email", "password")
+		})
+		Description("ログイン")
+		Response(OK, Message)
+		Response(BadRequest, ErrorMedia)
+	})
+	Action("status", func() {
 		Routing(
 			PUT("/status"),
 		)
@@ -147,7 +165,7 @@ var _ = Resource("users", func() {
 		Response(OK)
 		Response(BadRequest, ErrorMedia)
 	})
-	Action("account create", func() {
+	Action("regular create", func() {
 		Routing(
 			POST("/new"),
 		)
@@ -170,7 +188,7 @@ var _ = Resource("users", func() {
 var _ = Resource("prefs", func() {
 	BasePath("/prefs")
 	Security(UserAuth)
-	Action("pref follow", func() {
+	Action("follow", func() {
 		Routing(
 			PUT("/:prefID/follow"),
 			DELETE("/:prefID/follow"),

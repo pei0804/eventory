@@ -25,11 +25,11 @@ import (
 	"strconv"
 )
 
-// KeepEventEventsBadRequest runs the method KeepEvent of the given controller with the given parameters.
+// KeepEventsBadRequest runs the method Keep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func KeepEventEventsBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) (http.ResponseWriter, error) {
+func KeepEventsBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -72,13 +72,13 @@ func KeepEventEventsBadRequest(t goatest.TInterface, ctx context.Context, servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "EventsTest"), rw, req, prms)
-	keepEventCtx, _err := app.NewKeepEventEventsContext(goaCtx, req, service)
+	keepCtx, _err := app.NewKeepEventsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.KeepEvent(keepEventCtx)
+	_err = ctrl.Keep(keepCtx)
 
 	// Validate response
 	if _err != nil {
@@ -100,11 +100,11 @@ func KeepEventEventsBadRequest(t goatest.TInterface, ctx context.Context, servic
 	return rw, mt
 }
 
-// KeepEventEventsNotFound runs the method KeepEvent of the given controller with the given parameters.
+// KeepEventsNotFound runs the method Keep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func KeepEventEventsNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
+func KeepEventsNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -147,13 +147,13 @@ func KeepEventEventsNotFound(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "EventsTest"), rw, req, prms)
-	keepEventCtx, _err := app.NewKeepEventEventsContext(goaCtx, req, service)
+	keepCtx, _err := app.NewKeepEventsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.KeepEvent(keepEventCtx)
+	_err = ctrl.Keep(keepCtx)
 
 	// Validate response
 	if _err != nil {
@@ -167,11 +167,11 @@ func KeepEventEventsNotFound(t goatest.TInterface, ctx context.Context, service 
 	return rw
 }
 
-// KeepEventEventsOK runs the method KeepEvent of the given controller with the given parameters.
+// KeepEventsOK runs the method Keep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func KeepEventEventsOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
+func KeepEventsOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -214,13 +214,13 @@ func KeepEventEventsOK(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "EventsTest"), rw, req, prms)
-	keepEventCtx, _err := app.NewKeepEventEventsContext(goaCtx, req, service)
+	keepCtx, _err := app.NewKeepEventsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.KeepEvent(keepEventCtx)
+	_err = ctrl.Keep(keepCtx)
 
 	// Validate response
 	if _err != nil {
@@ -234,11 +234,11 @@ func KeepEventEventsOK(t goatest.TInterface, ctx context.Context, service *goa.S
 	return rw
 }
 
-// KeepEventEventsUnauthorized runs the method KeepEvent of the given controller with the given parameters.
+// KeepEventsUnauthorized runs the method Keep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func KeepEventEventsUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
+func KeepEventsUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.EventsController, eventID int, isKeep bool) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -281,13 +281,13 @@ func KeepEventEventsUnauthorized(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "EventsTest"), rw, req, prms)
-	keepEventCtx, _err := app.NewKeepEventEventsContext(goaCtx, req, service)
+	keepCtx, _err := app.NewKeepEventsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.KeepEvent(keepEventCtx)
+	_err = ctrl.Keep(keepCtx)
 
 	// Validate response
 	if _err != nil {

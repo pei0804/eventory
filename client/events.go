@@ -18,32 +18,32 @@ import (
 	"strconv"
 )
 
-// KeepEventEventsPath computes a request path to the keep event action of events.
-func KeepEventEventsPath(eventID int) string {
+// KeepEventsPath computes a request path to the keep action of events.
+func KeepEventsPath(eventID int) string {
 	param0 := strconv.Itoa(eventID)
 
 	return fmt.Sprintf("/api/v2/events/%s/keep", param0)
 }
 
 // イベントのお気に入り操作
-func (c *Client) KeepEventEvents(ctx context.Context, path string, isKeep bool) (*http.Response, error) {
-	req, err := c.NewKeepEventEventsRequest(ctx, path, isKeep)
+func (c *Client) KeepEvents(ctx context.Context, path string, isKeep bool) (*http.Response, error) {
+	req, err := c.NewKeepEventsRequest(ctx, path, isKeep)
 	if err != nil {
 		return nil, err
 	}
 	return c.Client.Do(ctx, req)
 }
 
-// NewKeepEventEventsRequest create the request corresponding to the keep event action endpoint of the events resource.
-func (c *Client) NewKeepEventEventsRequest(ctx context.Context, path string, isKeep bool) (*http.Request, error) {
+// NewKeepEventsRequest create the request corresponding to the keep action endpoint of the events resource.
+func (c *Client) NewKeepEventsRequest(ctx context.Context, path string, isKeep bool) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
-	tmp11 := strconv.FormatBool(isKeep)
-	values.Set("isKeep", tmp11)
+	tmp12 := strconv.FormatBool(isKeep)
+	values.Set("isKeep", tmp12)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -110,8 +110,8 @@ func (c *Client) NewListEventsRequest(ctx context.Context, path string, page *in
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	if page != nil {
-		tmp12 := strconv.Itoa(*page)
-		values.Set("page", tmp12)
+		tmp13 := strconv.Itoa(*page)
+		values.Set("page", tmp13)
 	}
 	if q != nil {
 		values.Set("q", *q)

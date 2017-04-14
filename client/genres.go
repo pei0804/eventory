@@ -53,31 +53,31 @@ func (c *Client) NewCreateGenresRequest(ctx context.Context, path string, name s
 	return req, nil
 }
 
-// FollowGenreGenresPath computes a request path to the follow genre action of genres.
-func FollowGenreGenresPath(genreID int) string {
+// FollowGenresPath computes a request path to the follow action of genres.
+func FollowGenresPath(genreID int) string {
 	param0 := strconv.Itoa(genreID)
 
 	return fmt.Sprintf("/api/v2/genres/%s/follow", param0)
 }
 
-// FollowGenreGenresPath2 computes a request path to the follow genre action of genres.
-func FollowGenreGenresPath2(genreID int) string {
+// FollowGenresPath2 computes a request path to the follow action of genres.
+func FollowGenresPath2(genreID int) string {
 	param0 := strconv.Itoa(genreID)
 
 	return fmt.Sprintf("/api/v2/genres/%s/follow", param0)
 }
 
 // ジャンルお気に入り操作
-func (c *Client) FollowGenreGenres(ctx context.Context, path string) (*http.Response, error) {
-	req, err := c.NewFollowGenreGenresRequest(ctx, path)
+func (c *Client) FollowGenres(ctx context.Context, path string) (*http.Response, error) {
+	req, err := c.NewFollowGenresRequest(ctx, path)
 	if err != nil {
 		return nil, err
 	}
 	return c.Client.Do(ctx, req)
 }
 
-// NewFollowGenreGenresRequest create the request corresponding to the follow genre action endpoint of the genres resource.
-func (c *Client) NewFollowGenreGenresRequest(ctx context.Context, path string) (*http.Request, error) {
+// NewFollowGenresRequest create the request corresponding to the follow action endpoint of the genres resource.
+func (c *Client) NewFollowGenresRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
@@ -117,8 +117,8 @@ func (c *Client) NewListGenresRequest(ctx context.Context, path string, page *in
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	if page != nil {
-		tmp13 := strconv.Itoa(*page)
-		values.Set("page", tmp13)
+		tmp14 := strconv.Itoa(*page)
+		values.Set("page", tmp14)
 	}
 	if q != nil {
 		values.Set("q", *q)

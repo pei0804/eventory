@@ -24,11 +24,11 @@ import (
 	"net/url"
 )
 
-// PrefFollowPrefsBadRequest runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsBadRequest runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) (http.ResponseWriter, error) {
+func FollowPrefsBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -61,13 +61,13 @@ func PrefFollowPrefsBadRequest(t goatest.TInterface, ctx context.Context, servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -89,11 +89,11 @@ func PrefFollowPrefsBadRequest(t goatest.TInterface, ctx context.Context, servic
 	return rw, mt
 }
 
-// PrefFollowPrefsBadRequest1 runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsBadRequest1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsBadRequest1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) (http.ResponseWriter, error) {
+func FollowPrefsBadRequest1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -126,13 +126,13 @@ func PrefFollowPrefsBadRequest1(t goatest.TInterface, ctx context.Context, servi
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -154,11 +154,11 @@ func PrefFollowPrefsBadRequest1(t goatest.TInterface, ctx context.Context, servi
 	return rw, mt
 }
 
-// PrefFollowPrefsNotFound runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsNotFound runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -191,13 +191,13 @@ func PrefFollowPrefsNotFound(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -211,11 +211,11 @@ func PrefFollowPrefsNotFound(t goatest.TInterface, ctx context.Context, service 
 	return rw
 }
 
-// PrefFollowPrefsNotFound1 runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsNotFound1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsNotFound1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsNotFound1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -248,13 +248,13 @@ func PrefFollowPrefsNotFound1(t goatest.TInterface, ctx context.Context, service
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -268,11 +268,11 @@ func PrefFollowPrefsNotFound1(t goatest.TInterface, ctx context.Context, service
 	return rw
 }
 
-// PrefFollowPrefsOK runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsOK runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -305,13 +305,13 @@ func PrefFollowPrefsOK(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -325,11 +325,11 @@ func PrefFollowPrefsOK(t goatest.TInterface, ctx context.Context, service *goa.S
 	return rw
 }
 
-// PrefFollowPrefsOK1 runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsOK1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsOK1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsOK1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -362,13 +362,13 @@ func PrefFollowPrefsOK1(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -382,11 +382,11 @@ func PrefFollowPrefsOK1(t goatest.TInterface, ctx context.Context, service *goa.
 	return rw
 }
 
-// PrefFollowPrefsUnauthorized runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsUnauthorized runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -419,13 +419,13 @@ func PrefFollowPrefsUnauthorized(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -439,11 +439,11 @@ func PrefFollowPrefsUnauthorized(t goatest.TInterface, ctx context.Context, serv
 	return rw
 }
 
-// PrefFollowPrefsUnauthorized1 runs the method PrefFollow of the given controller with the given parameters.
+// FollowPrefsUnauthorized1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func PrefFollowPrefsUnauthorized1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
+func FollowPrefsUnauthorized1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.PrefsController, prefID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -476,13 +476,13 @@ func PrefFollowPrefsUnauthorized1(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "PrefsTest"), rw, req, prms)
-	prefFollowCtx, _err := app.NewPrefFollowPrefsContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowPrefsContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.PrefFollow(prefFollowCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {

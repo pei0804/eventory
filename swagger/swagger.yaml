@@ -219,7 +219,7 @@ paths:
   /events/{eventID}/keep:
     put:
       description: イベントのお気に入り操作
-      operationId: events#keep event
+      operationId: events#keep
       parameters:
       - description: イベントID
         in: path
@@ -249,7 +249,7 @@ paths:
       - http
       security:
       - key: []
-      summary: keep event events
+      summary: keep events
       tags:
       - events
   /events/genre/{id}:
@@ -391,8 +391,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.event+json; type=collection
       - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -497,8 +497,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.event+json; type=collection
       - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -624,7 +624,7 @@ paths:
   /genres/{genreID}/follow:
     delete:
       description: ジャンルお気に入り操作
-      operationId: genres#follow genre#1
+      operationId: genres#follow#1
       parameters:
       - description: ジャンルID
         in: path
@@ -649,12 +649,12 @@ paths:
       - http
       security:
       - key: []
-      summary: follow genre genres
+      summary: follow genres
       tags:
       - genres
     put:
       description: ジャンルお気に入り操作
-      operationId: genres#follow genre
+      operationId: genres#follow
       parameters:
       - description: ジャンルID
         in: path
@@ -679,7 +679,7 @@ paths:
       - http
       security:
       - key: []
-      summary: follow genre genres
+      summary: follow genres
       tags:
       - genres
   /genres/new:
@@ -718,7 +718,7 @@ paths:
   /prefs/{prefID}/follow:
     delete:
       description: ジャンルお気に入り操作
-      operationId: prefs#pref follow#1
+      operationId: prefs#follow#1
       parameters:
       - description: 都道府県ID
         in: path
@@ -743,12 +743,12 @@ paths:
       - http
       security:
       - key: []
-      summary: pref follow prefs
+      summary: follow prefs
       tags:
       - prefs
     put:
       description: ジャンルお気に入り操作
-      operationId: prefs#pref follow
+      operationId: prefs#follow
       parameters:
       - description: 都道府県ID
         in: path
@@ -756,8 +756,8 @@ paths:
         required: true
         type: integer
       produces:
-      - text/plain
       - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -773,13 +773,50 @@ paths:
       - http
       security:
       - key: []
-      summary: pref follow prefs
+      summary: follow prefs
       tags:
       - prefs
+  /users/login:
+    post:
+      description: ログイン
+      operationId: users#login
+      parameters:
+      - description: メールアドレス
+        format: email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: パスワード
+        in: query
+        maxLength: 255
+        minLength: 1
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.message+json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+      schemes:
+      - http
+      security:
+      - key: []
+      summary: login users
+      tags:
+      - users
   /users/new:
     post:
       description: 正規ユーザーの作成
-      operationId: users#account create
+      operationId: users#regular create
       parameters:
       - description: メールアドレス
         format: email
@@ -811,13 +848,13 @@ paths:
       - http
       security:
       - key: []
-      summary: account create users
+      summary: regular create users
       tags:
       - users
   /users/status:
     put:
       description: 一時ユーザーの作成
-      operationId: users#account terminal status update
+      operationId: users#status
       parameters:
       - description: アプリのバージョン
         in: query
@@ -843,13 +880,13 @@ paths:
       - http
       security:
       - key: []
-      summary: account terminal status update users
+      summary: status users
       tags:
       - users
   /users/tmp:
     post:
       description: 一時ユーザーの作成
-      operationId: users#tmp account create
+      operationId: users#tmp create
       parameters:
       - description: アプリのバージョン
         in: query
@@ -881,7 +918,7 @@ paths:
             $ref: '#/definitions/error'
       schemes:
       - http
-      summary: tmp account create users
+      summary: tmp create users
       tags:
       - users
 produces:

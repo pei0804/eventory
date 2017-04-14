@@ -1,9 +1,13 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/goadesign/goa"
 	"github.com/jinzhu/gorm"
 	"github.com/tikasan/eventory/app"
+	"github.com/tikasan/eventory/models"
+	"github.com/tikasan/eventory/utility"
 )
 
 // PrefsController implements the prefs resource.
@@ -20,12 +24,25 @@ func NewPrefsController(service *goa.Service, db *gorm.DB) *PrefsController {
 	}
 }
 
-// PrefFollow runs the pref follow action.
-func (c *PrefsController) PrefFollow(ctx *app.PrefFollowPrefsContext) error {
-	// PrefsController_PrefFollow: start_implement
+// Follow runs the follow action.
+func (c *PrefsController) Follow(ctx *app.FollowPrefsContext) error {
+	// PrefsController_Follow: start_implement
 
 	// Put your logic here
-
-	// PrefsController_PrefFollow: end_implement
+	ufg := &models.UserFollowPref{}
+	ufg.PrefID = ctx.PrefID
+	userID, err := utility.GetToken(ctx.Context)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	ufg.UserID = userID
+	ufgDB := models.NewUserFollowPrefDB(c.db)
+	if "PUT" == ctx.Request.Method {
+		ufgDB.UserFollowPref(ctx.Context, ufg)
+	}
+	if "DELETE" == ctx.Request.Method {
+		ufgDB.UserUnfollowPref(ctx.Context, ufg)
+	}
+	// PrefsController_Follow: end_implement
 	return nil
 }

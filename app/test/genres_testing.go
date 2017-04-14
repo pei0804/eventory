@@ -313,11 +313,11 @@ func CreateGenresUnauthorized(t goatest.TInterface, ctx context.Context, service
 	return rw
 }
 
-// FollowGenreGenresBadRequest runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresBadRequest runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) (http.ResponseWriter, error) {
+func FollowGenresBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -350,13 +350,13 @@ func FollowGenreGenresBadRequest(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -378,11 +378,11 @@ func FollowGenreGenresBadRequest(t goatest.TInterface, ctx context.Context, serv
 	return rw, mt
 }
 
-// FollowGenreGenresBadRequest1 runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresBadRequest1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresBadRequest1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) (http.ResponseWriter, error) {
+func FollowGenresBadRequest1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -415,13 +415,13 @@ func FollowGenreGenresBadRequest1(t goatest.TInterface, ctx context.Context, ser
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -443,11 +443,11 @@ func FollowGenreGenresBadRequest1(t goatest.TInterface, ctx context.Context, ser
 	return rw, mt
 }
 
-// FollowGenreGenresNotFound runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresNotFound runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresNotFound(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -480,13 +480,13 @@ func FollowGenreGenresNotFound(t goatest.TInterface, ctx context.Context, servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -500,11 +500,11 @@ func FollowGenreGenresNotFound(t goatest.TInterface, ctx context.Context, servic
 	return rw
 }
 
-// FollowGenreGenresNotFound1 runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresNotFound1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresNotFound1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresNotFound1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -537,13 +537,13 @@ func FollowGenreGenresNotFound1(t goatest.TInterface, ctx context.Context, servi
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -557,11 +557,11 @@ func FollowGenreGenresNotFound1(t goatest.TInterface, ctx context.Context, servi
 	return rw
 }
 
-// FollowGenreGenresOK runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresOK runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -594,13 +594,13 @@ func FollowGenreGenresOK(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -614,11 +614,11 @@ func FollowGenreGenresOK(t goatest.TInterface, ctx context.Context, service *goa
 	return rw
 }
 
-// FollowGenreGenresOK1 runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresOK1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresOK1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresOK1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -651,13 +651,13 @@ func FollowGenreGenresOK1(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -671,11 +671,11 @@ func FollowGenreGenresOK1(t goatest.TInterface, ctx context.Context, service *go
 	return rw
 }
 
-// FollowGenreGenresUnauthorized runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresUnauthorized runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -708,13 +708,13 @@ func FollowGenreGenresUnauthorized(t goatest.TInterface, ctx context.Context, se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {
@@ -728,11 +728,11 @@ func FollowGenreGenresUnauthorized(t goatest.TInterface, ctx context.Context, se
 	return rw
 }
 
-// FollowGenreGenresUnauthorized1 runs the method FollowGenre of the given controller with the given parameters.
+// FollowGenresUnauthorized1 runs the method Follow of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FollowGenreGenresUnauthorized1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
+func FollowGenresUnauthorized1(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.GenresController, genreID int) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -765,13 +765,13 @@ func FollowGenreGenresUnauthorized1(t goatest.TInterface, ctx context.Context, s
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "GenresTest"), rw, req, prms)
-	followGenreCtx, _err := app.NewFollowGenreGenresContext(goaCtx, req, service)
+	followCtx, _err := app.NewFollowGenresContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FollowGenre(followGenreCtx)
+	_err = ctrl.Follow(followCtx)
 
 	// Validate response
 	if _err != nil {

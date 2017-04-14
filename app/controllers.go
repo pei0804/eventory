@@ -35,7 +35,7 @@ func initService(service *goa.Service) {
 // EventsController is the controller interface for the Events actions.
 type EventsController interface {
 	goa.Muxer
-	KeepEvent(*KeepEventEventsContext) error
+	Keep(*KeepEventsContext) error
 	List(*ListEventsContext) error
 }
 
@@ -57,16 +57,16 @@ func MountEventsController(service *goa.Service, ctrl EventsController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewKeepEventEventsContext(ctx, req, service)
+		rctx, err := NewKeepEventsContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.KeepEvent(rctx)
+		return ctrl.Keep(rctx)
 	}
 	h = handleSecurity("key", h)
 	h = handleEventsOrigin(h)
-	service.Mux.Handle("PUT", "/api/v2/events/:eventID/keep", ctrl.MuxHandler("KeepEvent", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "KeepEvent", "route", "PUT /api/v2/events/:eventID/keep", "security", "key")
+	service.Mux.Handle("PUT", "/api/v2/events/:eventID/keep", ctrl.MuxHandler("Keep", h, nil))
+	service.LogInfo("mount", "ctrl", "Events", "action", "Keep", "route", "PUT /api/v2/events/:eventID/keep", "security", "key")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -125,7 +125,7 @@ func handleEventsOrigin(h goa.Handler) goa.Handler {
 type GenresController interface {
 	goa.Muxer
 	Create(*CreateGenresContext) error
-	FollowGenre(*FollowGenreGenresContext) error
+	Follow(*FollowGenresContext) error
 	List(*ListGenresContext) error
 }
 
@@ -160,18 +160,18 @@ func MountGenresController(service *goa.Service, ctrl GenresController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewFollowGenreGenresContext(ctx, req, service)
+		rctx, err := NewFollowGenresContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.FollowGenre(rctx)
+		return ctrl.Follow(rctx)
 	}
 	h = handleSecurity("key", h)
 	h = handleGenresOrigin(h)
-	service.Mux.Handle("PUT", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("FollowGenre", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "FollowGenre", "route", "PUT /api/v2/genres/:genreID/follow", "security", "key")
-	service.Mux.Handle("DELETE", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("FollowGenre", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "FollowGenre", "route", "DELETE /api/v2/genres/:genreID/follow", "security", "key")
+	service.Mux.Handle("PUT", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("Follow", h, nil))
+	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "PUT /api/v2/genres/:genreID/follow", "security", "key")
+	service.Mux.Handle("DELETE", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("Follow", h, nil))
+	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "DELETE /api/v2/genres/:genreID/follow", "security", "key")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -219,7 +219,7 @@ func handleGenresOrigin(h goa.Handler) goa.Handler {
 // PrefsController is the controller interface for the Prefs actions.
 type PrefsController interface {
 	goa.Muxer
-	PrefFollow(*PrefFollowPrefsContext) error
+	Follow(*FollowPrefsContext) error
 }
 
 // MountPrefsController "mounts" a Prefs resource controller on the given service.
@@ -234,18 +234,18 @@ func MountPrefsController(service *goa.Service, ctrl PrefsController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewPrefFollowPrefsContext(ctx, req, service)
+		rctx, err := NewFollowPrefsContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.PrefFollow(rctx)
+		return ctrl.Follow(rctx)
 	}
 	h = handleSecurity("key", h)
 	h = handlePrefsOrigin(h)
-	service.Mux.Handle("PUT", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("PrefFollow", h, nil))
-	service.LogInfo("mount", "ctrl", "Prefs", "action", "PrefFollow", "route", "PUT /api/v2/prefs/:prefID/follow", "security", "key")
-	service.Mux.Handle("DELETE", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("PrefFollow", h, nil))
-	service.LogInfo("mount", "ctrl", "Prefs", "action", "PrefFollow", "route", "DELETE /api/v2/prefs/:prefID/follow", "security", "key")
+	service.Mux.Handle("PUT", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("Follow", h, nil))
+	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "PUT /api/v2/prefs/:prefID/follow", "security", "key")
+	service.Mux.Handle("DELETE", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("Follow", h, nil))
+	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "DELETE /api/v2/prefs/:prefID/follow", "security", "key")
 }
 
 // handlePrefsOrigin applies the CORS response headers corresponding to the origin.
@@ -276,15 +276,17 @@ func handlePrefsOrigin(h goa.Handler) goa.Handler {
 // UsersController is the controller interface for the Users actions.
 type UsersController interface {
 	goa.Muxer
-	AccountCreate(*AccountCreateUsersContext) error
-	AccountTerminalStatusUpdate(*AccountTerminalStatusUpdateUsersContext) error
-	TmpAccountCreate(*TmpAccountCreateUsersContext) error
+	Login(*LoginUsersContext) error
+	RegularCreate(*RegularCreateUsersContext) error
+	Status(*StatusUsersContext) error
+	TmpCreate(*TmpCreateUsersContext) error
 }
 
 // MountUsersController "mounts" a Users resource controller on the given service.
 func MountUsersController(service *goa.Service, ctrl UsersController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/api/v2/users/login", ctrl.MuxHandler("preflight", handleUsersOrigin(cors.HandlePreflight()), nil))
 	service.Mux.Handle("OPTIONS", "/api/v2/users/new", ctrl.MuxHandler("preflight", handleUsersOrigin(cors.HandlePreflight()), nil))
 	service.Mux.Handle("OPTIONS", "/api/v2/users/status", ctrl.MuxHandler("preflight", handleUsersOrigin(cors.HandlePreflight()), nil))
 	service.Mux.Handle("OPTIONS", "/api/v2/users/tmp", ctrl.MuxHandler("preflight", handleUsersOrigin(cors.HandlePreflight()), nil))
@@ -295,16 +297,16 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewAccountCreateUsersContext(ctx, req, service)
+		rctx, err := NewLoginUsersContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.AccountCreate(rctx)
+		return ctrl.Login(rctx)
 	}
 	h = handleSecurity("key", h)
 	h = handleUsersOrigin(h)
-	service.Mux.Handle("POST", "/api/v2/users/new", ctrl.MuxHandler("AccountCreate", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "AccountCreate", "route", "POST /api/v2/users/new", "security", "key")
+	service.Mux.Handle("POST", "/api/v2/users/login", ctrl.MuxHandler("Login", h, nil))
+	service.LogInfo("mount", "ctrl", "Users", "action", "Login", "route", "POST /api/v2/users/login", "security", "key")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -312,16 +314,16 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewAccountTerminalStatusUpdateUsersContext(ctx, req, service)
+		rctx, err := NewRegularCreateUsersContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.AccountTerminalStatusUpdate(rctx)
+		return ctrl.RegularCreate(rctx)
 	}
 	h = handleSecurity("key", h)
 	h = handleUsersOrigin(h)
-	service.Mux.Handle("PUT", "/api/v2/users/status", ctrl.MuxHandler("AccountTerminalStatusUpdate", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "AccountTerminalStatusUpdate", "route", "PUT /api/v2/users/status", "security", "key")
+	service.Mux.Handle("POST", "/api/v2/users/new", ctrl.MuxHandler("RegularCreate", h, nil))
+	service.LogInfo("mount", "ctrl", "Users", "action", "RegularCreate", "route", "POST /api/v2/users/new", "security", "key")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -329,15 +331,32 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewTmpAccountCreateUsersContext(ctx, req, service)
+		rctx, err := NewStatusUsersContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.TmpAccountCreate(rctx)
+		return ctrl.Status(rctx)
+	}
+	h = handleSecurity("key", h)
+	h = handleUsersOrigin(h)
+	service.Mux.Handle("PUT", "/api/v2/users/status", ctrl.MuxHandler("Status", h, nil))
+	service.LogInfo("mount", "ctrl", "Users", "action", "Status", "route", "PUT /api/v2/users/status", "security", "key")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewTmpCreateUsersContext(ctx, req, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.TmpCreate(rctx)
 	}
 	h = handleUsersOrigin(h)
-	service.Mux.Handle("POST", "/api/v2/users/tmp", ctrl.MuxHandler("TmpAccountCreate", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "TmpAccountCreate", "route", "POST /api/v2/users/tmp")
+	service.Mux.Handle("POST", "/api/v2/users/tmp", ctrl.MuxHandler("TmpCreate", h, nil))
+	service.LogInfo("mount", "ctrl", "Users", "action", "TmpCreate", "route", "POST /api/v2/users/tmp")
 }
 
 // handleUsersOrigin applies the CORS response headers corresponding to the origin.

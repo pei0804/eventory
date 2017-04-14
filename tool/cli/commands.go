@@ -27,8 +27,8 @@ import (
 )
 
 type (
-	// KeepEventEventsCommand is the command line data structure for the keep event action of events
-	KeepEventEventsCommand struct {
+	// KeepEventsCommand is the command line data structure for the keep action of events
+	KeepEventsCommand struct {
 		// イベントID
 		EventID int
 		// キープ操作
@@ -55,8 +55,8 @@ type (
 		PrettyPrint bool
 	}
 
-	// FollowGenreGenresCommand is the command line data structure for the follow genre action of genres
-	FollowGenreGenresCommand struct {
+	// FollowGenresCommand is the command line data structure for the follow action of genres
+	FollowGenresCommand struct {
 		// ジャンルID
 		GenreID     int
 		PrettyPrint bool
@@ -73,15 +73,24 @@ type (
 		PrettyPrint bool
 	}
 
-	// PrefFollowPrefsCommand is the command line data structure for the pref follow action of prefs
-	PrefFollowPrefsCommand struct {
+	// FollowPrefsCommand is the command line data structure for the follow action of prefs
+	FollowPrefsCommand struct {
 		// 都道府県ID
 		PrefID      int
 		PrettyPrint bool
 	}
 
-	// AccountCreateUsersCommand is the command line data structure for the account create action of users
-	AccountCreateUsersCommand struct {
+	// LoginUsersCommand is the command line data structure for the login action of users
+	LoginUsersCommand struct {
+		// メールアドレス
+		Email string
+		// パスワード
+		Password    string
+		PrettyPrint bool
+	}
+
+	// RegularCreateUsersCommand is the command line data structure for the regular create action of users
+	RegularCreateUsersCommand struct {
 		// メールアドレス
 		Email string
 		// 識別子(android:Android_ID, ios:IDFV)
@@ -89,8 +98,8 @@ type (
 		PrettyPrint bool
 	}
 
-	// AccountTerminalStatusUpdateUsersCommand is the command line data structure for the account terminal status update action of users
-	AccountTerminalStatusUpdateUsersCommand struct {
+	// StatusUsersCommand is the command line data structure for the status action of users
+	StatusUsersCommand struct {
 		// アプリのバージョン
 		ClientVersion string
 		// OSとバージョン
@@ -98,8 +107,8 @@ type (
 		PrettyPrint bool
 	}
 
-	// TmpAccountCreateUsersCommand is the command line data structure for the tmp account create action of users
-	TmpAccountCreateUsersCommand struct {
+	// TmpCreateUsersCommand is the command line data structure for the tmp create action of users
+	TmpCreateUsersCommand struct {
 		// アプリのバージョン
 		ClientVersion string
 		// 識別子(android:Android_ID, ios:IDFV)
@@ -114,12 +123,12 @@ type (
 func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
-		Use:   "account-create",
-		Short: `正規ユーザーの作成`,
+		Use:   "create",
+		Short: `ジャンルの新規作成`,
 	}
-	tmp1 := new(AccountCreateUsersCommand)
+	tmp1 := new(CreateGenresCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/new"]`,
+		Use:   `genres ["/api/v2/genres/new"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -128,26 +137,21 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "account-terminal-status-update",
-		Short: `一時ユーザーの作成`,
+		Use:   "follow",
+		Short: `follow action`,
 	}
-	tmp2 := new(AccountTerminalStatusUpdateUsersCommand)
+	tmp2 := new(FollowGenresCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/status"]`,
+		Use:   `genres [("/api/v2/genres/GENREID/follow"|"/api/v2/genres/GENREID/follow")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
 	tmp2.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "create",
-		Short: `ジャンルの新規作成`,
-	}
-	tmp3 := new(CreateGenresCommand)
+	tmp3 := new(FollowPrefsCommand)
 	sub = &cobra.Command{
-		Use:   `genres ["/api/v2/genres/new"]`,
+		Use:   `prefs [("/api/v2/prefs/PREFID/follow"|"/api/v2/prefs/PREFID/follow")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
@@ -156,12 +160,12 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "follow-genre",
-		Short: `ジャンルお気に入り操作`,
+		Use:   "keep",
+		Short: `イベントのお気に入り操作`,
 	}
-	tmp4 := new(FollowGenreGenresCommand)
+	tmp4 := new(KeepEventsCommand)
 	sub = &cobra.Command{
-		Use:   `genres [("/api/v2/genres/GENREID/follow"|"/api/v2/genres/GENREID/follow")]`,
+		Use:   `events ["/api/v2/events/EVENTID/keep"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
@@ -170,35 +174,35 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "keep-event",
-		Short: `イベントのお気に入り操作`,
+		Use:   "list",
+		Short: `list action`,
 	}
-	tmp5 := new(KeepEventEventsCommand)
+	tmp5 := new(ListEventsCommand)
 	sub = &cobra.Command{
-		Use:   `events ["/api/v2/events/EVENTID/keep"]`,
+		Use:   `events [("/api/v2/events/genre/ID"|"/api/v2/events/new"|"/api/v2/events/keep"|"/api/v2/events/nokeep"|"/api/v2/events/popular"|"/api/v2/events/recommend")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
 	tmp5.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp5.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "list",
-		Short: `list action`,
-	}
-	tmp6 := new(ListEventsCommand)
+	tmp6 := new(ListGenresCommand)
 	sub = &cobra.Command{
-		Use:   `events [("/api/v2/events/genre/ID"|"/api/v2/events/new"|"/api/v2/events/keep"|"/api/v2/events/nokeep"|"/api/v2/events/popular"|"/api/v2/events/recommend")]`,
+		Use:   `genres ["/api/v2/genres"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
 	tmp6.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp6.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp7 := new(ListGenresCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "login",
+		Short: `ログイン`,
+	}
+	tmp7 := new(LoginUsersCommand)
 	sub = &cobra.Command{
-		Use:   `genres ["/api/v2/genres"]`,
+		Use:   `users ["/api/v2/users/login"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
@@ -207,12 +211,12 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "pref-follow",
-		Short: `ジャンルお気に入り操作`,
+		Use:   "regular-create",
+		Short: `正規ユーザーの作成`,
 	}
-	tmp8 := new(PrefFollowPrefsCommand)
+	tmp8 := new(RegularCreateUsersCommand)
 	sub = &cobra.Command{
-		Use:   `prefs [("/api/v2/prefs/PREFID/follow"|"/api/v2/prefs/PREFID/follow")]`,
+		Use:   `users ["/api/v2/users/new"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -221,17 +225,31 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "tmp-account-create",
+		Use:   "status",
 		Short: `一時ユーザーの作成`,
 	}
-	tmp9 := new(TmpAccountCreateUsersCommand)
+	tmp9 := new(StatusUsersCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/tmp"]`,
+		Use:   `users ["/api/v2/users/status"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
 	tmp9.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp9.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "tmp-create",
+		Short: `一時ユーザーの作成`,
+	}
+	tmp10 := new(TmpCreateUsersCommand)
+	sub = &cobra.Command{
+		Use:   `users ["/api/v2/users/tmp"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
+	}
+	tmp10.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp10.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 }
@@ -389,8 +407,8 @@ func boolArray(ins []string) ([]bool, error) {
 	return vals, nil
 }
 
-// Run makes the HTTP request corresponding to the KeepEventEventsCommand command.
-func (cmd *KeepEventEventsCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the KeepEventsCommand command.
+func (cmd *KeepEventsCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -399,20 +417,20 @@ func (cmd *KeepEventEventsCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	var tmp10 *bool
+	var tmp11 *bool
 	if cmd.IsKeep != "" {
 		var err error
-		tmp10, err = boolVal(cmd.IsKeep)
+		tmp11, err = boolVal(cmd.IsKeep)
 		if err != nil {
 			goa.LogError(ctx, "failed to parse flag into *bool value", "flag", "--isKeep", "err", err)
 			return err
 		}
 	}
-	if tmp10 == nil {
+	if tmp11 == nil {
 		goa.LogError(ctx, "required flag is missing", "flag", "--isKeep")
 		return fmt.Errorf("required flag isKeep is missing")
 	}
-	resp, err := c.KeepEventEvents(ctx, path, *tmp10)
+	resp, err := c.KeepEvents(ctx, path, *tmp11)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -423,7 +441,7 @@ func (cmd *KeepEventEventsCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *KeepEventEventsCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *KeepEventsCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var eventID int
 	cc.Flags().IntVar(&cmd.EventID, "eventID", eventID, `イベントID`)
 	var isKeep string
@@ -488,8 +506,8 @@ func (cmd *CreateGenresCommand) RegisterFlags(cc *cobra.Command, c *client.Clien
 	cc.Flags().StringVar(&cmd.Name, "name", name, `ジャンル名`)
 }
 
-// Run makes the HTTP request corresponding to the FollowGenreGenresCommand command.
-func (cmd *FollowGenreGenresCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the FollowGenresCommand command.
+func (cmd *FollowGenresCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -498,7 +516,7 @@ func (cmd *FollowGenreGenresCommand) Run(c *client.Client, args []string) error 
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.FollowGenreGenres(ctx, path)
+	resp, err := c.FollowGenres(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -509,7 +527,7 @@ func (cmd *FollowGenreGenresCommand) Run(c *client.Client, args []string) error 
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *FollowGenreGenresCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *FollowGenresCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var genreID int
 	cc.Flags().IntVar(&cmd.GenreID, "genreID", genreID, `ジャンルID`)
 }
@@ -544,8 +562,8 @@ func (cmd *ListGenresCommand) RegisterFlags(cc *cobra.Command, c *client.Client)
 	cc.Flags().StringVar(&cmd.Sort, "sort", sort, `ソート`)
 }
 
-// Run makes the HTTP request corresponding to the PrefFollowPrefsCommand command.
-func (cmd *PrefFollowPrefsCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the FollowPrefsCommand command.
+func (cmd *FollowPrefsCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -554,7 +572,7 @@ func (cmd *PrefFollowPrefsCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.PrefFollowPrefs(ctx, path)
+	resp, err := c.FollowPrefs(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -565,13 +583,41 @@ func (cmd *PrefFollowPrefsCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *PrefFollowPrefsCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *FollowPrefsCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var prefID int
 	cc.Flags().IntVar(&cmd.PrefID, "prefID", prefID, `都道府県ID`)
 }
 
-// Run makes the HTTP request corresponding to the AccountCreateUsersCommand command.
-func (cmd *AccountCreateUsersCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the LoginUsersCommand command.
+func (cmd *LoginUsersCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/v2/users/login"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.LoginUsers(ctx, path, cmd.Email, cmd.Password)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *LoginUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+	var email string
+	cc.Flags().StringVar(&cmd.Email, "email", email, `メールアドレス`)
+	var password string
+	cc.Flags().StringVar(&cmd.Password, "password", password, `パスワード`)
+}
+
+// Run makes the HTTP request corresponding to the RegularCreateUsersCommand command.
+func (cmd *RegularCreateUsersCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -580,7 +626,7 @@ func (cmd *AccountCreateUsersCommand) Run(c *client.Client, args []string) error
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.AccountCreateUsers(ctx, path, cmd.Email, cmd.Identifier)
+	resp, err := c.RegularCreateUsers(ctx, path, cmd.Email, cmd.Identifier)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -591,15 +637,15 @@ func (cmd *AccountCreateUsersCommand) Run(c *client.Client, args []string) error
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *AccountCreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *RegularCreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var email string
 	cc.Flags().StringVar(&cmd.Email, "email", email, `メールアドレス`)
 	var identifier string
 	cc.Flags().StringVar(&cmd.Identifier, "identifier", identifier, `識別子(android:Android_ID, ios:IDFV)`)
 }
 
-// Run makes the HTTP request corresponding to the AccountTerminalStatusUpdateUsersCommand command.
-func (cmd *AccountTerminalStatusUpdateUsersCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the StatusUsersCommand command.
+func (cmd *StatusUsersCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -608,7 +654,7 @@ func (cmd *AccountTerminalStatusUpdateUsersCommand) Run(c *client.Client, args [
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.AccountTerminalStatusUpdateUsers(ctx, path, cmd.ClientVersion, cmd.Platform)
+	resp, err := c.StatusUsers(ctx, path, cmd.ClientVersion, cmd.Platform)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -619,15 +665,15 @@ func (cmd *AccountTerminalStatusUpdateUsersCommand) Run(c *client.Client, args [
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *AccountTerminalStatusUpdateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *StatusUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var clientVersion string
 	cc.Flags().StringVar(&cmd.ClientVersion, "client_version", clientVersion, `アプリのバージョン`)
 	var platform string
 	cc.Flags().StringVar(&cmd.Platform, "platform", platform, `OSとバージョン`)
 }
 
-// Run makes the HTTP request corresponding to the TmpAccountCreateUsersCommand command.
-func (cmd *TmpAccountCreateUsersCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the TmpCreateUsersCommand command.
+func (cmd *TmpCreateUsersCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -636,7 +682,7 @@ func (cmd *TmpAccountCreateUsersCommand) Run(c *client.Client, args []string) er
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.TmpAccountCreateUsers(ctx, path, cmd.ClientVersion, cmd.Identifier, cmd.Platform)
+	resp, err := c.TmpCreateUsers(ctx, path, cmd.ClientVersion, cmd.Identifier, cmd.Platform)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -647,7 +693,7 @@ func (cmd *TmpAccountCreateUsersCommand) Run(c *client.Client, args []string) er
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *TmpAccountCreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *TmpCreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var clientVersion string
 	cc.Flags().StringVar(&cmd.ClientVersion, "client_version", clientVersion, `アプリのバージョン`)
 	var identifier string
