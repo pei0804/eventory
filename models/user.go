@@ -23,6 +23,7 @@ type User struct {
 	ID               int `gorm:"primary_key"` // primary key
 	Email            string
 	Name             string
+	PasswordHash     string
 	UserFollowEvents []UserFollowEvent // has many UserFollowEvents
 	UserFollowGenres []UserFollowGenre // has many UserFollowGenres
 	UserFollowPrefs  []UserFollowPref  // has many UserFollowPrefs
@@ -84,7 +85,17 @@ func (m *UserDB) Get(ctx context.Context, id int) (*User, error) {
 	if err == gorm.ErrRecordNotFound {
 		return nil, err
 	}
+	return &native, err
+}
 
+func (m *UserDB) UserAuth(ctx context.Context, email string, password_hash string) (*User, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "user", "get"}, time.Now())
+
+	var native User
+	err := m.Db.Table(m.TableName()).Where("email = ?", email).Where("password_hash = ?", password_hash).Find(&native).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, err
+	}
 	return &native, err
 }
 

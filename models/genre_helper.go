@@ -64,3 +64,48 @@ func (m *GenreDB) OneGenre(ctx context.Context, id int) (*app.Genre, error) {
 	view := *native.GenreToGenre()
 	return &view, err
 }
+
+// MediaType Retrieval Functions
+
+// ListGenreTiny returns an array of view: tiny.
+func (m *GenreDB) ListGenreTiny(ctx context.Context) []*app.GenreTiny {
+	defer goa.MeasureSince([]string{"goa", "db", "genre", "listgenretiny"}, time.Now())
+
+	var native []*Genre
+	var objs []*app.GenreTiny
+	err := m.Db.Scopes().Table(m.TableName()).Find(&native).Error
+
+	if err != nil {
+		goa.LogError(ctx, "error listing Genre", "error", err.Error())
+		return objs
+	}
+
+	for _, t := range native {
+		objs = append(objs, t.GenreToGenreTiny())
+	}
+
+	return objs
+}
+
+// GenreToGenreTiny loads a Genre and builds the tiny view of media type Genre.
+func (m *Genre) GenreToGenreTiny() *app.GenreTiny {
+	genre := &app.GenreTiny{}
+
+	return genre
+}
+
+// OneGenreTiny loads a Genre and builds the tiny view of media type Genre.
+func (m *GenreDB) OneGenreTiny(ctx context.Context, id int) (*app.GenreTiny, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "genre", "onegenretiny"}, time.Now())
+
+	var native Genre
+	err := m.Db.Scopes().Table(m.TableName()).Preload("EventGenres").Preload("UserFollowGenres").Where("id = ?", id).Find(&native).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		goa.LogError(ctx, "error getting Genre", "error", err.Error())
+		return nil, err
+	}
+
+	view := *native.GenreToGenreTiny()
+	return &view, err
+}

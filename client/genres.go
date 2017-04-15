@@ -24,7 +24,9 @@ func CreateGenresPath() string {
 	return fmt.Sprintf("/api/v2/genres/new")
 }
 
-// ジャンルの新規作成
+// <b>ジャンルの新規作成</b><br>
+// 新しく作成するジャンル名を送信して、新規作成を行う。追加処理が完了とするとジャンルIDが返ってくるので、それを自動でフォローするようにする。<br>
+// 但し、ジャンルを新規作成する前に、ジャンル名を検索するフローを挟み、検索結果に出てこなかった場合に追加できるようにする。
 func (c *Client) CreateGenres(ctx context.Context, path string, name string) (*http.Response, error) {
 	req, err := c.NewCreateGenresRequest(ctx, path, name)
 	if err != nil {
@@ -47,8 +49,8 @@ func (c *Client) NewCreateGenresRequest(ctx context.Context, path string, name s
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }
@@ -67,7 +69,10 @@ func FollowGenresPath2(genreID int) string {
 	return fmt.Sprintf("/api/v2/genres/%s/follow", param0)
 }
 
-// ジャンルお気に入り操作
+// <b>ジャンルフォロー操作</b><br>
+// PUTでフォロー、DELETEでアンフォローをする。<br>
+// HTTPメソッド意外は同じパラメーターで動作する。<br>
+// 存在しない都道府県へのリクエストは404エラーを返す。
 func (c *Client) FollowGenres(ctx context.Context, path string) (*http.Response, error) {
 	req, err := c.NewFollowGenresRequest(ctx, path)
 	if err != nil {
@@ -87,8 +92,8 @@ func (c *Client) NewFollowGenresRequest(ctx context.Context, path string) (*http
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }
@@ -99,7 +104,9 @@ func ListGenresPath() string {
 	return fmt.Sprintf("/api/v2/genres")
 }
 
-// ジャンル取得
+// <b>ジャンル検索</b><br>
+// ジャンル名で検索し、当てはまるジャンルを返す。その際に対象となるジャンルがなかった場合、<br>
+// ジャンル追加ボタンを表示し、追加出来るようにする。
 func (c *Client) ListGenres(ctx context.Context, path string, page *int, q *string, sort *string) (*http.Response, error) {
 	req, err := c.NewListGenresRequest(ctx, path, page, q, sort)
 	if err != nil {
@@ -117,8 +124,8 @@ func (c *Client) NewListGenresRequest(ctx context.Context, path string, page *in
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	if page != nil {
-		tmp14 := strconv.Itoa(*page)
-		values.Set("page", tmp14)
+		tmp17 := strconv.Itoa(*page)
+		values.Set("page", tmp17)
 	}
 	if q != nil {
 		values.Set("q", *q)
@@ -131,8 +138,8 @@ func (c *Client) NewListGenresRequest(ctx context.Context, path string, page *in
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }

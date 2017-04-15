@@ -65,6 +65,7 @@ var _ = StorageGroup("eventory", func() {
 			})
 			Field("name", gorma.String)
 			Field("email", gorma.String)
+			Field("password_hash", gorma.String)
 			Field("created_at", gorma.Timestamp)
 			Field("updated_at", gorma.Timestamp)
 			Field("deleted_at", gorma.NullableTimestamp)

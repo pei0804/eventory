@@ -32,7 +32,10 @@ func FollowPrefsPath2(prefID int) string {
 	return fmt.Sprintf("/api/v2/prefs/%s/follow", param0)
 }
 
-// ジャンルお気に入り操作
+// <b>都道府県フォロー操作</b><br>
+// PUTでフォロー、DELETEでアンフォローをする。<br>
+// HTTPメソッド意外は同じパラメーターで動作する。<br>
+// 存在しない都道府県へのリクエストは404エラーを返す。
 func (c *Client) FollowPrefs(ctx context.Context, path string) (*http.Response, error) {
 	req, err := c.NewFollowPrefsRequest(ctx, path)
 	if err != nil {
@@ -52,8 +55,8 @@ func (c *Client) NewFollowPrefsRequest(ctx context.Context, path string) (*http.
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }

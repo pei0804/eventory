@@ -28,7 +28,7 @@ import (
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, password string) (http.ResponseWriter, error) {
+func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, passwordHash string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -54,8 +54,8 @@ func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{password}
-		query["password"] = sliceVal
+		sliceVal := []string{passwordHash}
+		query["password_hash"] = sliceVal
 	}
 	u := &url.URL{
 		Path:     fmt.Sprintf("/api/v2/users/login"),
@@ -71,8 +71,8 @@ func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{password}
-		prms["password"] = sliceVal
+		sliceVal := []string{passwordHash}
+		prms["password_hash"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
@@ -110,7 +110,7 @@ func LoginUsersBadRequest(t goatest.TInterface, ctx context.Context, service *go
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, password string) (http.ResponseWriter, *app.Message) {
+func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, passwordHash string) (http.ResponseWriter, *app.Message) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -136,8 +136,8 @@ func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{password}
-		query["password"] = sliceVal
+		sliceVal := []string{passwordHash}
+		query["password_hash"] = sliceVal
 	}
 	u := &url.URL{
 		Path:     fmt.Sprintf("/api/v2/users/login"),
@@ -153,8 +153,8 @@ func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{password}
-		prms["password"] = sliceVal
+		sliceVal := []string{passwordHash}
+		prms["password_hash"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
@@ -192,7 +192,7 @@ func LoginUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, error) {
+func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, passwordHash string) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -218,8 +218,8 @@ func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		query["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		query["password_hash"] = sliceVal
 	}
 	u := &url.URL{
 		Path:     fmt.Sprintf("/api/v2/users/new"),
@@ -235,8 +235,8 @@ func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		prms["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		prms["password_hash"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
@@ -274,7 +274,7 @@ func RegularCreateUsersBadRequest(t goatest.TInterface, ctx context.Context, ser
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) (http.ResponseWriter, *app.Message) {
+func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, passwordHash string) (http.ResponseWriter, *app.Message) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -300,8 +300,8 @@ func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		query["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		query["password_hash"] = sliceVal
 	}
 	u := &url.URL{
 		Path:     fmt.Sprintf("/api/v2/users/new"),
@@ -317,8 +317,8 @@ func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		prms["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		prms["password_hash"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()
@@ -356,7 +356,7 @@ func RegularCreateUsersOK(t goatest.TInterface, ctx context.Context, service *go
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func RegularCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, identifier string) http.ResponseWriter {
+func RegularCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.UsersController, email string, passwordHash string) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -382,8 +382,8 @@ func RegularCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, s
 		query["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		query["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		query["password_hash"] = sliceVal
 	}
 	u := &url.URL{
 		Path:     fmt.Sprintf("/api/v2/users/new"),
@@ -399,8 +399,8 @@ func RegularCreateUsersUnauthorized(t goatest.TInterface, ctx context.Context, s
 		prms["email"] = sliceVal
 	}
 	{
-		sliceVal := []string{identifier}
-		prms["identifier"] = sliceVal
+		sliceVal := []string{passwordHash}
+		prms["password_hash"] = sliceVal
 	}
 	if ctx == nil {
 		ctx = context.Background()

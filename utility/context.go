@@ -10,11 +10,11 @@ type userIDKey string
 
 const ContextUserIDKey userIDKey = "tokenKey"
 
-func SetToken(parents context.Context, userID int) context.Context {
+func SetUserID(parents context.Context, userID int) context.Context {
 	return context.WithValue(parents, ContextUserIDKey, userID)
 }
 
-func GetToken(ctx context.Context) (int, error) {
+func GetUserID(ctx context.Context) (int, error) {
 	v := ctx.Value(ContextUserIDKey)
 
 	userID, ok := v.(int)
@@ -23,4 +23,23 @@ func GetToken(ctx context.Context) (int, error) {
 	}
 
 	return userID, nil
+}
+
+type tokenKey string
+
+const ContextTokenKey userIDKey = "tokenKey"
+
+func SetToken(parents context.Context, userID int) context.Context {
+	return context.WithValue(parents, ContextTokenKey, userID)
+}
+
+func GetToken(ctx context.Context) (string, error) {
+	v := ctx.Value(ContextTokenKey)
+
+	token, ok := v.(string)
+	if !ok {
+		return "", fmt.Errorf("token not found")
+	}
+
+	return token, nil
 }

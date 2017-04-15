@@ -21,18 +21,32 @@ type (
 	authMiddlewareKey string
 )
 
-// UseKeyMiddleware mounts the key auth middleware onto the service.
-func UseKeyMiddleware(service *goa.Service, middleware goa.Middleware) {
-	service.Context = context.WithValue(service.Context, authMiddlewareKey("key"), middleware)
+// UseUserTokenMiddleware mounts the userToken auth middleware onto the service.
+func UseUserTokenMiddleware(service *goa.Service, middleware goa.Middleware) {
+	service.Context = context.WithValue(service.Context, authMiddlewareKey("userToken"), middleware)
 }
 
-// NewKeySecurity creates a key security definition.
-func NewKeySecurity() *goa.APIKeySecurity {
+// NewUserTokenSecurity creates a userToken security definition.
+func NewUserTokenSecurity() *goa.APIKeySecurity {
 	def := goa.APIKeySecurity{
 		In:   goa.LocHeader,
 		Name: "X-Authorization",
 	}
 	def.Description = "ユーザートークン"
+	return &def
+}
+
+// UseCronTokenMiddleware mounts the cronToken auth middleware onto the service.
+func UseCronTokenMiddleware(service *goa.Service, middleware goa.Middleware) {
+	service.Context = context.WithValue(service.Context, authMiddlewareKey("cronToken"), middleware)
+}
+
+// NewCronTokenSecurity creates a cronToken security definition.
+func NewCronTokenSecurity() *goa.APIKeySecurity {
+	def := goa.APIKeySecurity{
+		In:   goa.LocHeader,
+		Name: "X-Appengine-Cron",
+	}
 	return &def
 }
 

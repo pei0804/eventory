@@ -31,7 +31,7 @@ func (c *PrefsController) Follow(ctx *app.FollowPrefsContext) error {
 	// Put your logic here
 	ufg := &models.UserFollowPref{}
 	ufg.PrefID = ctx.PrefID
-	userID, err := utility.GetToken(ctx.Context)
+	userID, err := utility.GetUserID(ctx.Context)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}

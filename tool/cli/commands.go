@@ -27,6 +27,21 @@ import (
 )
 
 type (
+	// AppendGenreCronCommand is the command line data structure for the append genre action of cron
+	AppendGenreCronCommand struct {
+		PrettyPrint bool
+	}
+
+	// FixUserFollowCronCommand is the command line data structure for the fix user follow action of cron
+	FixUserFollowCronCommand struct {
+		PrettyPrint bool
+	}
+
+	// NewEventFetchCronCommand is the command line data structure for the new event fetch action of cron
+	NewEventFetchCronCommand struct {
+		PrettyPrint bool
+	}
+
 	// KeepEventsCommand is the command line data structure for the keep action of events
 	KeepEventsCommand struct {
 		// イベントID
@@ -84,25 +99,25 @@ type (
 	LoginUsersCommand struct {
 		// メールアドレス
 		Email string
-		// パスワード
-		Password    string
-		PrettyPrint bool
+		// パスワードハッシュ(^[a-z0-9]{64}$)
+		PasswordHash string
+		PrettyPrint  bool
 	}
 
 	// RegularCreateUsersCommand is the command line data structure for the regular create action of users
 	RegularCreateUsersCommand struct {
 		// メールアドレス
 		Email string
-		// 識別子(android:Android_ID, ios:IDFV)
-		Identifier  string
-		PrettyPrint bool
+		// パスワードハッシュ(^[a-z0-9]{64}$)
+		PasswordHash string
+		PrettyPrint  bool
 	}
 
 	// StatusUsersCommand is the command line data structure for the status action of users
 	StatusUsersCommand struct {
 		// アプリのバージョン
 		ClientVersion string
-		// OSとバージョン
+		// OSとバージョン(iOS 10.2など)
 		Platform    string
 		PrettyPrint bool
 	}
@@ -123,12 +138,12 @@ type (
 func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
-		Use:   "create",
-		Short: `ジャンルの新規作成`,
+		Use:   "append-genre",
+		Short: `<b>イベントにジャンルを付加する<b>`,
 	}
-	tmp1 := new(CreateGenresCommand)
+	tmp1 := new(AppendGenreCronCommand)
 	sub = &cobra.Command{
-		Use:   `genres ["/api/v2/genres/new"]`,
+		Use:   `cron ["/api/v2/cron/events/appendgenre"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -137,21 +152,29 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "follow",
-		Short: `follow action`,
+		Use: "create",
+		Short: `<b>ジャンルの新規作成</b><br>
+		新しく作成するジャンル名を送信して、新規作成を行う。追加処理が完了とするとジャンルIDが返ってくるので、それを自動でフォローするようにする。<br>
+		但し、ジャンルを新規作成する前に、ジャンル名を検索するフローを挟み、検索結果に出てこなかった場合に追加できるようにする。`,
 	}
-	tmp2 := new(FollowGenresCommand)
+	tmp2 := new(CreateGenresCommand)
 	sub = &cobra.Command{
-		Use:   `genres [("/api/v2/genres/GENREID/follow"|"/api/v2/genres/GENREID/follow")]`,
+		Use:   `genres ["/api/v2/genres/new"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
 	tmp2.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp3 := new(FollowPrefsCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use: "fix-user-follow",
+		Short: `<b>イベントフォロー操作の確定</b><br>
+		user_follow_eventsテーブルのbatch_processedをtrueに変更する`,
+	}
+	tmp3 := new(FixUserFollowCronCommand)
 	sub = &cobra.Command{
-		Use:   `prefs [("/api/v2/prefs/PREFID/follow"|"/api/v2/prefs/PREFID/follow")]`,
+		Use:   `cron ["/api/v2/cron/user/events/fixfollow"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
@@ -160,35 +183,37 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "keep",
-		Short: `イベントのお気に入り操作`,
+		Use:   "follow",
+		Short: `follow action`,
 	}
-	tmp4 := new(KeepEventsCommand)
+	tmp4 := new(FollowGenresCommand)
 	sub = &cobra.Command{
-		Use:   `events ["/api/v2/events/EVENTID/keep"]`,
+		Use:   `genres [("/api/v2/genres/GENREID/follow"|"/api/v2/genres/GENREID/follow")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
 	tmp4.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp4.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "list",
-		Short: `list action`,
-	}
-	tmp5 := new(ListEventsCommand)
+	tmp5 := new(FollowPrefsCommand)
 	sub = &cobra.Command{
-		Use:   `events [("/api/v2/events/genre/ID"|"/api/v2/events/new"|"/api/v2/events/keep"|"/api/v2/events/nokeep"|"/api/v2/events/popular"|"/api/v2/events/recommend")]`,
+		Use:   `prefs [("/api/v2/prefs/PREFID/follow"|"/api/v2/prefs/PREFID/follow")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
 	tmp5.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp5.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp6 := new(ListGenresCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use: "keep",
+		Short: `<b>イベントお気に入り操作</b><br>
+		isKeepがtrueだった場合はフォロー、falseの場合はアンフォローとする。<br>
+		存在しないイベントへのリクエストは404エラーを返す。`,
+	}
+	tmp6 := new(KeepEventsCommand)
 	sub = &cobra.Command{
-		Use:   `genres ["/api/v2/genres"]`,
+		Use:   `events ["/api/v2/events/EVENTID/keep"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
@@ -197,26 +222,21 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "login",
-		Short: `ログイン`,
+		Use:   "list",
+		Short: `list action`,
 	}
-	tmp7 := new(LoginUsersCommand)
+	tmp7 := new(ListEventsCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/login"]`,
+		Use:   `events [("/api/v2/events/genre/ID"|"/api/v2/events/new"|"/api/v2/events/keep"|"/api/v2/events/nokeep"|"/api/v2/events/popular"|"/api/v2/events/recommend")]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
 	tmp7.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp7.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "regular-create",
-		Short: `正規ユーザーの作成`,
-	}
-	tmp8 := new(RegularCreateUsersCommand)
+	tmp8 := new(ListGenresCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/new"]`,
+		Use:   `genres ["/api/v2/genres"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -225,12 +245,15 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "status",
-		Short: `一時ユーザーの作成`,
+		Use: "login",
+		Short: `<b>ログイン認証</b><br>
+		正規ユーザーのメールアドレスとパスワードのハッシュを送ることで、ユーザー認証を行う<br>
+		正しくユーザー認証が完了した場合、正規ユーザーのIDを仮ユーザーIDに紐付けを行い。<br>
+		ユーザーの行動を別端末で引き継ぐことが出来る。<br>`,
 	}
-	tmp9 := new(StatusUsersCommand)
+	tmp9 := new(LoginUsersCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/status"]`,
+		Use:   `users ["/api/v2/users/login"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
@@ -239,17 +262,65 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "tmp-create",
-		Short: `一時ユーザーの作成`,
+		Use:   "new-event-fetch",
+		Short: `<b>最新イベント情報の取得<b>`,
 	}
-	tmp10 := new(TmpCreateUsersCommand)
+	tmp10 := new(NewEventFetchCronCommand)
 	sub = &cobra.Command{
-		Use:   `users ["/api/v2/users/tmp"]`,
+		Use:   `cron ["/api/v2/cron/events/fetch"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
 	tmp10.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp10.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use: "regular-create",
+		Short: `<b>正規ユーザーの作成</b><br>
+		メールアドレスとパスワードハッシュを使って、正規ユーザーの作成を行う。<br>
+		もし、既に存在するアカウントだった場合は、"alreadyExists"を返す。<br>
+		正しく実行された場合は、"ok"を返す。`,
+	}
+	tmp11 := new(RegularCreateUsersCommand)
+	sub = &cobra.Command{
+		Use:   `users ["/api/v2/users/new"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+	}
+	tmp11.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use: "status",
+		Short: `<b>ユーザーの端末情報更新</b><br>
+		利用者のバージョンや端末情報を更新する。この更新処理は起動時に行われるものとする。`,
+	}
+	tmp12 := new(StatusUsersCommand)
+	sub = &cobra.Command{
+		Use:   `users ["/api/v2/users/status"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
+	}
+	tmp12.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp12.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use: "tmp-create",
+		Short: `<b>一時ユーザーの作成</b><br>
+		初回起動時に仮ユーザーを作成する。ここで与えられるユーザーIDは、メールアドレスなどとひも付きがないため、<br>
+		端末が変わるとtokenが変わるので、別端末で共有するには、正規ユーザーの登録が必要になる。`,
+	}
+	tmp13 := new(TmpCreateUsersCommand)
+	sub = &cobra.Command{
+		Use:   `users ["/api/v2/users/tmp"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp13.Run(c, args) },
+	}
+	tmp13.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp13.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 }
@@ -407,6 +478,78 @@ func boolArray(ins []string) ([]bool, error) {
 	return vals, nil
 }
 
+// Run makes the HTTP request corresponding to the AppendGenreCronCommand command.
+func (cmd *AppendGenreCronCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/v2/cron/events/appendgenre"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.AppendGenreCron(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *AppendGenreCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
+// Run makes the HTTP request corresponding to the FixUserFollowCronCommand command.
+func (cmd *FixUserFollowCronCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/v2/cron/user/events/fixfollow"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.FixUserFollowCron(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *FixUserFollowCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
+// Run makes the HTTP request corresponding to the NewEventFetchCronCommand command.
+func (cmd *NewEventFetchCronCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/v2/cron/events/fetch"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.NewEventFetchCron(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *NewEventFetchCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
 // Run makes the HTTP request corresponding to the KeepEventsCommand command.
 func (cmd *KeepEventsCommand) Run(c *client.Client, args []string) error {
 	var path string
@@ -417,20 +560,20 @@ func (cmd *KeepEventsCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	var tmp11 *bool
+	var tmp14 *bool
 	if cmd.IsKeep != "" {
 		var err error
-		tmp11, err = boolVal(cmd.IsKeep)
+		tmp14, err = boolVal(cmd.IsKeep)
 		if err != nil {
 			goa.LogError(ctx, "failed to parse flag into *bool value", "flag", "--isKeep", "err", err)
 			return err
 		}
 	}
-	if tmp11 == nil {
+	if tmp14 == nil {
 		goa.LogError(ctx, "required flag is missing", "flag", "--isKeep")
 		return fmt.Errorf("required flag isKeep is missing")
 	}
-	resp, err := c.KeepEvents(ctx, path, *tmp11)
+	resp, err := c.KeepEvents(ctx, path, *tmp14)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -598,7 +741,7 @@ func (cmd *LoginUsersCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.LoginUsers(ctx, path, cmd.Email, cmd.Password)
+	resp, err := c.LoginUsers(ctx, path, cmd.Email, cmd.PasswordHash)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -612,8 +755,8 @@ func (cmd *LoginUsersCommand) Run(c *client.Client, args []string) error {
 func (cmd *LoginUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var email string
 	cc.Flags().StringVar(&cmd.Email, "email", email, `メールアドレス`)
-	var password string
-	cc.Flags().StringVar(&cmd.Password, "password", password, `パスワード`)
+	var passwordHash string
+	cc.Flags().StringVar(&cmd.PasswordHash, "password_hash", passwordHash, `パスワードハッシュ(^[a-z0-9]{64}$)`)
 }
 
 // Run makes the HTTP request corresponding to the RegularCreateUsersCommand command.
@@ -626,7 +769,7 @@ func (cmd *RegularCreateUsersCommand) Run(c *client.Client, args []string) error
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.RegularCreateUsers(ctx, path, cmd.Email, cmd.Identifier)
+	resp, err := c.RegularCreateUsers(ctx, path, cmd.Email, cmd.PasswordHash)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -640,8 +783,8 @@ func (cmd *RegularCreateUsersCommand) Run(c *client.Client, args []string) error
 func (cmd *RegularCreateUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var email string
 	cc.Flags().StringVar(&cmd.Email, "email", email, `メールアドレス`)
-	var identifier string
-	cc.Flags().StringVar(&cmd.Identifier, "identifier", identifier, `識別子(android:Android_ID, ios:IDFV)`)
+	var passwordHash string
+	cc.Flags().StringVar(&cmd.PasswordHash, "password_hash", passwordHash, `パスワードハッシュ(^[a-z0-9]{64}$)`)
 }
 
 // Run makes the HTTP request corresponding to the StatusUsersCommand command.
@@ -669,7 +812,7 @@ func (cmd *StatusUsersCommand) RegisterFlags(cc *cobra.Command, c *client.Client
 	var clientVersion string
 	cc.Flags().StringVar(&cmd.ClientVersion, "client_version", clientVersion, `アプリのバージョン`)
 	var platform string
-	cc.Flags().StringVar(&cmd.Platform, "platform", platform, `OSとバージョン`)
+	cc.Flags().StringVar(&cmd.Platform, "platform", platform, `OSとバージョン(iOS 10.2など)`)
 }
 
 // Run makes the HTTP request corresponding to the TmpCreateUsersCommand command.

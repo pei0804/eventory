@@ -18,9 +18,10 @@ import (
 // Client is the eventory service client.
 type Client struct {
 	*goaclient.Client
-	KeySigner goaclient.Signer
-	Encoder   *goa.HTTPEncoder
-	Decoder   *goa.HTTPDecoder
+	UserTokenSigner goaclient.Signer
+	CronTokenSigner goaclient.Signer
+	Encoder         *goa.HTTPEncoder
+	Decoder         *goa.HTTPDecoder
 }
 
 // New instantiates the client.
@@ -46,7 +47,12 @@ func New(c goaclient.Doer) *Client {
 	return client
 }
 
-// SetKeySigner sets the request signer for the key security scheme.
-func (c *Client) SetKeySigner(signer goaclient.Signer) {
-	c.KeySigner = signer
+// SetUserTokenSigner sets the request signer for the userToken security scheme.
+func (c *Client) SetUserTokenSigner(signer goaclient.Signer) {
+	c.UserTokenSigner = signer
+}
+
+// SetCronTokenSigner sets the request signer for the cronToken security scheme.
+func (c *Client) SetCronTokenSigner(signer goaclient.Signer) {
+	c.CronTokenSigner = signer
 }

@@ -65,6 +65,9 @@ type GenreStorage interface {
 
 	ListGenre(ctx context.Context) []*app.Genre
 	OneGenre(ctx context.Context, id int) (*app.Genre, error)
+
+	ListGenreTiny(ctx context.Context) []*app.GenreTiny
+	OneGenreTiny(ctx context.Context, id int) (*app.GenreTiny, error)
 }
 
 // TableName overrides the table name settings in Gorm to force a specific table name

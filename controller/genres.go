@@ -50,7 +50,7 @@ func (c *GenresController) Follow(ctx *app.FollowGenresContext) error {
 	// Put your logic here
 	ufg := &models.UserFollowGenre{}
 	ufg.GenreID = ctx.GenreID
-	userID, err := utility.GetToken(ctx.Context)
+	userID, err := utility.GetUserID(ctx.Context)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}

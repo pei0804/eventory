@@ -216,9 +216,78 @@ info:
   title: 'eventory: ITイベント収集アプリ'
   version: ""
 paths:
+  /cron/events/appendgenre:
+    get:
+      description: <b>イベントにジャンルを付加する<b>
+      operationId: cron#append genre
+      produces:
+      - application/vnd.goa.error
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - cronToken: []
+      summary: append genre cron
+      tags:
+      - cron
+  /cron/events/fetch:
+    get:
+      description: <b>最新イベント情報の取得<b>
+      operationId: cron#new event fetch
+      produces:
+      - application/vnd.goa.error
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - cronToken: []
+      summary: new event fetch cron
+      tags:
+      - cron
+  /cron/user/events/fixfollow:
+    get:
+      description: "<b>イベントフォロー操作の確定</b><br>\n\t\tuser_follow_eventsテーブルのbatch_processedをtrueに変更する"
+      operationId: cron#fix user follow
+      produces:
+      - application/vnd.goa.error
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/error'
+        "401":
+          description: Unauthorized
+      schemes:
+      - http
+      security:
+      - cronToken: []
+      summary: fix user follow cron
+      tags:
+      - cron
   /events/{eventID}/keep:
     put:
-      description: イベントのお気に入り操作
+      description: "<b>イベントお気に入り操作</b><br>\n\t\tisKeepがtrueだった場合はフォロー、falseの場合はアンフォローとする。<br>\n\t\t存在しないイベントへのリクエストは404エラーを返す。"
       operationId: events#keep
       parameters:
       - description: イベントID
@@ -232,8 +301,8 @@ paths:
         required: true
         type: boolean
       produces:
-      - application/vnd.goa.error
       - text/plain
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -248,13 +317,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: keep events
       tags:
       - events
   /events/genre/{id}:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list
       parameters:
       - in: path
@@ -301,13 +373,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /events/keep:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list#2
       parameters:
       - in: query
@@ -354,13 +429,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /events/new:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list#1
       parameters:
       - in: query
@@ -407,13 +485,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /events/nokeep:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list#3
       parameters:
       - in: query
@@ -460,13 +541,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /events/popular:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list#4
       parameters:
       - in: query
@@ -513,13 +597,16 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /events/recommend:
     get:
-      description: イベント情報取得
+      description: "<b>イベント情報取得</b><br>\n\t\t<ul>\n\t\t\t<li>/genre/:id -> ジャンル別新着情報</li>\n\t\t\t<li>/new
+        -> ユーザー別新着情報</li>\n\t\t\t<li>/keep -> ユーザーがキープしているイベント</li>\n\t\t\t<li>/nokeep
+        -> ユーザーが興味なしにしたイベント</li>\n\t\t\t<li>/popular -> キープ数が多い。注目されているイベント</li>\n\t\t\t<li>/recommend
+        -> ユーザー属性に合わせたおすすめイベント</li>\n\t\t</ul>\n\t\tイベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>\n\t\tまた、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。"
       operationId: events#list#5
       parameters:
       - in: query
@@ -550,8 +637,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.goa.error
       - application/vnd.event+json; type=collection
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -566,13 +653,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list events
       tags:
       - events
   /genres:
     get:
-      description: ジャンル取得
+      description: "<b>ジャンル検索</b><br>\n\t\tジャンル名で検索し、当てはまるジャンルを返す。その際に対象となるジャンルがなかった場合、<br>\n\t\tジャンル追加ボタンを表示し、追加出来るようにする。"
       operationId: genres#list
       parameters:
       - default: 0
@@ -617,13 +704,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: list genres
       tags:
       - genres
   /genres/{genreID}/follow:
     delete:
-      description: ジャンルお気に入り操作
+      description: "<b>ジャンルフォロー操作</b><br>\n\t\tPUTでフォロー、DELETEでアンフォローをする。<br>\n\t\tHTTPメソッド意外は同じパラメーターで動作する。<br>\n\t\t存在しない都道府県へのリクエストは404エラーを返す。"
       operationId: genres#follow#1
       parameters:
       - description: ジャンルID
@@ -648,12 +735,12 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: follow genres
       tags:
       - genres
     put:
-      description: ジャンルお気に入り操作
+      description: "<b>ジャンルフォロー操作</b><br>\n\t\tPUTでフォロー、DELETEでアンフォローをする。<br>\n\t\tHTTPメソッド意外は同じパラメーターで動作する。<br>\n\t\t存在しない都道府県へのリクエストは404エラーを返す。"
       operationId: genres#follow
       parameters:
       - description: ジャンルID
@@ -678,13 +765,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: follow genres
       tags:
       - genres
   /genres/new:
     post:
-      description: ジャンルの新規作成
+      description: "<b>ジャンルの新規作成</b><br>\n\t\t新しく作成するジャンル名を送信して、新規作成を行う。追加処理が完了とするとジャンルIDが返ってくるので、それを自動でフォローするようにする。<br>\n\t\t但し、ジャンルを新規作成する前に、ジャンル名を検索するフローを挟み、検索結果に出てこなかった場合に追加できるようにする。"
       operationId: genres#create
       parameters:
       - description: ジャンル名
@@ -711,13 +798,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: create genres
       tags:
       - genres
   /prefs/{prefID}/follow:
     delete:
-      description: ジャンルお気に入り操作
+      description: "<b>都道府県フォロー操作</b><br>\n\t\tPUTでフォロー、DELETEでアンフォローをする。<br>\n\t\tHTTPメソッド意外は同じパラメーターで動作する。<br>\n\t\t存在しない都道府県へのリクエストは404エラーを返す。"
       operationId: prefs#follow#1
       parameters:
       - description: 都道府県ID
@@ -742,12 +829,12 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: follow prefs
       tags:
       - prefs
     put:
-      description: ジャンルお気に入り操作
+      description: "<b>都道府県フォロー操作</b><br>\n\t\tPUTでフォロー、DELETEでアンフォローをする。<br>\n\t\tHTTPメソッド意外は同じパラメーターで動作する。<br>\n\t\t存在しない都道府県へのリクエストは404エラーを返す。"
       operationId: prefs#follow
       parameters:
       - description: 都道府県ID
@@ -772,13 +859,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: follow prefs
       tags:
       - prefs
   /users/login:
     post:
-      description: ログイン
+      description: "<b>ログイン認証</b><br>\n\t\t正規ユーザーのメールアドレスとパスワードのハッシュを送ることで、ユーザー認証を行う<br>\n\t\t正しくユーザー認証が完了した場合、正規ユーザーのIDを仮ユーザーIDに紐付けを行い。<br>\n\t\tユーザーの行動を別端末で引き継ぐことが出来る。<br>"
       operationId: users#login
       parameters:
       - description: メールアドレス
@@ -787,11 +874,10 @@ paths:
         name: email
         required: true
         type: string
-      - description: パスワード
+      - description: パスワードハッシュ(^[a-z0-9]{64}$)
         in: query
-        maxLength: 255
-        minLength: 1
-        name: password
+        name: password_hash
+        pattern: ^[a-z0-9]{64}$
         required: true
         type: string
       produces:
@@ -809,13 +895,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: login users
       tags:
       - users
   /users/new:
     post:
-      description: 正規ユーザーの作成
+      description: "<b>正規ユーザーの作成</b><br>\n\t\tメールアドレスとパスワードハッシュを使って、正規ユーザーの作成を行う。<br>\n\t\tもし、既に存在するアカウントだった場合は、\"alreadyExists\"を返す。<br>\n\t\t正しく実行された場合は、\"ok\"を返す。"
       operationId: users#regular create
       parameters:
       - description: メールアドレス
@@ -824,10 +910,10 @@ paths:
         name: email
         required: true
         type: string
-      - description: 識別子(android:Android_ID, ios:IDFV)
+      - description: パスワードハッシュ(^[a-z0-9]{64}$)
         in: query
-        name: identifier
-        pattern: (^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)
+        name: password_hash
+        pattern: ^[a-z0-9]{64}$
         required: true
         type: string
       produces:
@@ -847,13 +933,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: regular create users
       tags:
       - users
   /users/status:
     put:
-      description: 一時ユーザーの作成
+      description: "<b>ユーザーの端末情報更新</b><br>\n\t\t利用者のバージョンや端末情報を更新する。この更新処理は起動時に行われるものとする。"
       operationId: users#status
       parameters:
       - description: アプリのバージョン
@@ -861,7 +947,7 @@ paths:
         name: client_version
         required: true
         type: string
-      - description: OSとバージョン
+      - description: OSとバージョン(iOS 10.2など)
         in: query
         name: platform
         required: true
@@ -879,13 +965,13 @@ paths:
       schemes:
       - http
       security:
-      - key: []
+      - userToken: []
       summary: status users
       tags:
       - users
   /users/tmp:
     post:
-      description: 一時ユーザーの作成
+      description: "<b>一時ユーザーの作成</b><br>\n\t\t初回起動時に仮ユーザーを作成する。ここで与えられるユーザーIDは、メールアドレスなどとひも付きがないため、<br>\n\t\t端末が変わるとtokenが変わるので、別端末で共有するには、正規ユーザーの登録が必要になる。"
       operationId: users#tmp create
       parameters:
       - description: アプリのバージョン
@@ -936,7 +1022,11 @@ responses:
 schemes:
 - http
 securityDefinitions:
-  key:
+  cronToken:
+    in: header
+    name: X-Appengine-Cron
+    type: apiKey
+  userToken:
     description: ユーザートークン
     in: header
     name: X-Authorization

@@ -29,7 +29,27 @@ func (c *UsersController) Login(ctx *app.LoginUsersContext) error {
 	// UsersController_Login: start_implement
 
 	// Put your logic here
-
+	// 入力されたメールアドレスとパスワードハッシュでユーザーを見つける
+	userDB := models.NewUserDB(c.db)
+	user, err := userDB.UserAuth(ctx.Context, ctx.Email, ctx.PasswordHash)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	//  アカウントが正しく存在していれば該当のレコードを取得するため、tokenを取得する。
+	token, err := utility.GetToken(ctx.Context)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	userTerminalDB := models.NewUserTerminalDB(c.db)
+	// tokenから、ユーザーのレコードを取得する
+	ID, err := userTerminalDB.GetUserIDByToken(ctx.Context, token)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	// 仮ユーザーIDに正規のユーザーIDをセットする
+	userTerminal := &models.UserTerminal{}
+	userTerminal.ID = ID
+	userTerminal.UserID = user.ID
 	// UsersController_Login: end_implement
 	res := &app.Message{}
 	return ctx.OK(res)
@@ -40,28 +60,27 @@ func (c *UsersController) RegularCreate(ctx *app.RegularCreateUsersContext) erro
 	// UsersController_RegularCreate: start_implement
 
 	// Put your logic here
-	// 使用している端末の仮ユーザーが存在するか
+	// 正規ユーザーの登録を行う仮ユーザーを取得する
 	userTerminalDB := models.NewUserTerminalDB(c.db)
-	userTerminal, err := userTerminalDB.GetByIdentifier(ctx.Context, ctx.Identifier)
+	token, err := utility.GetToken(ctx.Context)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
-	// メールアドレスが既に登録されているか、登録されていれば既に登録されているユーザーに紐付ける
+	userTerminal, err := userTerminalDB.GetByToken(ctx.Context, token)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+	// メールアドレスが既に登録されているか、登録されていれば既にあることをクライアントに伝える
 	userDB := models.NewUserDB(c.db)
-	currentUser, err := userDB.GetByEmail(ctx.Context, ctx.Email)
+	_, err = userDB.GetByEmail(ctx.Context, ctx.Email)
 	if err == nil {
-		// 既に存在しているユーザーと端末情報を紐付ける
-		userTerminal.UserID = currentUser.ID
-		userTerminalDB.Update(ctx.Context, userTerminal)
-		if err != nil {
-			return fmt.Errorf("%v", err)
-		}
 		message := "alreadyExists"
 		return ctx.OK(&app.Message{&message})
 	}
 	// メールアドレスとユーザーを紐付ける
 	newUser := &models.User{}
 	newUser.ID = userTerminal.UserID
+	newUser.PasswordHash = ctx.PasswordHash
 	newUser.Email = ctx.Email
 	err = userDB.Update(ctx.Context, newUser)
 	if err != nil {
@@ -114,7 +133,7 @@ func (c *UsersController) Status(ctx *app.StatusUsersContext) error {
 	// UsersController_Status: start_implement
 
 	// Put your logic here
-	userID, err := utility.GetToken(ctx.Context)
+	userID, err := utility.GetUserID(ctx.Context)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}

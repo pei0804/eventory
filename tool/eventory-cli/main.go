@@ -35,10 +35,12 @@ func main() {
 
 	// Parse flags and setup signers
 	app.ParseFlags(os.Args)
-	keySigner := newKeySigner(key, format)
+	userTokenSigner := newUserTokenSigner(key, format)
+	cronTokenSigner := newCronTokenSigner(key, format)
 
 	// Initialize API client
-	c.SetKeySigner(keySigner)
+	c.SetUserTokenSigner(userTokenSigner)
+	c.SetCronTokenSigner(cronTokenSigner)
 	c.UserAgent = "eventory-cli/0"
 
 	// Register API commands
@@ -58,12 +60,24 @@ func newHTTPClient() *http.Client {
 	return http.DefaultClient
 }
 
-// newKeySigner returns the request signer used for authenticating
-// against the key security scheme.
-func newKeySigner(key, format string) goaclient.Signer {
+// newUserTokenSigner returns the request signer used for authenticating
+// against the userToken security scheme.
+func newUserTokenSigner(key, format string) goaclient.Signer {
 	return &goaclient.APIKeySigner{
 		SignQuery: false,
 		KeyName:   "X-Authorization",
+		KeyValue:  key,
+		Format:    format,
+	}
+
+}
+
+// newCronTokenSigner returns the request signer used for authenticating
+// against the cronToken security scheme.
+func newCronTokenSigner(key, format string) goaclient.Signer {
+	return &goaclient.APIKeySigner{
+		SignQuery: false,
+		KeyName:   "X-Appengine-Cron",
 		KeyValue:  key,
 		Format:    format,
 	}

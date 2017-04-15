@@ -18,6 +18,123 @@ import (
 	"unicode/utf8"
 )
 
+// AppendGenreCronContext provides the cron append genre action context.
+type AppendGenreCronContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewAppendGenreCronContext parses the incoming request URL and body, performs validations and creates the
+// context used by the cron controller append genre action.
+func NewAppendGenreCronContext(ctx context.Context, r *http.Request, service *goa.Service) (*AppendGenreCronContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	req.Request = r
+	rctx := AppendGenreCronContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *AppendGenreCronContext) OK(resp []byte) error {
+	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	ctx.ResponseData.WriteHeader(200)
+	_, err := ctx.ResponseData.Write(resp)
+	return err
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *AppendGenreCronContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
+// Unauthorized sends a HTTP response with status code 401.
+func (ctx *AppendGenreCronContext) Unauthorized() error {
+	ctx.ResponseData.WriteHeader(401)
+	return nil
+}
+
+// FixUserFollowCronContext provides the cron fix user follow action context.
+type FixUserFollowCronContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewFixUserFollowCronContext parses the incoming request URL and body, performs validations and creates the
+// context used by the cron controller fix user follow action.
+func NewFixUserFollowCronContext(ctx context.Context, r *http.Request, service *goa.Service) (*FixUserFollowCronContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	req.Request = r
+	rctx := FixUserFollowCronContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *FixUserFollowCronContext) OK(resp []byte) error {
+	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	ctx.ResponseData.WriteHeader(200)
+	_, err := ctx.ResponseData.Write(resp)
+	return err
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *FixUserFollowCronContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
+// Unauthorized sends a HTTP response with status code 401.
+func (ctx *FixUserFollowCronContext) Unauthorized() error {
+	ctx.ResponseData.WriteHeader(401)
+	return nil
+}
+
+// NewEventFetchCronContext provides the cron new event fetch action context.
+type NewEventFetchCronContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewNewEventFetchCronContext parses the incoming request URL and body, performs validations and creates the
+// context used by the cron controller new event fetch action.
+func NewNewEventFetchCronContext(ctx context.Context, r *http.Request, service *goa.Service) (*NewEventFetchCronContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	req.Request = r
+	rctx := NewEventFetchCronContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *NewEventFetchCronContext) OK(resp []byte) error {
+	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	ctx.ResponseData.WriteHeader(200)
+	_, err := ctx.ResponseData.Write(resp)
+	return err
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *NewEventFetchCronContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
+// Unauthorized sends a HTTP response with status code 401.
+func (ctx *NewEventFetchCronContext) Unauthorized() error {
+	ctx.ResponseData.WriteHeader(401)
+	return nil
+}
+
 // KeepEventsContext provides the events keep action context.
 type KeepEventsContext struct {
 	context.Context
@@ -426,8 +543,8 @@ type LoginUsersContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Email    string
-	Password string
+	Email        string
+	PasswordHash string
 }
 
 // NewLoginUsersContext parses the incoming request URL and body, performs validations and creates the
@@ -449,17 +566,14 @@ func NewLoginUsersContext(ctx context.Context, r *http.Request, service *goa.Ser
 			err = goa.MergeErrors(err, goa.InvalidFormatError(`email`, rctx.Email, goa.FormatEmail, err2))
 		}
 	}
-	paramPassword := req.Params["password"]
-	if len(paramPassword) == 0 {
-		err = goa.MergeErrors(err, goa.MissingParamError("password"))
+	paramPasswordHash := req.Params["password_hash"]
+	if len(paramPasswordHash) == 0 {
+		err = goa.MergeErrors(err, goa.MissingParamError("password_hash"))
 	} else {
-		rawPassword := paramPassword[0]
-		rctx.Password = rawPassword
-		if utf8.RuneCountInString(rctx.Password) < 1 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`password`, rctx.Password, utf8.RuneCountInString(rctx.Password), 1, true))
-		}
-		if utf8.RuneCountInString(rctx.Password) > 255 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`password`, rctx.Password, utf8.RuneCountInString(rctx.Password), 255, false))
+		rawPasswordHash := paramPasswordHash[0]
+		rctx.PasswordHash = rawPasswordHash
+		if ok := goa.ValidatePattern(`^[a-z0-9]{64}$`, rctx.PasswordHash); !ok {
+			err = goa.MergeErrors(err, goa.InvalidPatternError(`password_hash`, rctx.PasswordHash, `^[a-z0-9]{64}$`))
 		}
 	}
 	return &rctx, err
@@ -482,8 +596,8 @@ type RegularCreateUsersContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Email      string
-	Identifier string
+	Email        string
+	PasswordHash string
 }
 
 // NewRegularCreateUsersContext parses the incoming request URL and body, performs validations and creates the
@@ -505,14 +619,14 @@ func NewRegularCreateUsersContext(ctx context.Context, r *http.Request, service 
 			err = goa.MergeErrors(err, goa.InvalidFormatError(`email`, rctx.Email, goa.FormatEmail, err2))
 		}
 	}
-	paramIdentifier := req.Params["identifier"]
-	if len(paramIdentifier) == 0 {
-		err = goa.MergeErrors(err, goa.MissingParamError("identifier"))
+	paramPasswordHash := req.Params["password_hash"]
+	if len(paramPasswordHash) == 0 {
+		err = goa.MergeErrors(err, goa.MissingParamError("password_hash"))
 	} else {
-		rawIdentifier := paramIdentifier[0]
-		rctx.Identifier = rawIdentifier
-		if ok := goa.ValidatePattern(`(^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)`, rctx.Identifier); !ok {
-			err = goa.MergeErrors(err, goa.InvalidPatternError(`identifier`, rctx.Identifier, `(^[a-z0-9]{16}$|^[a-z0-9\-]{36}$)`))
+		rawPasswordHash := paramPasswordHash[0]
+		rctx.PasswordHash = rawPasswordHash
+		if ok := goa.ValidatePattern(`^[a-z0-9]{64}$`, rctx.PasswordHash); !ok {
+			err = goa.MergeErrors(err, goa.InvalidPatternError(`password_hash`, rctx.PasswordHash, `^[a-z0-9]{64}$`))
 		}
 	}
 	return &rctx, err

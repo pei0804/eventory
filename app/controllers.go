@@ -32,6 +32,99 @@ func initService(service *goa.Service) {
 	service.Decoder.Register(goa.NewJSONDecoder, "*/*")
 }
 
+// CronController is the controller interface for the Cron actions.
+type CronController interface {
+	goa.Muxer
+	AppendGenre(*AppendGenreCronContext) error
+	FixUserFollow(*FixUserFollowCronContext) error
+	NewEventFetch(*NewEventFetchCronContext) error
+}
+
+// MountCronController "mounts" a Cron resource controller on the given service.
+func MountCronController(service *goa.Service, ctrl CronController) {
+	initService(service)
+	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/api/v2/cron/events/appendgenre", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/api/v2/cron/user/events/fixfollow", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/api/v2/cron/events/fetch", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewAppendGenreCronContext(ctx, req, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.AppendGenre(rctx)
+	}
+	h = handleSecurity("cronToken", h)
+	h = handleCronOrigin(h)
+	service.Mux.Handle("GET", "/api/v2/cron/events/appendgenre", ctrl.MuxHandler("AppendGenre", h, nil))
+	service.LogInfo("mount", "ctrl", "Cron", "action", "AppendGenre", "route", "GET /api/v2/cron/events/appendgenre", "security", "cronToken")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewFixUserFollowCronContext(ctx, req, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.FixUserFollow(rctx)
+	}
+	h = handleSecurity("cronToken", h)
+	h = handleCronOrigin(h)
+	service.Mux.Handle("GET", "/api/v2/cron/user/events/fixfollow", ctrl.MuxHandler("FixUserFollow", h, nil))
+	service.LogInfo("mount", "ctrl", "Cron", "action", "FixUserFollow", "route", "GET /api/v2/cron/user/events/fixfollow", "security", "cronToken")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewNewEventFetchCronContext(ctx, req, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.NewEventFetch(rctx)
+	}
+	h = handleSecurity("cronToken", h)
+	h = handleCronOrigin(h)
+	service.Mux.Handle("GET", "/api/v2/cron/events/fetch", ctrl.MuxHandler("NewEventFetch", h, nil))
+	service.LogInfo("mount", "ctrl", "Cron", "action", "NewEventFetch", "route", "GET /api/v2/cron/events/fetch", "security", "cronToken")
+}
+
+// handleCronOrigin applies the CORS response headers corresponding to the origin.
+func handleCronOrigin(h goa.Handler) goa.Handler {
+
+	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		origin := req.Header.Get("Origin")
+		if origin == "" {
+			// Not a CORS request
+			return h(ctx, rw, req)
+		}
+		if cors.MatchOrigin(origin, "*") {
+			ctx = goa.WithLogContext(ctx, "origin", origin)
+			rw.Header().Set("Access-Control-Allow-Origin", origin)
+			rw.Header().Set("Access-Control-Max-Age", "600")
+			rw.Header().Set("Access-Control-Allow-Credentials", "true")
+			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
+				// We are handling a preflight request
+				rw.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT")
+			}
+			return h(ctx, rw, req)
+		}
+
+		return h(ctx, rw, req)
+	}
+}
+
 // EventsController is the controller interface for the Events actions.
 type EventsController interface {
 	goa.Muxer
@@ -63,10 +156,10 @@ func MountEventsController(service *goa.Service, ctrl EventsController) {
 		}
 		return ctrl.Keep(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleEventsOrigin(h)
 	service.Mux.Handle("PUT", "/api/v2/events/:eventID/keep", ctrl.MuxHandler("Keep", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "Keep", "route", "PUT /api/v2/events/:eventID/keep", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "Keep", "route", "PUT /api/v2/events/:eventID/keep", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -80,20 +173,20 @@ func MountEventsController(service *goa.Service, ctrl EventsController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleEventsOrigin(h)
 	service.Mux.Handle("GET", "/api/v2/events/genre/:id", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/genre/:id", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/genre/:id", "security", "userToken")
 	service.Mux.Handle("GET", "/api/v2/events/new", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/new", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/new", "security", "userToken")
 	service.Mux.Handle("GET", "/api/v2/events/keep", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/keep", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/keep", "security", "userToken")
 	service.Mux.Handle("GET", "/api/v2/events/nokeep", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/nokeep", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/nokeep", "security", "userToken")
 	service.Mux.Handle("GET", "/api/v2/events/popular", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/popular", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/popular", "security", "userToken")
 	service.Mux.Handle("GET", "/api/v2/events/recommend", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/recommend", "security", "key")
+	service.LogInfo("mount", "ctrl", "Events", "action", "List", "route", "GET /api/v2/events/recommend", "security", "userToken")
 }
 
 // handleEventsOrigin applies the CORS response headers corresponding to the origin.
@@ -149,10 +242,10 @@ func MountGenresController(service *goa.Service, ctrl GenresController) {
 		}
 		return ctrl.Create(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleGenresOrigin(h)
 	service.Mux.Handle("POST", "/api/v2/genres/new", ctrl.MuxHandler("Create", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "Create", "route", "POST /api/v2/genres/new", "security", "key")
+	service.LogInfo("mount", "ctrl", "Genres", "action", "Create", "route", "POST /api/v2/genres/new", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -166,12 +259,12 @@ func MountGenresController(service *goa.Service, ctrl GenresController) {
 		}
 		return ctrl.Follow(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleGenresOrigin(h)
 	service.Mux.Handle("PUT", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("Follow", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "PUT /api/v2/genres/:genreID/follow", "security", "key")
+	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "PUT /api/v2/genres/:genreID/follow", "security", "userToken")
 	service.Mux.Handle("DELETE", "/api/v2/genres/:genreID/follow", ctrl.MuxHandler("Follow", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "DELETE /api/v2/genres/:genreID/follow", "security", "key")
+	service.LogInfo("mount", "ctrl", "Genres", "action", "Follow", "route", "DELETE /api/v2/genres/:genreID/follow", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -185,10 +278,10 @@ func MountGenresController(service *goa.Service, ctrl GenresController) {
 		}
 		return ctrl.List(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleGenresOrigin(h)
 	service.Mux.Handle("GET", "/api/v2/genres", ctrl.MuxHandler("List", h, nil))
-	service.LogInfo("mount", "ctrl", "Genres", "action", "List", "route", "GET /api/v2/genres", "security", "key")
+	service.LogInfo("mount", "ctrl", "Genres", "action", "List", "route", "GET /api/v2/genres", "security", "userToken")
 }
 
 // handleGenresOrigin applies the CORS response headers corresponding to the origin.
@@ -240,12 +333,12 @@ func MountPrefsController(service *goa.Service, ctrl PrefsController) {
 		}
 		return ctrl.Follow(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handlePrefsOrigin(h)
 	service.Mux.Handle("PUT", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("Follow", h, nil))
-	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "PUT /api/v2/prefs/:prefID/follow", "security", "key")
+	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "PUT /api/v2/prefs/:prefID/follow", "security", "userToken")
 	service.Mux.Handle("DELETE", "/api/v2/prefs/:prefID/follow", ctrl.MuxHandler("Follow", h, nil))
-	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "DELETE /api/v2/prefs/:prefID/follow", "security", "key")
+	service.LogInfo("mount", "ctrl", "Prefs", "action", "Follow", "route", "DELETE /api/v2/prefs/:prefID/follow", "security", "userToken")
 }
 
 // handlePrefsOrigin applies the CORS response headers corresponding to the origin.
@@ -303,10 +396,10 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 		}
 		return ctrl.Login(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleUsersOrigin(h)
 	service.Mux.Handle("POST", "/api/v2/users/login", ctrl.MuxHandler("Login", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "Login", "route", "POST /api/v2/users/login", "security", "key")
+	service.LogInfo("mount", "ctrl", "Users", "action", "Login", "route", "POST /api/v2/users/login", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -320,10 +413,10 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 		}
 		return ctrl.RegularCreate(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleUsersOrigin(h)
 	service.Mux.Handle("POST", "/api/v2/users/new", ctrl.MuxHandler("RegularCreate", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "RegularCreate", "route", "POST /api/v2/users/new", "security", "key")
+	service.LogInfo("mount", "ctrl", "Users", "action", "RegularCreate", "route", "POST /api/v2/users/new", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -337,10 +430,10 @@ func MountUsersController(service *goa.Service, ctrl UsersController) {
 		}
 		return ctrl.Status(rctx)
 	}
-	h = handleSecurity("key", h)
+	h = handleSecurity("userToken", h)
 	h = handleUsersOrigin(h)
 	service.Mux.Handle("PUT", "/api/v2/users/status", ctrl.MuxHandler("Status", h, nil))
-	service.LogInfo("mount", "ctrl", "Users", "action", "Status", "route", "PUT /api/v2/users/status", "security", "key")
+	service.LogInfo("mount", "ctrl", "Users", "action", "Status", "route", "PUT /api/v2/users/status", "security", "userToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request

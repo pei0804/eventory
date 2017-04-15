@@ -54,6 +54,9 @@ func init() {
 	// Mount "users" controller
 	c4 := controller.NewUsersController(service, dbcon)
 	app.MountUsersController(service, c4)
+	// Mount "cron" controller
+	c5 := controller.NewCronController(service, dbcon)
+	app.MountCronController(service, c5)
 
 	// Setup HTTP handler
 	http.HandleFunc("/", service.Mux.ServeHTTP)
@@ -80,7 +83,8 @@ func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 				goa.LogInfo(ctx, "failed api token auth")
 				return errors.Unauthenticated("missing auth")
 			}
-			utility.SetToken(ctx, userID)
+			utility.SetUserID(ctx, userID)
+			utility.SetToken(ctx, token)
 			// Proceed.
 			goa.LogInfo(ctx, "auth", "apikey", "token", token)
 			return h(ctx, rw, req)

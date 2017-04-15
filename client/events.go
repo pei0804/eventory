@@ -25,7 +25,9 @@ func KeepEventsPath(eventID int) string {
 	return fmt.Sprintf("/api/v2/events/%s/keep", param0)
 }
 
-// イベントのお気に入り操作
+// <b>イベントお気に入り操作</b><br>
+// isKeepがtrueだった場合はフォロー、falseの場合はアンフォローとする。<br>
+// 存在しないイベントへのリクエストは404エラーを返す。
 func (c *Client) KeepEvents(ctx context.Context, path string, isKeep bool) (*http.Response, error) {
 	req, err := c.NewKeepEventsRequest(ctx, path, isKeep)
 	if err != nil {
@@ -42,15 +44,15 @@ func (c *Client) NewKeepEventsRequest(ctx context.Context, path string, isKeep b
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
-	tmp12 := strconv.FormatBool(isKeep)
-	values.Set("isKeep", tmp12)
+	tmp15 := strconv.FormatBool(isKeep)
+	values.Set("isKeep", tmp15)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }
@@ -92,7 +94,17 @@ func ListEventsPath6() string {
 	return fmt.Sprintf("/api/v2/events/recommend")
 }
 
-// イベント情報取得
+// <b>イベント情報取得</b><br>
+// <ul>
+// <li>/genre/:id -> ジャンル別新着情報</li>
+// <li>/new -> ユーザー別新着情報</li>
+// <li>/keep -> ユーザーがキープしているイベント</li>
+// <li>/nokeep -> ユーザーが興味なしにしたイベント</li>
+// <li>/popular -> キープ数が多い。注目されているイベント</li>
+// <li>/recommend -> ユーザー属性に合わせたおすすめイベント</li>
+// </ul>
+// イベントの情報は区切って送信され、スクロールイベントで次のページのイベント情報を取得することを想定している。<br>
+// また、キープや興味なしの操作は１日に１回行われるバッチ処理時に確定されるまでは、分類されずに表示される。
 func (c *Client) ListEvents(ctx context.Context, path string, page *int, q *string, sort *string) (*http.Response, error) {
 	req, err := c.NewListEventsRequest(ctx, path, page, q, sort)
 	if err != nil {
@@ -110,8 +122,8 @@ func (c *Client) NewListEventsRequest(ctx context.Context, path string, page *in
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	if page != nil {
-		tmp13 := strconv.Itoa(*page)
-		values.Set("page", tmp13)
+		tmp16 := strconv.Itoa(*page)
+		values.Set("page", tmp16)
 	}
 	if q != nil {
 		values.Set("q", *q)
@@ -124,8 +136,8 @@ func (c *Client) NewListEventsRequest(ctx context.Context, path string, page *in
 	if err != nil {
 		return nil, err
 	}
-	if c.KeySigner != nil {
-		c.KeySigner.Sign(req)
+	if c.UserTokenSigner != nil {
+		c.UserTokenSigner.Sign(req)
 	}
 	return req, nil
 }
