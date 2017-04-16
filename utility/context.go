@@ -19,7 +19,7 @@ func GetUserID(ctx context.Context) (int, error) {
 
 	userID, ok := v.(int)
 	if !ok {
-		return 0, fmt.Errorf("token not found")
+		return 0, fmt.Errorf("userID not found")
 	}
 
 	return userID, nil
@@ -27,10 +27,10 @@ func GetUserID(ctx context.Context) (int, error) {
 
 type tokenKey string
 
-const ContextTokenKey userIDKey = "tokenKey"
+const ContextTokenKey tokenKey = "tokenKey"
 
-func SetToken(parents context.Context, userID int) context.Context {
-	return context.WithValue(parents, ContextTokenKey, userID)
+func SetToken(parents context.Context, token string) context.Context {
+	return context.WithValue(parents, ContextTokenKey, token)
 }
 
 func GetToken(ctx context.Context) (string, error) {

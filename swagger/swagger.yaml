@@ -301,8 +301,8 @@ paths:
         required: true
         type: boolean
       produces:
-      - text/plain
       - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -469,8 +469,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.goa.error
       - application/vnd.event+json; type=collection
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -637,8 +637,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.event+json; type=collection
       - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -782,8 +782,8 @@ paths:
         required: true
         type: string
       produces:
-      - application/vnd.goa.error
       - application/vnd.genre+json
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -881,8 +881,8 @@ paths:
         required: true
         type: string
       produces:
-      - application/vnd.goa.error
       - application/vnd.message+json
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK

@@ -40,7 +40,8 @@ func init() {
 		log.Fatalf("database initialization failed: %s", err)
 	}
 
-	app.UseKeyMiddleware(service, NewAPIKeyMiddleware(dbcon))
+	app.UseUserTokenMiddleware(service, NewAPIKeyMiddleware(dbcon))
+	app.UseCronTokenMiddleware(service, NewCronAuthKeyMiddleware())
 
 	// Mount "events" controller
 	c := controller.NewEventsController(service, dbcon)
@@ -65,7 +66,7 @@ func init() {
 func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 
 	// Instantiate API Key security scheme details generated from design
-	scheme := app.NewKeySecurity()
+	scheme := app.NewUserTokenSecurity()
 
 	// Middleware
 	return func(h goa.Handler) goa.Handler {
@@ -73,7 +74,7 @@ func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 			// Retrieve and log header specified by scheme
 			token := req.Header.Get(scheme.Name)
 			// A real app would do something more interesting here
-			if len(token) == 0 || token == "Bearer" {
+			if len(token) == 0 {
 				goa.LogInfo(ctx, "failed api token auth")
 				return errors.Unauthenticated("missing auth")
 			}
@@ -85,6 +86,29 @@ func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 			}
 			utility.SetUserID(ctx, userID)
 			utility.SetToken(ctx, token)
+			// Proceed.
+			goa.LogInfo(ctx, "auth", "apikey", "token", token)
+			return h(ctx, rw, req)
+		}
+
+	}
+}
+
+func NewCronAuthKeyMiddleware(db *gorm.DB) goa.Middleware {
+
+	// Instantiate API Key security scheme details generated from design
+	scheme := app.NewCronTokenSecurity()
+
+	// Middleware
+	return func(h goa.Handler) goa.Handler {
+		return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+			// Retrieve and log header specified by scheme
+			token := req.Header.Get(scheme.Name)
+			// A real app would do something more interesting here
+			if len(token) == 0 {
+				goa.LogInfo(ctx, "failed api token auth")
+				return errors.Unauthenticated("missing auth")
+			}
 			// Proceed.
 			goa.LogInfo(ctx, "auth", "apikey", "token", token)
 			return h(ctx, rw, req)
