@@ -1,5 +1,5 @@
-hash: b65ced966c032664be41d4851a4be45ebe934f6a8435e0576bcd1d7221e1ec0d
-updated: 2017-04-12T23:37:12.683752697+09:00
+hash: 93f52812213303f117eced6468612bab43cf66a1a0889db35245d07197cd6572
+updated: 2017-04-16T21:05:33.986097892+09:00
 imports:
 - name: bitbucket.org/pkg/inflect
   version: 8961c3750a47b8c0b3e118d52513b97adf85a7e8
@@ -18,7 +18,7 @@ imports:
 - name: github.com/go-sql-driver/mysql
   version: a197e5d40516f2e9f74dcee085a5f2d4604e94df
 - name: github.com/goadesign/goa
-  version: 8f0fdca409904318050f9e03579c3878f8928826
+  version: d446b57f94d6e4a362ee455dd2e1a794f30cec4f
   subpackages:
   - client
   - cors
@@ -51,8 +51,6 @@ imports:
   version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
 - name: github.com/mjibson/goon
   version: a9ac1d26f6dbfd9538f4e1e02a04061ef41c1c17
-- name: github.com/pkg/errors
-  version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/spf13/cobra
@@ -61,6 +59,13 @@ imports:
   version: d16db1e50e33dff1b6cdf37596cef36742128670
 - name: github.com/zach-klippenstein/goregen
   version: 795b5e3961ea1912fde60af417ad85e86acc0d6a
+- name: golang.org/x/crypto
+  version: ede567c8e044a5913dad1d1af3696d9da953104c
+  subpackages:
+  - bcrypt
+  - blowfish
+  - pbkdf2
+  - scrypt
 - name: golang.org/x/net
   version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
