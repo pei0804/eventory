@@ -12,7 +12,9 @@
 # - all is the default target, it runs all the targets in the order above.
 #
 
-dev:
+build: install test
+
+install:
 	@which direnv || go get -v github.com/zimbatm/direnv
 	@direnv allow
 	@which glide || go get -v github.com/Masterminds/glide
