@@ -15,19 +15,18 @@ import (
 	"google.golang.org/appengine/urlfetch"
 )
 
-func NewParser(rawurl string, rawapi int, token string, r *http.Request) *Parser {
+func NewParser(rawurl string, rawapi string, token string, r *http.Request) *Parser {
 	return &Parser{
-		Url:     rawurl,
-		Api:     rawapi,
+		URL:     rawurl,
+		APIType: rawapi,
 		Token:   token,
 		Request: r,
 	}
 }
 
-// TODO ネーミング変えるべきかも
 type Parser struct {
-	Url      string
-	Api      int
+	URL      string
+	APIType  string
 	Token    string
 	RespByte []byte
 	err      error
@@ -36,7 +35,7 @@ type Parser struct {
 
 func (p *Parser) sendQuery() {
 	ctx := appengine.NewContext(p.Request)
-	req, err := http.NewRequest("GET", p.Url, nil)
+	req, err := http.NewRequest("GET", p.URL, nil)
 	if err != nil {
 		fmt.Fprint(os.Stderr, err)
 		p.err = err
@@ -64,7 +63,7 @@ func (p *Parser) sendQuery() {
 	p.RespByte = respByte
 }
 
-func (p *Parser) atdnJsonParse() (events []models.EventParser, err error) {
+func (p *Parser) atdnJsonParse() (events []models.Event, err error) {
 	var at models.At
 	err = json.Unmarshal(p.RespByte, &at)
 	if err != nil {
@@ -72,17 +71,19 @@ func (p *Parser) atdnJsonParse() (events []models.EventParser, err error) {
 		p.err = err
 		return events, nil
 	}
-	e := new(models.EventParser)
-	events = make([]models.EventParser, len(at.Events))
+	e := new(models.Event)
+	events = make([]models.Event, len(at.Events))
 	for i, v := range at.Events {
 		utility.CopyStruct(v.Event, e)
 		events[i] = *e
-		events[i].ApiId = define.ATDN
+		events[i].APIType = define.ATDN
+		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.Event.EventId)
+		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil
 }
 
-func (p *Parser) connpassJsonParse() (events []models.EventParser, err error) {
+func (p *Parser) connpassJsonParse() (events []models.Event, err error) {
 	var cp models.Cp
 	err = json.Unmarshal(p.RespByte, &cp)
 	if err != nil {
@@ -91,17 +92,19 @@ func (p *Parser) connpassJsonParse() (events []models.EventParser, err error) {
 		return events, nil
 	}
 
-	e := new(models.EventParser)
-	events = make([]models.EventParser, len(cp.Events))
+	e := new(models.Event)
+	events = make([]models.Event, len(cp.Events))
 	for i, v := range cp.Events {
 		utility.CopyStruct(v, e)
 		events[i] = *e
-		events[i].ApiId = define.CONNPASS
+		events[i].APIType = define.CONNPASS
+		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.EventId)
+		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil
 }
 
-func (p *Parser) doorkeeperJsonParse() (events []models.EventParser, err error) {
+func (p *Parser) doorkeeperJsonParse() (events []models.Event, err error) {
 	var dk []models.Dk
 	err = json.Unmarshal(p.RespByte, &dk)
 	if err != nil {
@@ -110,25 +113,39 @@ func (p *Parser) doorkeeperJsonParse() (events []models.EventParser, err error) 
 		return events, nil
 	}
 
-	e := new(models.EventParser)
-	events = make([]models.EventParser, len(dk))
+	e := new(models.Event)
+	events = make([]models.Event, len(dk))
 	for i, v := range dk {
 		utility.CopyStruct(v.Event, e)
 		events[i] = *e
-		events[i].ApiId = define.DOORKEEPER
+		events[i].APIType = define.DOORKEEPER
+		events[i].Address = utility.RemovePoscode(events[i].Address)
+		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.Event.EventId)
+		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil
 }
 
-func (p *Parser) convertingToJson() (events []models.EventParser, err error) {
+func createDataHash(e models.Event) string {
+	d := utility.ConcatenateString(
+		e.Title,
+		e.Description,
+		e.URL,
+		e.Address,
+		string(e.Limits),
+		string(e.Accept),
+		string(e.StartAt.Format("2006-01-02 15:04:05")),
+		string(e.EndAt.Format("2006-01-02 15:04:05")))
+	return utility.ToHash(d)
+}
 
+func (p *Parser) ConvertingToJson() (events []models.Event, err error) {
 	p.sendQuery()
-
-	if p.Api == define.ATDN {
+	if p.APIType == define.ATDN {
 		return p.atdnJsonParse()
-	} else if p.Api == define.CONNPASS {
+	} else if p.APIType == define.CONNPASS {
 		return p.connpassJsonParse()
-	} else if p.Api == define.DOORKEEPER {
+	} else if p.APIType == define.DOORKEEPER {
 		return p.doorkeeperJsonParse()
 	}
 	return events, errors.New("未知のAPIがセットされています。")

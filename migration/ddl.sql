@@ -31,6 +31,7 @@ CREATE TABLE events
 	identifier varchar(10) NOT NULL COMMENT '識別子(api-event_id)',
 	title varchar(200) NOT NULL COMMENT 'イベント名',
 	description text NOT NULL COMMENT '説明',
+	data_hash char(64) NOT NULL COMMENT 'データハッシュ',
 	url text NOT NULL COMMENT 'イベントページURL',
 	limits int NOT NULL COMMENT '参加人数上限',
 	wait int NOT NULL COMMENT 'キャンセル待ち人数',

@@ -1,23 +1,13 @@
 package: github.com/tikasan/eventory
 import:
 - package: github.com/goadesign/goa
-  version: ~1.2.0
-  subpackages:
-  - client
-  - cors
-  - design
-  - design/apidsl
-  - goatest
-  - middleware
-  - uuid
+  version: ~1.1.0
 - package: github.com/spf13/cobra
 - package: github.com/goadesign/gorma
 - package: github.com/jinzhu/gorm
   version: ~1.0.0
 - package: gopkg.in/yaml.v1
-- package: google.golang.org/appengine
-  subpackages:
-  - '...'
+- package: google.golang.org/appengine/...
 - package: github.com/mjibson/goon
 - package: cloud.google.com/go
   subpackages:
@@ -25,13 +15,5 @@ import:
 - package: google.golang.org/grpc
   version: ~1.2.0
 - package: golang.org/x/net
-  version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
   - context
-  - context/ctxhttp
-  - http2
-  - http2/hpack
-  - idna
-  - internal/timeseries
-  - lex/httplex
-  - trace

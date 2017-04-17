@@ -94,7 +94,7 @@ func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 	}
 }
 
-func NewCronAuthKeyMiddleware(db *gorm.DB) goa.Middleware {
+func NewCronAuthKeyMiddleware() goa.Middleware {
 
 	// Instantiate API Key security scheme details generated from design
 	scheme := app.NewCronTokenSecurity()

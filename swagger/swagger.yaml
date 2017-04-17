@@ -220,9 +220,6 @@ paths:
     get:
       description: <b>イベントにジャンルを付加する<b>
       operationId: cron#append genre
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -243,9 +240,6 @@ paths:
     get:
       description: <b>最新イベント情報の取得<b>
       operationId: cron#new event fetch
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -266,9 +260,6 @@ paths:
     get:
       description: "<b>イベントフォロー操作の確定</b><br>\n\t\tuser_follow_eventsテーブルのbatch_processedをtrueに変更する"
       operationId: cron#fix user follow
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -300,9 +291,6 @@ paths:
         name: isKeep
         required: true
         type: boolean
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -356,9 +344,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -412,9 +397,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -468,9 +450,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.event+json; type=collection
-      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -524,9 +503,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -580,9 +556,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -636,9 +609,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -687,9 +657,6 @@ paths:
         name: sort
         required: false
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.genre+json; type=collection
       responses:
         "200":
           description: OK
@@ -718,9 +685,6 @@ paths:
         name: genreID
         required: true
         type: integer
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -748,9 +712,6 @@ paths:
         name: genreID
         required: true
         type: integer
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -781,9 +742,6 @@ paths:
         name: name
         required: true
         type: string
-      produces:
-      - application/vnd.genre+json
-      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -812,9 +770,6 @@ paths:
         name: prefID
         required: true
         type: integer
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -842,9 +797,6 @@ paths:
         name: prefID
         required: true
         type: integer
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -880,9 +832,6 @@ paths:
         pattern: ^[a-z0-9]{64}$
         required: true
         type: string
-      produces:
-      - application/vnd.message+json
-      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -916,9 +865,6 @@ paths:
         pattern: ^[a-z0-9]{64}$
         required: true
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.message+json
       responses:
         "200":
           description: OK
@@ -952,9 +898,6 @@ paths:
         name: platform
         required: true
         type: string
-      produces:
-      - application/vnd.goa.error
-      - text/plain
       responses:
         "200":
           description: OK
@@ -990,9 +933,6 @@ paths:
         name: platform
         required: true
         type: string
-      produces:
-      - application/vnd.goa.error
-      - application/vnd.token+json
       responses:
         "200":
           description: OK

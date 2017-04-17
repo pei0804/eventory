@@ -1,5 +1,5 @@
-hash: 93f52812213303f117eced6468612bab43cf66a1a0889db35245d07197cd6572
-updated: 2017-04-16T21:05:33.986097892+09:00
+hash: 91df43e1c187c99636c34fc0ce575fed3001e02c66ed70467742923ae4f9d58c
+updated: 2017-04-17T16:02:58.075400947+09:00
 imports:
 - name: bitbucket.org/pkg/inflect
   version: 8961c3750a47b8c0b3e118d52513b97adf85a7e8
@@ -18,7 +18,7 @@ imports:
 - name: github.com/go-sql-driver/mysql
   version: a197e5d40516f2e9f74dcee085a5f2d4604e94df
 - name: github.com/goadesign/goa
-  version: d446b57f94d6e4a362ee455dd2e1a794f30cec4f
+  version: 8f0fdca409904318050f9e03579c3878f8928826
   subpackages:
   - client
   - cors
@@ -35,6 +35,17 @@ imports:
   version: 37e02c0e3b7b779b3e981ec729e4015ea2b9ee29
   subpackages:
   - dsl
+- name: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+  subpackages:
+  - proto
+  - protoc-gen-go/descriptor
+  - ptypes/any
+  - ptypes/duration
+  - ptypes/empty
+  - ptypes/struct
+  - ptypes/timestamp
+  - ptypes/wrappers
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/jinzhu/gorm
@@ -51,26 +62,22 @@ imports:
   version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
 - name: github.com/mjibson/goon
   version: a9ac1d26f6dbfd9538f4e1e02a04061ef41c1c17
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/spf13/cobra
   version: 7aeaa2cce6ae7e18d2a6ee597b60ee137e999bd9
 - name: github.com/spf13/pflag
   version: d16db1e50e33dff1b6cdf37596cef36742128670
+- name: github.com/yterajima/go-dtf
+  version: 9e54ad5c4b459faa158c3948c39b6378b0eba138
 - name: github.com/zach-klippenstein/goregen
   version: 795b5e3961ea1912fde60af417ad85e86acc0d6a
-- name: golang.org/x/crypto
-  version: ede567c8e044a5913dad1d1af3696d9da953104c
-  subpackages:
-  - bcrypt
-  - blowfish
-  - pbkdf2
-  - scrypt
 - name: golang.org/x/net
   version: 4971afdc2f162e82d185353533d3cf16188a9f4e
   subpackages:
   - context
-  - context/ctxhttp
   - http2
   - http2/hpack
   - idna
@@ -86,8 +93,75 @@ imports:
   version: 2e4a801b39fc199db615bfca7d0b9f8cd9580599
   subpackages:
   - '...'
+  - datastore
+  - internal
+  - internal/aetesting
+  - internal/app_identity
+  - internal/base
+  - internal/blobstore
+  - internal/capability
+  - internal/channel
+  - internal/datastore
+  - internal/image
+  - internal/log
+  - internal/mail
+  - internal/memcache
+  - internal/modules
+  - internal/remote_api
+  - internal/search
+  - internal/socket
+  - internal/system
+  - internal/taskqueue
+  - internal/urlfetch
+  - internal/user
+  - internal/xmpp
+  - log
+  - memcache
+  - taskqueue
+  - urlfetch
+  - user
+- name: google.golang.org/genproto
+  version: 411e09b969b1170a9f0c467558eb4c4c110d9c77
+  subpackages:
+  - googleapis/api
+  - googleapis/api/annotations
+  - googleapis/api/configchange
+  - googleapis/api/distribution
+  - googleapis/api/httpbody
+  - googleapis/api/label
+  - googleapis/api/metric
+  - googleapis/api/monitoredres
+  - googleapis/api/serviceconfig
+  - googleapis/cloud/support/common
+  - googleapis/devtools/source/v1
+  - googleapis/iam/v1
+  - googleapis/logging/type
+  - googleapis/longrunning
+  - googleapis/rpc/code
+  - googleapis/rpc/status
+  - googleapis/type/color
+  - googleapis/type/date
+  - googleapis/type/latlng
+  - googleapis/type/money
+  - googleapis/type/timeofday
+  - protobuf/api
+  - protobuf/field_mask
+  - protobuf/ptype
+  - protobuf/source_context
 - name: google.golang.org/grpc
   version: 8050b9cbc271307e5a716a9d782803d09b0d6f2d
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - stats
+  - tap
+  - transport
 - name: gopkg.in/yaml.v1
   version: 9f9df34309c04878acc86042b16630b0f696e1de
 testImports: []

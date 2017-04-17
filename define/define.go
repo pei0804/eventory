@@ -7,9 +7,9 @@ const DOORKEEPER_URL = "https://api.doorkeeper.jp/events"
 const SERACH_SCOPE = 12
 
 const (
-	ATDN = iota
-	CONNPASS
-	DOORKEEPER
+	ATDN       = "atdn"
+	CONNPASS   = "connpass"
+	DOORKEEPER = "doorkeeper"
 )
 
 // setting

@@ -234,3 +234,9 @@ func (m *UserFollowEventDB) Delete(ctx context.Context, id int) error {
 
 	return nil
 }
+
+func (m *UserFollowEventDB) FixUserFollow(ctx context.Context) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "delete"}, time.Now())
+
+	return nil
+}

@@ -23,8 +23,11 @@ import (
 type Event struct {
 	ID               int `gorm:"primary_key"` // primary key
 	APIType          string
+	Title            string
 	Accept           int
 	Address          string
+	DataHash         string
+	Description      string
 	EventGenres      []EventGenre // has many EventGenres
 	Identifier       string
 	Limits           int
