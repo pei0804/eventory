@@ -42,6 +42,11 @@ func (c *CronController) FixUserFollow(ctx *app.FixUserFollowCronContext) error 
 	// CronController_FixUserFollow: start_implement
 
 	// Put your logic here
+	ufe := models.NewUserFollowEventDB(c.db)
+	err := ufe.FixUserFollow(ctx.Context)
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
 
 	// CronController_FixUserFollow: end_implement
 	return nil
@@ -92,8 +97,8 @@ func (c *CronController) NewEventFetch(ctx *app.NewEventFetchCronContext) error 
 			events.Pref = e.Pref
 			events.URL = e.URL
 			events.Wait = e.Wait
-			events.EndAt = e.EndAt
 			events.StartAt = e.StartAt
+			events.EndAt = e.EndAt
 			eventsDB := models.NewEventDB(c.db)
 			err := eventsDB.Add(ctx.Context, events)
 			if err != nil {

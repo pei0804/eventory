@@ -238,5 +238,14 @@ func (m *UserFollowEventDB) Delete(ctx context.Context, id int) error {
 func (m *UserFollowEventDB) FixUserFollow(ctx context.Context) error {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "delete"}, time.Now())
 
+	oneAgo := time.Now()
+	oneAgo = oneAgo.AddDate(0, 0, -1)
+	model := UserFollowEvent{}
+	model.BatchProcessed = true
+	err := m.Db.Table(m.TableName()).Updates(model).Where("created_at > ?", oneAgo).Error
+	if err != nil {
+		goa.LogError(ctx, "error updating UserFollowEvent", "error", err.Error())
+		return err
+	}
 	return nil
 }
