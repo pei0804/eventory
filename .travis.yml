@@ -3,7 +3,6 @@ go:
 - 1.6.3
 sudo: false
 install:
-- go get -v ./...
 - export PATH=$PATH:$HOME/gopath/bin
 - curl https://bitbucket.org/birkenfeld/pygments-main/get/2.1.tar.gz -L -o 2.1.tar.gz
 - mkdir -p ${HOME}/bin
