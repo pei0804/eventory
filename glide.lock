@@ -1,5 +1,5 @@
-hash: 91df43e1c187c99636c34fc0ce575fed3001e02c66ed70467742923ae4f9d58c
-updated: 2017-04-17T16:02:58.075400947+09:00
+hash: c9626345ec0e038125f46fd7f3702417075a2e832d6b767450753642383b1161
+updated: 2017-04-19T19:41:57.152739772+09:00
 imports:
 - name: bitbucket.org/pkg/inflect
   version: 8961c3750a47b8c0b3e118d52513b97adf85a7e8
@@ -18,7 +18,7 @@ imports:
 - name: github.com/go-sql-driver/mysql
   version: a197e5d40516f2e9f74dcee085a5f2d4604e94df
 - name: github.com/goadesign/goa
-  version: 8f0fdca409904318050f9e03579c3878f8928826
+  version: d446b57f94d6e4a362ee455dd2e1a794f30cec4f
   subpackages:
   - client
   - cors
@@ -62,8 +62,6 @@ imports:
   version: 717f7cf83fb78669bfab612749c2e8ff63d5be11
 - name: github.com/mjibson/goon
   version: a9ac1d26f6dbfd9538f4e1e02a04061ef41c1c17
-- name: github.com/pkg/errors
-  version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/spf13/cobra

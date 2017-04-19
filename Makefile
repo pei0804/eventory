@@ -20,6 +20,12 @@ install:
 	@which glide || go get -v github.com/Masterminds/glide
 	@glide install
 
+appengine:
+	@which gorep || go get -v github.com/novalagung/gorep
+	@gorep -path="./vendor/github.com/goadesign/goa" \
+          -from="context" \
+          -to="golang.org/x/net/context"
+
 test:
 	go test -v $(shell glide novendor)
 
