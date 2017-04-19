@@ -12,7 +12,7 @@
 # - all is the default target, it runs all the targets in the order above.
 #
 
-build: install test
+build: install appengine
 
 install:
 	@which direnv || go get -v github.com/zimbatm/direnv
@@ -20,18 +20,38 @@ install:
 	@which glide || go get -v github.com/Masterminds/glide
 	@glide install
 
+REPO:=github.com/tikasan/eventory
+
 appengine:
 	@which gorep || go get -v github.com/novalagung/gorep
 	@gorep -path="./vendor/github.com/goadesign/goa" \
           -from="context" \
           -to="golang.org/x/net/context"
+	@gorep -path="./app" \
+          -from="context" \
+          -to="golang.org/x/net/context"
+	@gorep -path="./client" \
+          -from="context" \
+          -to="golang.org/x/net/context"
+	@gorep -path="./tool" \
+          -from="context" \
+          -to="golang.org/x/net/context"
+	@gorep -path="./" \
+          -from="../app" \
+          -to="$(REPO)/app"
+	@gorep -path="./" \
+          -from="../client" \
+          -to="$(REPO)/client"
+	@gorep -path="./" \
+          -from="../tool/cli" \
+          -to="$(REPO)/tool/cli"
 
 test:
 	go test -v $(shell glide novendor)
 
 ##### goa ######
 
-all: clean generate
+all: clean generate appengine
 
 clean:
 	@rm -rf app
