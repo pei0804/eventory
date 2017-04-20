@@ -24,7 +24,9 @@ func NewUsersController(service *goa.Service, db *gorm.DB) *UsersController {
 	}
 }
 
-// Login runs the login action.
+// ユーザーのログイン処理。
+// 成功した場合は、ユーザーに登録されているtokenを返す。
+// また、ログイン処理を行った端末に正規ユーザーIDを付与する。
 func (c *UsersController) Login(ctx *app.LoginUsersContext) error {
 	// UsersController_Login: start_implement
 
@@ -55,7 +57,9 @@ func (c *UsersController) Login(ctx *app.LoginUsersContext) error {
 	return ctx.OK(res)
 }
 
-// RegularCreate runs the regular create action.
+// 正規ユーザー作成。
+// 既に登録が行われているユーザーの場合は、alreadyExistsというメッセージを返す。
+// 正しく作成が行われた場合は、端末とユーザーを紐付けを行う。
 func (c *UsersController) RegularCreate(ctx *app.RegularCreateUsersContext) error {
 	// UsersController_RegularCreate: start_implement
 
@@ -91,7 +95,9 @@ func (c *UsersController) RegularCreate(ctx *app.RegularCreateUsersContext) erro
 	return ctx.OK(&app.Message{&message})
 }
 
-// TmpCreate runs the tmp create action.
+// 仮ユーザー作成
+// 既に登録されている端末の場合、仮ユーザーのtokenを返す。
+// ユーザーを識別するtokenを発行するため、tokenの確認は行わない。
 func (c *UsersController) TmpCreate(ctx *app.TmpCreateUsersContext) error {
 	// UsersController_TmpCreate: start_implement
 
@@ -101,6 +107,16 @@ func (c *UsersController) TmpCreate(ctx *app.TmpCreateUsersContext) error {
 	tmpUserTerminal, err := userTerminalDB.GetByIdentifier(ctx.Context, ctx.Identifier)
 	if err == nil {
 		return ctx.OK(&app.Token{&tmpUserTerminal.Token})
+	}
+	// tokenに被りがないかチェックする
+	var token string
+	for {
+		token = utility.CreateToken(ctx.Identifier)
+		_, err = userTerminalDB.GetUserIDByToken(ctx, token)
+		// tokenに紐づくユーザーがいなければ終了する
+		if err == nil {
+			break
+		}
 	}
 	// ユーザー作成
 	t := c.db.Begin()
@@ -114,7 +130,7 @@ func (c *UsersController) TmpCreate(ctx *app.TmpCreateUsersContext) error {
 	userTerminalDB = models.NewUserTerminalDB(t)
 	userTerminal := &models.UserTerminal{}
 	userTerminal.UserID = user.ID
-	userTerminal.Token = utility.CreateToken(userTerminal.Identifier)
+	userTerminal.Token = token
 	userTerminal.Identifier = ctx.Identifier
 	userTerminal.Platform = ctx.Platform
 	userTerminal.ClientVersion = ctx.ClientVersion
