@@ -242,7 +242,7 @@ func (m *UserFollowEventDB) FixUserFollow(ctx context.Context) error {
 	oneAgo = oneAgo.AddDate(0, 0, -1)
 	model := UserFollowEvent{}
 	model.BatchProcessed = true
-	err := m.Db.Table(m.TableName()).Updates(model).Where("created_at > ?", oneAgo).Error
+	err := m.Db.Table(m.TableName()).Where("updated_at < ?", oneAgo.Format("2006-01-02 15:04:05")).Updates(model).Error
 	if err != nil {
 		goa.LogError(ctx, "error updating UserFollowEvent", "error", err.Error())
 		return err
