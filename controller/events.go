@@ -37,7 +37,7 @@ func (c *EventsController) List(ctx *app.ListEventsContext) error {
 	return ctx.OK(events)
 }
 
-// ユーザーのキープ少佐
+// ユーザーのキープ操作
 func (c *EventsController) Keep(ctx *app.KeepEventsContext) error {
 	// EventsController_Keep: start_implement
 

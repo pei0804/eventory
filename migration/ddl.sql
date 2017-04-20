@@ -1,11 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Indexes */
-
-DROP INDEX search_index ON events;
-
-
-
 /* Drop Tables */
 
 DROP TABLE IF EXISTS event_genres;
@@ -18,9 +12,6 @@ DROP TABLE IF EXISTS prefs;
 DROP TABLE IF EXISTS user_terminals;
 DROP TABLE IF EXISTS users;
 
-
-
-
 /* Create Tables */
 
 -- イベント
@@ -31,7 +22,6 @@ CREATE TABLE events
 	identifier varchar(10) NOT NULL COMMENT '識別子(api-event_id)',
 	title varchar(200) NOT NULL COMMENT 'イベント名',
 	description text NOT NULL COMMENT '説明',
-	data_hash char(64) NOT NULL COMMENT 'データハッシュ',
 	url text NOT NULL COMMENT 'イベントページURL',
 	limits int NOT NULL COMMENT '参加人数上限',
 	wait int NOT NULL COMMENT 'キャンセル待ち人数',
@@ -108,7 +98,7 @@ CREATE TABLE user_keep_statuses
 	user_id bigint(20) unsigned NOT NULL COMMENT 'ユーザーID',
 	event_id bigint(20) unsigned NOT NULL COMMENT 'イベントID',
 	status enum('keep','nokeep') NOT NULL COMMENT '状態',
-	batch_processed boolean DEFAULT 'false' NOT NULL COMMENT 'バッチ処理済み',
+	batch_processed tinyint(0) DEFAULT 0 NOT NULL COMMENT 'バッチ処理済み',
 	created_at datetime NOT NULL COMMENT '作成日',
 	updated_at datetime NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
@@ -239,12 +229,3 @@ ALTER TABLE user_terminals
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
-
-
-
-/* Create Indexes */
-
-CREATE INDEX search_index USING BTREE ON events (end_at ASC, updated_at ASC, address ASC);
-
-
-
