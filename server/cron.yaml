@@ -1,0 +1,15 @@
+cron:
+- description: event fetch
+  url: /api/v2/cron/events/fetch
+  schedule: every 12 hours
+  timezone: Asia/Tokyo
+
+- description: event apend genre
+  url: /api/v2/cron/events/appendgenre
+  schedule: every 12 hours
+  timezone: Asia/Tokyo
+
+- description: user follow event fix
+  url: /api/v2/cron/user/events/fixfollow
+  schedule: every 12 hours
+  timezone: Asia/Tokyo
