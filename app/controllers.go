@@ -36,7 +36,7 @@ func initService(service *goa.Service) {
 type CronController interface {
 	goa.Muxer
 	AppendGenre(*AppendGenreCronContext) error
-	FixUserFollow(*FixUserFollowCronContext) error
+	FixUserKeep(*FixUserKeepCronContext) error
 	NewEventFetch(*NewEventFetchCronContext) error
 }
 
@@ -45,7 +45,7 @@ func MountCronController(service *goa.Service, ctrl CronController) {
 	initService(service)
 	var h goa.Handler
 	service.Mux.Handle("OPTIONS", "/api/v2/cron/events/appendgenre", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/api/v2/cron/user/events/fixfollow", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/api/v2/cron/user/events/fixkeep", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
 	service.Mux.Handle("OPTIONS", "/api/v2/cron/events/fetch", ctrl.MuxHandler("preflight", handleCronOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
@@ -71,16 +71,16 @@ func MountCronController(service *goa.Service, ctrl CronController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewFixUserFollowCronContext(ctx, req, service)
+		rctx, err := NewFixUserKeepCronContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
-		return ctrl.FixUserFollow(rctx)
+		return ctrl.FixUserKeep(rctx)
 	}
 	h = handleSecurity("cronToken", h)
 	h = handleCronOrigin(h)
-	service.Mux.Handle("GET", "/api/v2/cron/user/events/fixfollow", ctrl.MuxHandler("FixUserFollow", h, nil))
-	service.LogInfo("mount", "ctrl", "Cron", "action", "FixUserFollow", "route", "GET /api/v2/cron/user/events/fixfollow", "security", "cronToken")
+	service.Mux.Handle("GET", "/api/v2/cron/user/events/fixkeep", ctrl.MuxHandler("FixUserKeep", h, nil))
+	service.LogInfo("mount", "ctrl", "Cron", "action", "FixUserKeep", "route", "GET /api/v2/cron/user/events/fixkeep", "security", "cronToken")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request

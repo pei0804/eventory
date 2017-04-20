@@ -49,24 +49,24 @@ func (c *Client) NewAppendGenreCronRequest(ctx context.Context, path string) (*h
 	return req, nil
 }
 
-// FixUserFollowCronPath computes a request path to the fix user follow action of cron.
-func FixUserFollowCronPath() string {
+// FixUserKeepCronPath computes a request path to the fix user keep action of cron.
+func FixUserKeepCronPath() string {
 
-	return fmt.Sprintf("/api/v2/cron/user/events/fixfollow")
+	return fmt.Sprintf("/api/v2/cron/user/events/fixkeep")
 }
 
-// <b>イベントフォロー操作の確定</b><br>
-// user_follow_eventsテーブルのbatch_processedをtrueに変更する
-func (c *Client) FixUserFollowCron(ctx context.Context, path string) (*http.Response, error) {
-	req, err := c.NewFixUserFollowCronRequest(ctx, path)
+// <b>ユーザーのイベントのキープ操作の確定</b><br>
+// user_keep_statusesテーブルのbatch_processedをtrueに変更する
+func (c *Client) FixUserKeepCron(ctx context.Context, path string) (*http.Response, error) {
+	req, err := c.NewFixUserKeepCronRequest(ctx, path)
 	if err != nil {
 		return nil, err
 	}
 	return c.Client.Do(ctx, req)
 }
 
-// NewFixUserFollowCronRequest create the request corresponding to the fix user follow action endpoint of the cron resource.
-func (c *Client) NewFixUserFollowCronRequest(ctx context.Context, path string) (*http.Request, error) {
+// NewFixUserKeepCronRequest create the request corresponding to the fix user keep action endpoint of the cron resource.
+func (c *Client) NewFixUserKeepCronRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"

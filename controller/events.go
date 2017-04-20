@@ -42,9 +42,6 @@ func (c *EventsController) Keep(ctx *app.KeepEventsContext) error {
 	// EventsController_Keep: start_implement
 
 	// Put your logic here
-	//ufeDB := models.NewUserFollowEventDB(c.db)
-	//ufe := models.UserFollowEvent{}
-	//ufe.EventID = ctx.EventID
 
 	// EventsController_Keep: end_implement
 	return nil

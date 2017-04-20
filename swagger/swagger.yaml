@@ -262,10 +262,10 @@ paths:
       summary: new event fetch cron
       tags:
       - cron
-  /cron/user/events/fixfollow:
+  /cron/user/events/fixkeep:
     get:
-      description: "<b>イベントフォロー操作の確定</b><br>\n\t\tuser_follow_eventsテーブルのbatch_processedをtrueに変更する"
-      operationId: cron#fix user follow
+      description: "<b>ユーザーのイベントのキープ操作の確定</b><br>\n\t\tuser_keep_statusesテーブルのbatch_processedをtrueに変更する"
+      operationId: cron#fix user keep
       produces:
       - application/vnd.goa.error
       - text/plain
@@ -282,7 +282,7 @@ paths:
       - http
       security:
       - cronToken: []
-      summary: fix user follow cron
+      summary: fix user keep cron
       tags:
       - cron
   /events/{eventID}/keep:
@@ -581,8 +581,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.event+json; type=collection
       - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -637,8 +637,8 @@ paths:
         required: false
         type: string
       produces:
-      - application/vnd.event+json; type=collection
       - application/vnd.goa.error
+      - application/vnd.event+json; type=collection
       responses:
         "200":
           description: OK
@@ -719,8 +719,8 @@ paths:
         required: true
         type: integer
       produces:
-      - application/vnd.goa.error
       - text/plain
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK

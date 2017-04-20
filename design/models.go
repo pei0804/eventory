@@ -31,7 +31,7 @@ var _ = StorageGroup("eventory", func() {
 			Field("updated_at", gorma.Timestamp)
 			Field("deleted_at", gorma.NullableTimestamp)
 			HasMany("EventGenres", "EventGenre")
-			HasMany("UserFollowEvents", "UserFollowEvent")
+			HasMany("UserKeepStatuses", "UserKeepStatus")
 			BelongsTo("Pref")
 		})
 		Model("Pref", func() {
@@ -75,7 +75,7 @@ var _ = StorageGroup("eventory", func() {
 			HasMany("UserFollowGenres", "UserFollowGenre")
 			HasMany("UserFollowPrefs", "UserFollowPref")
 			HasMany("UserTerminals", "UserTerminal")
-			HasMany("UserFollowEvents", "UserFollowEvent")
+			HasMany("UserKeepStatuses", "UserKeepStatus")
 		})
 		Model("EventGenre", func() {
 			Description("イベントジャンル")
@@ -116,7 +116,7 @@ var _ = StorageGroup("eventory", func() {
 			BelongsTo("Pref")
 			BelongsTo("User")
 		})
-		Model("UserFollowEvent", func() {
+		Model("UserKeepStatus", func() {
 			Description("ユーザーのキープ状態")
 			Field("id", gorma.Integer, func() {
 				PrimaryKey()

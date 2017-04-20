@@ -238,11 +238,11 @@ var _ = Resource("prefs", func() {
 var _ = Resource("cron", func() {
 	BasePath("/cron")
 	Security(CronAuth)
-	Action("fix user follow", func() {
-		Description(`<b>イベントフォロー操作の確定</b><br>
-		user_follow_eventsテーブルのbatch_processedをtrueに変更する`)
+	Action("fix user keep", func() {
+		Description(`<b>ユーザーのイベントのキープ操作の確定</b><br>
+		user_keep_statusesテーブルのbatch_processedをtrueに変更する`)
 		Routing(
-			GET("user/events/fixfollow"),
+			GET("user/events/fixkeep"),
 		)
 		Response(OK)
 		Response(Unauthorized)

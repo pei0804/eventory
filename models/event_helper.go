@@ -60,7 +60,7 @@ func (m *EventDB) OneEvent(ctx context.Context, id int, prefID int) (*app.Event,
 	defer goa.MeasureSince([]string{"goa", "db", "event", "oneevent"}, time.Now())
 
 	var native Event
-	err := m.Db.Scopes(EventFilterByPref(prefID, m.Db)).Table(m.TableName()).Preload("EventGenres").Preload("UserFollowEvents").Preload("Pref").Where("id = ?", id).Find(&native).Error
+	err := m.Db.Scopes(EventFilterByPref(prefID, m.Db)).Table(m.TableName()).Preload("EventGenres").Preload("UserKeepStatues").Preload("Pref").Where("id = ?", id).Find(&native).Error
 
 	if err != nil && err != gorm.ErrRecordNotFound {
 		goa.LogError(ctx, "error getting Event", "error", err.Error())

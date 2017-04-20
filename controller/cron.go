@@ -37,18 +37,18 @@ func (c *CronController) AppendGenre(ctx *app.AppendGenreCronContext) error {
 	return nil
 }
 
-// ユーザーのフォロー操作を確定させる。範囲は一日以上前の操作
-func (c *CronController) FixUserFollow(ctx *app.FixUserFollowCronContext) error {
-	// CronController_FixUserFollow: start_implement
+// ユーザーのキープ操作を確定させる。範囲は一日以上前の操作
+func (c *CronController) FixUserKeep(ctx *app.FixUserKeepCronContext) error {
+	// CronController_FixUserKeep: start_implement
 
 	// Put your logic here
-	ufe := models.NewUserFollowEventDB(c.db)
-	err := ufe.FixUserFollow(ctx.Context)
+	ufe := models.NewUserKeepStatusDB(c.db)
+	err := ufe.FixUserKeep(ctx.Context)
 	if err != nil {
 		return fmt.Errorf("%v", err)
 	}
 
-	// CronController_FixUserFollow: end_implement
+	// CronController_FixUserKeep: end_implement
 	return nil
 }
 

@@ -24,7 +24,7 @@ type User struct {
 	Email            string
 	Name             string
 	PasswordHash     string
-	UserFollowEvents []UserFollowEvent // has many UserFollowEvents
+	UserKeepStatuses []UserKeepStatus  // has many UserKeepStatus
 	UserFollowGenres []UserFollowGenre // has many UserFollowGenres
 	UserFollowPrefs  []UserFollowPref  // has many UserFollowPrefs
 	UserTerminals    []UserTerminal    // has many UserTerminals

@@ -27,6 +27,9 @@ appengine:
 	@gorep -path="./vendor/github.com/goadesign/goa" \
           -from="context" \
           -to="golang.org/x/net/context"
+	@gorep -path="./models" \
+          -from="context" \
+          -to="golang.org/x/net/context"
 	@gorep -path="./app" \
           -from="context" \
           -to="golang.org/x/net/context"

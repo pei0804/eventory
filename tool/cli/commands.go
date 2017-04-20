@@ -32,8 +32,8 @@ type (
 		PrettyPrint bool
 	}
 
-	// FixUserFollowCronCommand is the command line data structure for the fix user follow action of cron
-	FixUserFollowCronCommand struct {
+	// FixUserKeepCronCommand is the command line data structure for the fix user keep action of cron
+	FixUserKeepCronCommand struct {
 		PrettyPrint bool
 	}
 
@@ -168,13 +168,13 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use: "fix-user-follow",
-		Short: `<b>イベントフォロー操作の確定</b><br>
-		user_follow_eventsテーブルのbatch_processedをtrueに変更する`,
+		Use: "fix-user-keep",
+		Short: `<b>ユーザーのイベントのキープ操作の確定</b><br>
+		user_keep_statusesテーブルのbatch_processedをtrueに変更する`,
 	}
-	tmp3 := new(FixUserFollowCronCommand)
+	tmp3 := new(FixUserKeepCronCommand)
 	sub = &cobra.Command{
-		Use:   `cron ["/api/v2/cron/user/events/fixfollow"]`,
+		Use:   `cron ["/api/v2/cron/user/events/fixkeep"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
@@ -502,17 +502,17 @@ func (cmd *AppendGenreCronCommand) Run(c *client.Client, args []string) error {
 func (cmd *AppendGenreCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
-// Run makes the HTTP request corresponding to the FixUserFollowCronCommand command.
-func (cmd *FixUserFollowCronCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the FixUserKeepCronCommand command.
+func (cmd *FixUserKeepCronCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/api/v2/cron/user/events/fixfollow"
+		path = "/api/v2/cron/user/events/fixkeep"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.FixUserFollowCron(ctx, path)
+	resp, err := c.FixUserKeepCron(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -523,7 +523,7 @@ func (cmd *FixUserFollowCronCommand) Run(c *client.Client, args []string) error 
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *FixUserFollowCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *FixUserKeepCronCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
 // Run makes the HTTP request corresponding to the NewEventFetchCronCommand command.

@@ -57,27 +57,27 @@ func (ctx *AppendGenreCronContext) Unauthorized() error {
 	return nil
 }
 
-// FixUserFollowCronContext provides the cron fix user follow action context.
-type FixUserFollowCronContext struct {
+// FixUserKeepCronContext provides the cron fix user keep action context.
+type FixUserKeepCronContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 }
 
-// NewFixUserFollowCronContext parses the incoming request URL and body, performs validations and creates the
-// context used by the cron controller fix user follow action.
-func NewFixUserFollowCronContext(ctx context.Context, r *http.Request, service *goa.Service) (*FixUserFollowCronContext, error) {
+// NewFixUserKeepCronContext parses the incoming request URL and body, performs validations and creates the
+// context used by the cron controller fix user keep action.
+func NewFixUserKeepCronContext(ctx context.Context, r *http.Request, service *goa.Service) (*FixUserKeepCronContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := FixUserFollowCronContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := FixUserKeepCronContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *FixUserFollowCronContext) OK(resp []byte) error {
+func (ctx *FixUserKeepCronContext) OK(resp []byte) error {
 	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
@@ -85,13 +85,13 @@ func (ctx *FixUserFollowCronContext) OK(resp []byte) error {
 }
 
 // BadRequest sends a HTTP response with status code 400.
-func (ctx *FixUserFollowCronContext) BadRequest(r error) error {
+func (ctx *FixUserKeepCronContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // Unauthorized sends a HTTP response with status code 401.
-func (ctx *FixUserFollowCronContext) Unauthorized() error {
+func (ctx *FixUserKeepCronContext) Unauthorized() error {
 	ctx.ResponseData.WriteHeader(401)
 	return nil
 }

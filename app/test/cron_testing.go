@@ -200,11 +200,11 @@ func AppendGenreCronUnauthorized(t goatest.TInterface, ctx context.Context, serv
 	return rw
 }
 
-// FixUserFollowCronBadRequest runs the method FixUserFollow of the given controller with the given parameters.
+// FixUserKeepCronBadRequest runs the method FixUserKeep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FixUserFollowCronBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) (http.ResponseWriter, error) {
+func FixUserKeepCronBadRequest(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -225,7 +225,7 @@ func FixUserFollowCronBadRequest(t goatest.TInterface, ctx context.Context, serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/api/v2/cron/user/events/fixfollow"),
+		Path: fmt.Sprintf("/api/v2/cron/user/events/fixkeep"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -236,13 +236,13 @@ func FixUserFollowCronBadRequest(t goatest.TInterface, ctx context.Context, serv
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CronTest"), rw, req, prms)
-	fixUserFollowCtx, _err := app.NewFixUserFollowCronContext(goaCtx, req, service)
+	fixUserKeepCtx, _err := app.NewFixUserKeepCronContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FixUserFollow(fixUserFollowCtx)
+	_err = ctrl.FixUserKeep(fixUserKeepCtx)
 
 	// Validate response
 	if _err != nil {
@@ -264,11 +264,11 @@ func FixUserFollowCronBadRequest(t goatest.TInterface, ctx context.Context, serv
 	return rw, mt
 }
 
-// FixUserFollowCronOK runs the method FixUserFollow of the given controller with the given parameters.
+// FixUserKeepCronOK runs the method FixUserKeep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FixUserFollowCronOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) http.ResponseWriter {
+func FixUserKeepCronOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -289,7 +289,7 @@ func FixUserFollowCronOK(t goatest.TInterface, ctx context.Context, service *goa
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/api/v2/cron/user/events/fixfollow"),
+		Path: fmt.Sprintf("/api/v2/cron/user/events/fixkeep"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -300,13 +300,13 @@ func FixUserFollowCronOK(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CronTest"), rw, req, prms)
-	fixUserFollowCtx, _err := app.NewFixUserFollowCronContext(goaCtx, req, service)
+	fixUserKeepCtx, _err := app.NewFixUserKeepCronContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FixUserFollow(fixUserFollowCtx)
+	_err = ctrl.FixUserKeep(fixUserKeepCtx)
 
 	// Validate response
 	if _err != nil {
@@ -320,11 +320,11 @@ func FixUserFollowCronOK(t goatest.TInterface, ctx context.Context, service *goa
 	return rw
 }
 
-// FixUserFollowCronUnauthorized runs the method FixUserFollow of the given controller with the given parameters.
+// FixUserKeepCronUnauthorized runs the method FixUserKeep of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func FixUserFollowCronUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) http.ResponseWriter {
+func FixUserKeepCronUnauthorized(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.CronController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -345,7 +345,7 @@ func FixUserFollowCronUnauthorized(t goatest.TInterface, ctx context.Context, se
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/api/v2/cron/user/events/fixfollow"),
+		Path: fmt.Sprintf("/api/v2/cron/user/events/fixkeep"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -356,13 +356,13 @@ func FixUserFollowCronUnauthorized(t goatest.TInterface, ctx context.Context, se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "CronTest"), rw, req, prms)
-	fixUserFollowCtx, _err := app.NewFixUserFollowCronContext(goaCtx, req, service)
+	fixUserKeepCtx, _err := app.NewFixUserKeepCronContext(goaCtx, req, service)
 	if _err != nil {
 		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	_err = ctrl.FixUserFollow(fixUserFollowCtx)
+	_err = ctrl.FixUserKeep(fixUserKeepCtx)
 
 	// Validate response
 	if _err != nil {

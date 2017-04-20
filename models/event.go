@@ -33,7 +33,7 @@ type Event struct {
 	Limits           int
 	PrefID           int // has many Event
 	URL              string
-	UserFollowEvents []UserFollowEvent // has many UserFollowEvents
+	UserKeepStatuses []UserKeepStatus // has many UserKeepStatus
 	Wait             int
 	CreatedAt        time.Time  // timestamp
 	DeletedAt        *time.Time // nullable timestamp (soft delete)
