@@ -6,7 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// EventFilterByPref is a gorm filter for a Belongs To relationship.
+// ページネーションクエリ作成。
 func CreatePagingQuery(page int) func(db *gorm.DB) *gorm.DB {
 	if page > 0 {
 		return func(db *gorm.DB) *gorm.DB {
@@ -17,6 +17,7 @@ func CreatePagingQuery(page int) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB { return db }
 }
 
+// ソートクエリ作成
 func CreateSortQuery(sort string) func(db *gorm.DB) *gorm.DB {
 
 	if sort == "created_asc" {
@@ -32,6 +33,7 @@ func CreateSortQuery(sort string) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB { return db }
 }
 
+// 文字列検索クエリ作成。検索したいカラムは適宜設定する。
 func CreateLikeQuery(q string, columns ...string) func(db *gorm.DB) *gorm.DB {
 	if q != "" && len(columns) > 0 {
 		return func(db *gorm.DB) *gorm.DB {
@@ -41,6 +43,16 @@ func CreateLikeQuery(q string, columns ...string) func(db *gorm.DB) *gorm.DB {
 				db = db.Where(lc, lq)
 			}
 			return db
+		}
+	}
+	return func(db *gorm.DB) *gorm.DB { return db }
+}
+
+// 削除済みレコード表示クエリ作成
+func CreateUnscopedQuery(isExecute bool) func(db *gorm.DB) *gorm.DB {
+	if isExecute {
+		return func(db *gorm.DB) *gorm.DB {
+			return db.Unscoped()
 		}
 	}
 	return func(db *gorm.DB) *gorm.DB { return db }

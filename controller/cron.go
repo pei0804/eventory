@@ -37,7 +37,7 @@ func (c *CronController) AppendGenre(ctx *app.AppendGenreCronContext) error {
 	return nil
 }
 
-// FixUserFollow runs the fix user follow action.
+// ユーザーのフォロー操作を確定させる。範囲は一日以上前の操作
 func (c *CronController) FixUserFollow(ctx *app.FixUserFollowCronContext) error {
 	// CronController_FixUserFollow: start_implement
 
@@ -52,7 +52,7 @@ func (c *CronController) FixUserFollow(ctx *app.FixUserFollowCronContext) error 
 	return nil
 }
 
-// NewEventFetch runs the new event fetch action.
+// 新しいイベント情報を取得する
 func (c *CronController) NewEventFetch(ctx *app.NewEventFetchCronContext) error {
 	// CronController_NewEventFetch: start_implement
 

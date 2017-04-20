@@ -119,17 +119,6 @@ func (m *UserFollowEventDB) Get(ctx context.Context, id int) (*UserFollowEvent, 
 	return &native, err
 }
 
-func (m *UserFollowEventDB) GetByUserAndEvent(ctx context.Context, userID int, eventID int) (*UserFollowEvent, error) {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "get"}, time.Now())
-
-	var native UserFollowEvent
-	err := m.Db.Table(m.TableName()).Where("user_id = ?", userID).Where("event_id = ?", eventID).Find(&native).Error
-	if err == gorm.ErrRecordNotFound {
-		return nil, err
-	}
-	return &native, err
-}
-
 // List returns an array of UserFollowEvent
 func (m *UserFollowEventDB) List(ctx context.Context) ([]*UserFollowEvent, error) {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "list"}, time.Now())
@@ -156,39 +145,6 @@ func (m *UserFollowEventDB) Add(ctx context.Context, model *UserFollowEvent) err
 	return nil
 }
 
-// User Follow Genre
-func (m *UserFollowEventDB) UserFollowEvent(ctx context.Context, model *UserFollowEvent) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "follow"}, time.Now())
-
-	// 過去に一度でもフォロー操作をしたことがあるか
-	ufe, err := m.GetByUserAndEvent(ctx, model.UserID, model.EventID)
-	if err != nil {
-		// レコードが存在しないので、フォローレコードを追加する
-		err := m.Db.Create(model).Error
-		if err != nil {
-			goa.LogError(ctx, "error adding UserFollowGenre", "error", err.Error())
-			return err
-		}
-	}
-	// 過去に使ったレコードからdeleted_atをnullにして復活させる
-	ufe.DeletedAt = nil
-	err = m.Db.Model(ufe).Updates(model).Error
-	return nil
-}
-
-func (m *UserFollowEventDB) UserUnfollowEvent(ctx context.Context, model *UserFollowEvent) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "unfollow"}, time.Now())
-
-	var obj UserFollowGenre
-	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("genre_id = ?", model.EventID)).Error
-	if err != nil {
-		goa.LogError(ctx, "error deleting UserFollowGenre", "error", err.Error())
-		return err
-	}
-
-	return nil
-}
-
 // Update modifies a single record.
 func (m *UserFollowEventDB) Update(ctx context.Context, model *UserFollowEvent) error {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "update"}, time.Now())
@@ -200,22 +156,6 @@ func (m *UserFollowEventDB) Update(ctx context.Context, model *UserFollowEvent) 
 	}
 	err = m.Db.Model(obj).Updates(model).Error
 
-	return err
-}
-
-// Upsert modifies a single record.
-func (m *UserFollowEventDB) Upsert(ctx context.Context, model *UserFollowEvent) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "update"}, time.Now())
-
-	err := m.Db.Create(model).Error
-	if err != nil {
-		obj, err := m.GetByUserAndEvent(ctx, model.UserID, model.EventID)
-		if err != nil {
-			goa.LogError(ctx, "error upsert UserFollowEvent", "error", err.Error())
-			return err
-		}
-		err = m.Db.Model(obj).Updates(model).Error
-	}
 	return err
 }
 
@@ -231,12 +171,12 @@ func (m *UserFollowEventDB) Delete(ctx context.Context, id int) error {
 		goa.LogError(ctx, "error deleting UserFollowEvent", "error", err.Error())
 		return err
 	}
-
 	return nil
 }
 
+// ユーザーのキープしたイベント情報を一時的情報を確定させる。 範囲は１日以上とする。
 func (m *UserFollowEventDB) FixUserFollow(ctx context.Context) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "delete"}, time.Now())
+	defer goa.MeasureSince([]string{"goa", "db", "FixUserFollow", "patch"}, time.Now())
 
 	oneAgo := time.Now()
 	oneAgo = oneAgo.AddDate(0, 0, -1)
@@ -244,7 +184,52 @@ func (m *UserFollowEventDB) FixUserFollow(ctx context.Context) error {
 	model.BatchProcessed = true
 	err := m.Db.Table(m.TableName()).Where("updated_at < ?", oneAgo.Format("2006-01-02 15:04:05")).Updates(model).Error
 	if err != nil {
-		goa.LogError(ctx, "error updating UserFollowEvent", "error", err.Error())
+		goa.LogError(ctx, "error FixUserFollowUser", "error", err.Error())
+		return err
+	}
+	return nil
+}
+
+// ユーザーのフォロー情報を一件取得する
+func (m *UserFollowEventDB) GetByUserAndEvent(ctx context.Context, userID int, eventID int, isShowDeleted bool) (*UserFollowEvent, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "GetByUserAndEvent", "get"}, time.Now())
+
+	var native UserFollowEvent
+	err := m.Db.Table(m.TableName()).Where("user_id = ?", userID).Where("event_id = ?", eventID).Scopes(CreateUnscopedQuery(isShowDeleted)).Find(&native).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &native, err
+}
+
+// ユーザーのフォロー操作。過去に一度でも操作をしたことのあるレコードの場合は、過去のものを復帰させる
+func (m *UserFollowEventDB) UserFollowEvent(ctx context.Context, model *UserFollowEvent) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowEvent", "upsert"}, time.Now())
+
+	// 過去に一度でもフォロー操作をしたことがあるか
+	ufe, err := m.GetByUserAndEvent(ctx, model.UserID, model.EventID, true)
+	if err != nil {
+		// レコードが存在しないので、フォローレコードを追加する
+		err := m.Db.Create(model).Error
+		if err != nil {
+			goa.LogError(ctx, "error UserFollowEvent", "error", err.Error())
+			return err
+		}
+	}
+	// 過去に使ったレコードからdeleted_atをnullにして復活させる
+	ufe.DeletedAt = nil
+	err = m.Db.Model(ufe).Updates(model).Error
+	return nil
+}
+
+// ユーザーのアンフォロー操作。
+func (m *UserFollowEventDB) UserUnfollowEvent(ctx context.Context, model *UserFollowEvent) error {
+	defer goa.MeasureSince([]string{"goa", "db", "UserUnfollowEvent", "delete"}, time.Now())
+
+	var obj UserFollowGenre
+	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("event_id = ?", model.EventID)).Error
+	if err != nil {
+		goa.LogError(ctx, "error UserUnfollowEvent", "error", err.Error())
 		return err
 	}
 	return nil

@@ -93,24 +93,6 @@ func (m *GenreDB) Get(ctx context.Context, id int) (*Genre, error) {
 	return &native, err
 }
 
-// List returns an array of UserFollowGenre
-func (m *GenreDB) ListByKeyword(ctx context.Context, q string, sort string, page int) ([]*app.Genre, error) {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "list"}, time.Now())
-
-	var objs []*app.Genre
-	err := m.Db.Table(m.TableName()).Find(&objs).
-		Scopes(
-			CreatePagingQuery(page),
-			CreateSortQuery(sort),
-			CreateLikeQuery(q, "keyword")).
-		Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil, err
-	}
-
-	return objs, nil
-}
-
 // List returns an array of Genre
 func (m *GenreDB) List(ctx context.Context) ([]*Genre, error) {
 	defer goa.MeasureSince([]string{"goa", "db", "genre", "list"}, time.Now())
@@ -135,19 +117,6 @@ func (m *GenreDB) Add(ctx context.Context, model *Genre) error {
 	}
 
 	return nil
-}
-
-// Add creates a new record.
-func (m *GenreDB) AddGetInsertID(ctx context.Context, model *Genre) (int, error) {
-	defer goa.MeasureSince([]string{"goa", "db", "genre", "add"}, time.Now())
-
-	err := m.Db.Create(model).Error
-	if err != nil {
-		goa.LogError(ctx, "error adding Genre", "error", err.Error())
-		return 0, err
-	}
-
-	return model.ID, nil
 }
 
 // Update modifies a single record.
@@ -178,4 +147,33 @@ func (m *GenreDB) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+// 追加処理を行い。追加した時にIDを返す。
+func (m *GenreDB) AddGetInsertID(ctx context.Context, model *Genre) (int, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "genre", "add"}, time.Now())
+
+	err := m.Db.Create(model).Error
+	if err != nil {
+		goa.LogError(ctx, "error adding Genre", "error", err.Error())
+		return 0, err
+	}
+	return model.ID, nil
+}
+
+// キーワード検索する page sort q は適宜設定する
+func (m *GenreDB) ListByKeyword(ctx context.Context, q string, sort string, page int) ([]*app.Genre, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowGenre", "list"}, time.Now())
+
+	var objs []*app.Genre
+	err := m.Db.Table(m.TableName()).Find(&objs).
+		Scopes(
+			CreatePagingQuery(page),
+			CreateSortQuery(sort),
+			CreateLikeQuery(q, "keyword")).
+		Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return objs, nil
 }

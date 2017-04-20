@@ -111,7 +111,6 @@ func (m *PrefDB) Add(ctx context.Context, model *Pref) error {
 		goa.LogError(ctx, "error adding Pref", "error", err.Error())
 		return err
 	}
-
 	return nil
 }
 

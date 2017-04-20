@@ -130,25 +130,6 @@ func (m *EventDB) List(ctx context.Context) ([]*app.Event, error) {
 	return objs, nil
 }
 
-// List returns an array of Event
-func (m *EventDB) ListByQ(ctx context.Context, q string, sort string, page int) ([]*app.Event, error) {
-	defer goa.MeasureSince([]string{"goa", "db", "event", "list"}, time.Now())
-
-	var objs []*app.Event
-	err := m.Db.Table(m.TableName()).
-		Find(&objs).
-		Scopes(
-			CreatePagingQuery(page),
-			CreateSortQuery(sort),
-			CreateLikeQuery(q, "description")).
-		Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil, err
-	}
-
-	return objs, nil
-}
-
 // Add creates a new record.
 func (m *EventDB) Add(ctx context.Context, model *Event) error {
 	defer goa.MeasureSince([]string{"goa", "db", "event", "add"}, time.Now())
@@ -190,4 +171,22 @@ func (m *EventDB) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+// イベント検索用クエリー page sort qはそれぞれは適宜設定する。
+func (m *EventDB) ListByQ(ctx context.Context, q string, sort string, page int) ([]*app.Event, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "event", "list"}, time.Now())
+
+	var objs []*app.Event
+	err := m.Db.Table(m.TableName()).
+		Find(&objs).
+		Scopes(
+			CreatePagingQuery(page),
+			CreateSortQuery(sort),
+			CreateLikeQuery(q, "description")).
+		Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return objs, nil
 }

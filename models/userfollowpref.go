@@ -116,17 +116,6 @@ func (m *UserFollowPrefDB) Get(ctx context.Context, id int) (*UserFollowPref, er
 	return &native, err
 }
 
-func (m *UserFollowPrefDB) GetByUserFollowPref(ctx context.Context, userID int, prefID int) (*UserFollowPref, error) {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "get"}, time.Now())
-
-	var native UserFollowPref
-	err := m.Db.Table(m.TableName()).Where("user_id = ?", userID).Where("pref_id = ?", prefID).Find(&native).Error
-	if err == gorm.ErrRecordNotFound {
-		return nil, err
-	}
-	return &native, err
-}
-
 // List returns an array of UserFollowPref
 func (m *UserFollowPrefDB) List(ctx context.Context) ([]*UserFollowPref, error) {
 	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "list"}, time.Now())
@@ -147,39 +136,6 @@ func (m *UserFollowPrefDB) Add(ctx context.Context, model *UserFollowPref) error
 	err := m.Db.Create(model).Error
 	if err != nil {
 		goa.LogError(ctx, "error adding UserFollowPref", "error", err.Error())
-		return err
-	}
-
-	return nil
-}
-
-// User Follow Pref
-func (m *UserFollowPrefDB) UserFollowPref(ctx context.Context, model *UserFollowPref) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "follow"}, time.Now())
-
-	// 過去に一度でもフォロー操作をしたことがあるか
-	ufg, err := m.GetByUserFollowPref(ctx, model.UserID, model.PrefID)
-	if err != nil {
-		// レコードが存在しないので、フォローレコードを追加する
-		err := m.Db.Create(model).Error
-		if err != nil {
-			goa.LogError(ctx, "error adding UserFollowPref", "error", err.Error())
-			return err
-		}
-	}
-	// 過去に使ったレコードからdeleted_atをnullにして復活させる
-	ufg.DeletedAt = nil
-	err = m.Db.Model(ufg).Updates(model).Error
-	return nil
-}
-
-func (m *UserFollowPrefDB) UserUnfollowPref(ctx context.Context, model *UserFollowPref) error {
-	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "unfollow"}, time.Now())
-
-	var obj UserFollowPref
-	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("pref_id = ?", model.PrefID)).Error
-	if err != nil {
-		goa.LogError(ctx, "error deleting UserFollowPref", "error", err.Error())
 		return err
 	}
 
@@ -212,6 +168,50 @@ func (m *UserFollowPrefDB) Delete(ctx context.Context, id int) error {
 		goa.LogError(ctx, "error deleting UserFollowPref", "error", err.Error())
 		return err
 	}
+	return nil
+}
 
+// ユーザーのフォロー情報を一件取得する
+func (m *UserFollowPrefDB) GetByUserFollowPref(ctx context.Context, userID int, prefID int, isShowDeleted bool) (*UserFollowPref, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "get"}, time.Now())
+
+	var native UserFollowPref
+	err := m.Db.Table(m.TableName()).Where("user_id = ?", userID).Where("pref_id = ?", prefID).Scopes(CreateUnscopedQuery(isShowDeleted)).Find(&native).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &native, err
+}
+
+// ユーザーのフォロー操作。過去に一度でも操作をしたことのあるレコードの場合は、過去のものを復帰させる
+func (m *UserFollowPrefDB) UserFollowPref(ctx context.Context, model *UserFollowPref) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "upsert"}, time.Now())
+
+	// 過去に一度でもフォロー操作をしたことがあるか
+	ufg, err := m.GetByUserFollowPref(ctx, model.UserID, model.PrefID, true)
+	if err != nil {
+		// レコードが存在しないので、フォローレコードを追加する
+		err := m.Db.Create(model).Error
+		if err != nil {
+			goa.LogError(ctx, "error adding UserFollowPref", "error", err.Error())
+			return err
+		}
+	}
+	// 過去に使ったレコードからdeleted_atをnullにして復活させる
+	ufg.DeletedAt = nil
+	err = m.Db.Model(ufg).Updates(model).Error
+	return nil
+}
+
+// ユーザーのアンフォロー操作。
+func (m *UserFollowPrefDB) UserUnfollowPref(ctx context.Context, model *UserFollowPref) error {
+	defer goa.MeasureSince([]string{"goa", "db", "userFollowPref", "delete"}, time.Now())
+
+	var obj UserFollowPref
+	err := m.Db.Delete(&obj, m.Db.Where("user_id = ?", model.UserID).Where("pref_id = ?", model.PrefID)).Error
+	if err != nil {
+		goa.LogError(ctx, "error deleting UserFollowPref", "error", err.Error())
+		return err
+	}
 	return nil
 }

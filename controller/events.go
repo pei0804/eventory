@@ -23,19 +23,6 @@ func NewEventsController(service *goa.Service, db *gorm.DB) *EventsController {
 	}
 }
 
-// Keep runs the keep action.
-func (c *EventsController) Keep(ctx *app.KeepEventsContext) error {
-	// EventsController_Keep: start_implement
-
-	// Put your logic here
-	//ufeDB := models.NewUserFollowEventDB(c.db)
-	//ufe := models.UserFollowEvent{}
-	//ufe.EventID = ctx.EventID
-
-	// EventsController_Keep: end_implement
-	return nil
-}
-
 // List runs the list action.
 func (c *EventsController) List(ctx *app.ListEventsContext) error {
 	// EventsController_List: start_implement
@@ -48,4 +35,17 @@ func (c *EventsController) List(ctx *app.ListEventsContext) error {
 	}
 	// EventsController_List: end_implement
 	return ctx.OK(events)
+}
+
+// ユーザーのキープ少佐
+func (c *EventsController) Keep(ctx *app.KeepEventsContext) error {
+	// EventsController_Keep: start_implement
+
+	// Put your logic here
+	//ufeDB := models.NewUserFollowEventDB(c.db)
+	//ufe := models.UserFollowEvent{}
+	//ufe.EventID = ctx.EventID
+
+	// EventsController_Keep: end_implement
+	return nil
 }

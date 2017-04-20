@@ -9,7 +9,7 @@ DROP INDEX search_index ON events;
 /* Drop Tables */
 
 DROP TABLE IF EXISTS event_genres;
-DROP TABLE IF EXISTS user_follow_events;
+DROP TABLE IF EXISTS user_keep_statuses;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS user_follow_genres;
 DROP TABLE IF EXISTS genres;
@@ -102,7 +102,7 @@ CREATE TABLE users
 
 
 -- ユーザーのキープ状態
-CREATE TABLE user_follow_events
+CREATE TABLE user_keep_statuses
 (
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
 	user_id bigint(20) unsigned NOT NULL COMMENT 'ユーザーID',
@@ -169,7 +169,7 @@ ALTER TABLE event_genres
 ;
 
 
-ALTER TABLE user_follow_events
+ALTER TABLE user_keep_statuses
 	ADD FOREIGN KEY (event_id)
 	REFERENCES events (id)
 	ON UPDATE RESTRICT
@@ -209,7 +209,7 @@ ALTER TABLE user_follow_prefs
 ;
 
 
-ALTER TABLE user_follow_events
+ALTER TABLE user_keep_statuses
 	ADD FOREIGN KEY (user_id)
 	REFERENCES users (id)
 	ON UPDATE RESTRICT
