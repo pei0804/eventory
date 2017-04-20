@@ -24,7 +24,7 @@ func NewPrefsController(service *goa.Service, db *gorm.DB) *PrefsController {
 	}
 }
 
-// Follow runs the follow action.
+// フォロー、アンフォロー操作
 func (c *PrefsController) Follow(ctx *app.FollowPrefsContext) error {
 	// PrefsController_Follow: start_implement
 
@@ -37,6 +37,7 @@ func (c *PrefsController) Follow(ctx *app.FollowPrefsContext) error {
 	}
 	ufg.UserID = userID
 	ufgDB := models.NewUserFollowPrefDB(c.db)
+	// HTTPメソッドで判定する
 	if "PUT" == ctx.Request.Method {
 		ufgDB.UserFollowPref(ctx.Context, ufg)
 	}
