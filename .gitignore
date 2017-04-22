@@ -15,3 +15,7 @@ GoogleService-Info.plist
 .DS_Store
 .idea/
 eventory.iml
+
+src/
+bin/
+pkg/
