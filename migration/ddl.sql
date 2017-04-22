@@ -45,8 +45,8 @@ CREATE TABLE event_genres
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
 	genre_id bigint(20) unsigned NOT NULL COMMENT 'ジャンルID',
 	event_id bigint(20) unsigned NOT NULL COMMENT 'イベントID',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'イベントジャンル';
@@ -58,8 +58,8 @@ CREATE TABLE genres
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ジャンルID',
 	name varchar(30) NOT NULL COMMENT 'ジャンル名(表示用)',
 	keyword varchar(50) NOT NULL COMMENT 'キーワード',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ジャンル';
@@ -70,8 +70,8 @@ CREATE TABLE prefs
 (
 	id int(2) unsigned NOT NULL AUTO_INCREMENT COMMENT '都道府県ID',
 	name char(4) NOT NULL COMMENT '都道府県名',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = '都道府県';
@@ -84,8 +84,8 @@ CREATE TABLE users
 	name varchar(30) NOT NULL COMMENT 'ユーザー名',
 	email text NOT NULL COMMENT 'メールアドレス',
 	password char(64) NOT NULL COMMENT 'パスワード',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザー';
@@ -99,8 +99,8 @@ CREATE TABLE user_keep_statuses
 	event_id bigint(20) unsigned NOT NULL COMMENT 'イベントID',
 	status enum('keep','nokeep') NOT NULL COMMENT '状態',
 	batch_processed tinyint(0) DEFAULT 0 NOT NULL COMMENT 'バッチ処理済み',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザーのキープ状態';
@@ -112,8 +112,8 @@ CREATE TABLE user_follow_genres
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ジャンルID',
 	user_id bigint(20) unsigned NOT NULL COMMENT 'ユーザーID',
 	genre_id bigint(20) unsigned NOT NULL COMMENT 'ジャンルID',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザーのフォロージャンル';
@@ -125,8 +125,8 @@ CREATE TABLE user_follow_prefs
 	id int(2) unsigned NOT NULL AUTO_INCREMENT COMMENT '都道府県ID',
 	user_id bigint(20) unsigned NOT NULL COMMENT 'ユーザーID',
 	pref_id int(2) unsigned NOT NULL COMMENT '都道府県ID',
-	created_at datetime NOT NULL COMMENT '作成日',
-	updated_at datetime NOT NULL COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザーのフォロー都道府県';
@@ -141,8 +141,8 @@ CREATE TABLE user_terminals
 	client_version varchar(10) NOT NULL COMMENT 'アプリのバージョン',
 	token char(64) NOT NULL COMMENT 'トークン',
 	identifier char(36) NOT NULL COMMENT '識別子(android:Android_ID, ios:IDFV)',
-	created_at datetime COMMENT '作成日',
-	updated_at datetime COMMENT '更新日',
+	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
+	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザー端末情報';
