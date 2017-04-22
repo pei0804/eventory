@@ -58,48 +58,48 @@ type Dk struct {
 type AtdnEvent struct {
 	EventId    int `json:"event_id"`
 	ApiId      int
-	Title      string `json:"title"`
-	Desc       string `json:"description"`
-	Url        string `json:"event_url"`
-	Limit      int    `json:"limit"`
-	Accepted   int    `json:"accepted"`
-	Waitlisted int    `json:"waiting"`
-	Address    string `json:"address"`
-	Place      string `json:"place"`
-	StartAt    string `json:"started_at"`
-	EndAt      string `json:"ended_at"`
+	Title      string    `json:"title"`
+	Desc       string    `json:"description"`
+	Url        string    `json:"event_url"`
+	Limit      int       `json:"limit"`
+	Accepted   int       `json:"accepted"`
+	Waitlisted int       `json:"waiting"`
+	Address    string    `json:"address"`
+	Place      string    `json:"place"`
+	StartAt    time.Time `json:"started_at"`
+	EndAt      time.Time `json:"ended_at"`
 	DataHash   string
 }
 
 type ConnpassEvent struct {
 	EventId    int `json:"event_id"`
 	ApiId      int
-	Title      string `json:"title"`
-	Desc       string `json:"description"`
-	Url        string `json:"event_url"`
-	Limit      int    `json:"limit"`
-	Accepted   int    `json:"accepted"`
-	Waitlisted int    `json:"waiting"`
-	Address    string `json:"address"`
-	Place      string `json:"place"`
-	StartAt    string `json:"started_at"`
-	EndAt      string `json:"ended_at"`
+	Title      string    `json:"title"`
+	Desc       string    `json:"description"`
+	Url        string    `json:"event_url"`
+	Limit      int       `json:"limit"`
+	Accepted   int       `json:"accepted"`
+	Waitlisted int       `json:"waiting"`
+	Address    string    `json:"address"`
+	Place      string    `json:"place"`
+	StartAt    time.Time `json:"started_at"`
+	EndAt      time.Time `json:"ended_at"`
 	DataHash   string
 }
 
 type DoorkeeperEvent struct {
 	EventId    int `json:"id"`
 	ApiId      int
-	Title      string `json:"title"`
-	Desc       string `json:"description"`
-	Url        string `json:"public_url"`
-	Limit      int    `json:"ticket_limit"`
-	Accepted   int    `json:"participants"`
-	Waitlisted int    `json:"waitlisted"`
-	Address    string `json:"address"`
-	Place      string `json:"place"`
-	StartAt    string `json:"starts_at"`
-	EndAt      string `json:"ends_at"`
+	Title      string    `json:"title"`
+	Desc       string    `json:"description"`
+	Url        string    `json:"public_url"`
+	Limit      int       `json:"ticket_limit"`
+	Accepted   int       `json:"participants"`
+	Waitlisted int       `json:"waitlisted"`
+	Address    string    `json:"address"`
+	Place      string    `json:"place"`
+	StartAt    time.Time `json:"starts_at"`
+	EndAt      time.Time `json:"ends_at"`
 	DataHash   string
 }
 

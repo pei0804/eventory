@@ -74,3 +74,34 @@ func TestCopyStruct(t *testing.T) {
 		t.Fatalf("求められているフォーマットと違います　%s", dst.time)
 	}
 }
+
+func TestConvertIdFromAddress(t *testing.T) {
+
+	testCase := "千葉県香取郡東庄町笹川い６２４"
+	wantID := 12
+	id := ConvertIdFromAddress(testCase)
+	if id != wantID {
+		t.Fatalf("%s = %d, error = %d", testCase, wantID, id)
+	}
+
+	testCase = "〒530-0014 大阪府大阪市北区鶴野町1番5号"
+	wantID = 27
+	id = ConvertIdFromAddress(testCase)
+	if id != wantID {
+		t.Fatalf("%s = %d, error = %d", testCase, wantID, id)
+	}
+
+	testCase = "北区小松原町2-4 大阪富国生命ビル 27F"
+	wantID = 27
+	id = ConvertIdFromAddress(testCase)
+	if id != wantID {
+		t.Fatalf("%s = %d, error = %d", testCase, wantID, id)
+	}
+
+	testCase = "渋谷区道玄坂1-9-5"
+	wantID = 13
+	id = ConvertIdFromAddress(testCase)
+	if id != 13 {
+		t.Fatalf("%s = %d, error = %d", testCase, wantID, id)
+	}
+}

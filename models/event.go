@@ -190,3 +190,47 @@ func (m *EventDB) ListByQ(ctx context.Context, q string, sort string, page int) 
 	}
 	return objs, nil
 }
+
+// 識別子で取得する
+func (m *EventDB) GetByIdentifier(ctx context.Context, identifier string) (*Event, error) {
+	defer goa.MeasureSince([]string{"goa", "db", "event", "get"}, time.Now())
+
+	var native Event
+	err := m.Db.Table(m.TableName()).Where("identifier = ?", identifier).Find(&native).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &native, err
+}
+
+// 追加又は更新(バッチ処理用)
+func (m *EventDB) AddOrUpdate(ctx context.Context, model *Event) error {
+	defer goa.MeasureSince([]string{"goa", "db", "event", "add"}, time.Now())
+
+	err := m.Db.Create(model).Error
+	if err == nil {
+		goa.LogInfo(ctx, "event create compleate")
+		return nil
+	}
+	goa.LogInfo(ctx, "alerdy exits change conf flow start")
+	// イベントが既に存在し、更新の必要があるか確認する
+	oldEvent, err := m.GetByIdentifier(ctx, model.Identifier)
+	if err != nil {
+		goa.LogError(ctx, "there is no event to be updated", "error", err.Error())
+		return err
+	}
+	// 変更がなければ終了する
+	if oldEvent.DataHash == model.DataHash {
+		goa.LogInfo(ctx, "event not modified")
+		return nil
+	}
+	// 新しいイベント情報に置き換える
+	model.ID = oldEvent.ID
+	err = m.Update(ctx, model)
+	if err != nil {
+		goa.LogError(ctx, "event update error", "error", err.Error())
+		return err
+	}
+	goa.LogInfo(ctx, "event update compleate")
+	return nil
+}

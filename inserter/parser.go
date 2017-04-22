@@ -77,7 +77,7 @@ func (p *Parser) atdnJsonParse() (events []models.Event, err error) {
 		utility.CopyStruct(v.Event, e)
 		events[i] = *e
 		events[i].APIType = define.ATDN
-		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.Event.EventId)
+		events[i].Identifier = fmt.Sprintf("%d-%d", define.ATDN_ID, v.Event.EventId)
 		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil
@@ -98,7 +98,7 @@ func (p *Parser) connpassJsonParse() (events []models.Event, err error) {
 		utility.CopyStruct(v, e)
 		events[i] = *e
 		events[i].APIType = define.CONNPASS
-		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.EventId)
+		events[i].Identifier = fmt.Sprintf("%d-%d", define.CONNPASS_ID, v.EventId)
 		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil
@@ -120,7 +120,7 @@ func (p *Parser) doorkeeperJsonParse() (events []models.Event, err error) {
 		events[i] = *e
 		events[i].APIType = define.DOORKEEPER
 		events[i].Address = utility.RemovePoscode(events[i].Address)
-		events[i].Identifier = fmt.Sprintf("%s-%d", e.APIType, v.Event.EventId)
+		events[i].Identifier = fmt.Sprintf("%d-%d", define.DOORKEEPER_ID, v.Event.EventId)
 		events[i].DataHash = createDataHash(events[i])
 	}
 	return events, nil

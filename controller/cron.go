@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/goadesign/goa"
@@ -11,6 +10,7 @@ import (
 	"github.com/tikasan/eventory/define"
 	"github.com/tikasan/eventory/inserter"
 	"github.com/tikasan/eventory/models"
+	"github.com/tikasan/eventory/utility"
 )
 
 // CronController implements the cron resource.
@@ -82,13 +82,14 @@ func (c *CronController) NewEventFetch(ctx *app.NewEventFetchCronContext) error 
 		cli := inserter.NewParser(p.URL, p.APIType, p.Token, ctx.Request)
 		es, err := cli.ConvertingToJson()
 		if err != nil {
-			fmt.Fprint(os.Stderr, err)
+			goa.LogError(ctx, "event AddOrUpdate error", "error", err.Error())
 		}
 		for _, e := range es {
 			events := &models.Event{}
 			events.ID = e.ID
 			events.APIType = e.APIType
-			events.Address = e.Title
+			events.Title = e.Title
+			events.Address = e.Address
 			events.Accept = e.Accept
 			events.Identifier = e.Identifier
 			events.DataHash = e.DataHash
@@ -99,10 +100,11 @@ func (c *CronController) NewEventFetch(ctx *app.NewEventFetchCronContext) error 
 			events.Wait = e.Wait
 			events.StartAt = e.StartAt
 			events.EndAt = e.EndAt
+			events.PrefID = utility.ConvertIdFromAddress(e.Address)
 			eventsDB := models.NewEventDB(c.db)
-			err := eventsDB.Add(ctx.Context, events)
+			err = eventsDB.AddOrUpdate(ctx, events)
 			if err != nil {
-				return fmt.Errorf("%v", err)
+				goa.LogError(ctx, "event AddOrUpdate error", "error", err.Error())
 			}
 		}
 	}
