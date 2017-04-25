@@ -68,8 +68,8 @@ CREATE TABLE genres
 -- 都道府県
 CREATE TABLE prefs
 (
-	id int(2) unsigned NOT NULL AUTO_INCREMENT COMMENT '都道府県ID',
-	name char(4) NOT NULL COMMENT '都道府県名',
+	id int(2) unsigned NOT NULL COMMENT '都道府県ID',
+	name char(12) NOT NULL COMMENT '都道府県名',
 	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
 	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
