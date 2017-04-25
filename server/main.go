@@ -7,6 +7,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"golang.org/x/net/context"
 
@@ -31,11 +32,15 @@ func init() {
 	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
 
+	env := "production"
+	if os.Getenv("RUN_WITH_DEVAPPSERVER") == "1" {
+		env = "development"
+	}
 	cs, err := database.NewConfigsFromFile("dbconfig.yml")
 	if err != nil {
 		log.Fatalf("cannot open database configuration. exit. %s", err)
 	}
-	dbcon, err := cs.Open("setting")
+	dbcon, err := cs.Open(env)
 	if err != nil {
 		log.Fatalf("database initialization failed: %s", err)
 	}
