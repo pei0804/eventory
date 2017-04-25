@@ -83,7 +83,7 @@ CREATE TABLE users
 	id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーID',
 	name varchar(30) NOT NULL COMMENT 'ユーザー名',
 	email text NOT NULL COMMENT 'メールアドレス',
-	password char(64) NOT NULL COMMENT 'パスワード',
+	password_hash char(64) NOT NULL COMMENT 'パスワードハッシュ',
 	created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '作成日',
 	updated_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新日',
 	deleted_at datetime COMMENT '削除日',
