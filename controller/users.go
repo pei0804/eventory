@@ -114,7 +114,7 @@ func (c *UsersController) TmpCreate(ctx *app.TmpCreateUsersContext) error {
 		token = utility.CreateToken(ctx.Identifier)
 		_, err = userTerminalDB.GetUserIDByToken(ctx, token)
 		// tokenに紐づくユーザーがいなければ終了する
-		if err == nil {
+		if err != nil {
 			break
 		}
 	}
