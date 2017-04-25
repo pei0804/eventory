@@ -111,13 +111,16 @@ docker/clean:
 
 ##### App engine ######
 
-PROJECT:=projectName
+PROJECT:=eventory-test
 
 deploy:
-	goapp deploy -application $(PROJECT) ./app
+	goapp deploy -application $(PROJECT) ./server
 
 rollback:
-	appcfg.py rollback ./app -A $(PROJECT)
+	appcfg.py rollback ./server -A $(PROJECT)
 
 local:
 	goapp serve ./server
+
+school:
+	goapp serve -port 8010 ./server
