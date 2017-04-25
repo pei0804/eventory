@@ -207,7 +207,7 @@ definitions:
 externalDocs:
   description: eventory guide
   url: https://github.com/tikasan/eventory/wiki
-host: localhost:8080
+host: eventory-test.appspot.com
 info:
   description: 'ITイベント情報集アプリAPI '
   license:
@@ -233,7 +233,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - cronToken: []
       summary: append genre cron
@@ -256,7 +256,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - cronToken: []
       summary: new event fetch cron
@@ -279,7 +279,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - cronToken: []
       summary: fix user keep cron
@@ -315,7 +315,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: keep events
@@ -371,7 +371,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -427,7 +427,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -483,7 +483,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -539,7 +539,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -595,7 +595,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -651,7 +651,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list events
@@ -702,7 +702,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: list genres
@@ -719,8 +719,8 @@ paths:
         required: true
         type: integer
       produces:
-      - text/plain
       - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -733,7 +733,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: follow genres
@@ -749,8 +749,8 @@ paths:
         required: true
         type: integer
       produces:
-      - text/plain
       - application/vnd.goa.error
+      - text/plain
       responses:
         "200":
           description: OK
@@ -763,7 +763,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: follow genres
@@ -796,7 +796,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: create genres
@@ -827,7 +827,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: follow prefs
@@ -857,7 +857,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: follow prefs
@@ -893,7 +893,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: login users
@@ -931,7 +931,7 @@ paths:
         "401":
           description: Unauthorized
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: regular create users
@@ -953,8 +953,8 @@ paths:
         required: true
         type: string
       produces:
-      - application/vnd.goa.error
       - text/plain
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -963,7 +963,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
       schemes:
-      - http
+      - https
       security:
       - userToken: []
       summary: status users
@@ -1003,7 +1003,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
       schemes:
-      - http
+      - https
       summary: tmp create users
       tags:
       - users
@@ -1020,7 +1020,7 @@ responses:
   Unauthorized:
     description: Unauthorized
 schemes:
-- http
+- https
 securityDefinitions:
   cronToken:
     in: header

@@ -48,7 +48,7 @@ func (c *Client) FollowPrefs(ctx context.Context, path string) (*http.Response, 
 func (c *Client) NewFollowPrefsRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("PUT", u.String(), nil)

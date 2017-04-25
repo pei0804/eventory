@@ -39,7 +39,7 @@ func (c *Client) CreateGenres(ctx context.Context, path string, name string) (*h
 func (c *Client) NewCreateGenresRequest(ctx context.Context, path string, name string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
@@ -85,7 +85,7 @@ func (c *Client) FollowGenres(ctx context.Context, path string) (*http.Response,
 func (c *Client) NewFollowGenresRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("PUT", u.String(), nil)
@@ -119,7 +119,7 @@ func (c *Client) ListGenres(ctx context.Context, path string, page *int, q *stri
 func (c *Client) NewListGenresRequest(ctx context.Context, path string, page *int, q *string, sort *string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()

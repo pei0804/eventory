@@ -16,8 +16,8 @@ var _ = API("eventory", func() {
 		Description("eventory guide")
 		URL("https://github.com/tikasan/eventory/wiki")
 	})
-	Host("localhost:8080")
-	Scheme("http")
+	Host("eventory-test.appspot.com")
+	Scheme("https")
 	BasePath("/api/v2")
 
 	Origin("*", func() {

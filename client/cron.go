@@ -36,7 +36,7 @@ func (c *Client) AppendGenreCron(ctx context.Context, path string) (*http.Respon
 func (c *Client) NewAppendGenreCronRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -69,7 +69,7 @@ func (c *Client) FixUserKeepCron(ctx context.Context, path string) (*http.Respon
 func (c *Client) NewFixUserKeepCronRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -101,7 +101,7 @@ func (c *Client) NewEventFetchCron(ctx context.Context, path string) (*http.Resp
 func (c *Client) NewNewEventFetchCronRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)

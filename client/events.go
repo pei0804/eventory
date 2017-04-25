@@ -40,7 +40,7 @@ func (c *Client) KeepEvents(ctx context.Context, path string, isKeep bool) (*htt
 func (c *Client) NewKeepEventsRequest(ctx context.Context, path string, isKeep bool) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
@@ -117,7 +117,7 @@ func (c *Client) ListEvents(ctx context.Context, path string, page *int, q *stri
 func (c *Client) NewListEventsRequest(ctx context.Context, path string, page *int, q *string, sort *string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()

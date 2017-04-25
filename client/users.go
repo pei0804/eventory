@@ -39,7 +39,7 @@ func (c *Client) LoginUsers(ctx context.Context, path string, email string, pass
 func (c *Client) NewLoginUsersRequest(ctx context.Context, path string, email string, passwordHash string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
@@ -78,7 +78,7 @@ func (c *Client) RegularCreateUsers(ctx context.Context, path string, email stri
 func (c *Client) NewRegularCreateUsersRequest(ctx context.Context, path string, email string, passwordHash string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
@@ -115,7 +115,7 @@ func (c *Client) StatusUsers(ctx context.Context, path string, clientVersion str
 func (c *Client) NewStatusUsersRequest(ctx context.Context, path string, clientVersion string, platform string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
@@ -153,7 +153,7 @@ func (c *Client) TmpCreateUsers(ctx context.Context, path string, clientVersion 
 func (c *Client) NewTmpCreateUsersRequest(ctx context.Context, path string, clientVersion string, identifier string, platform string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
