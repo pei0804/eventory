@@ -89,8 +89,8 @@ func NewAPIKeyMiddleware(db *gorm.DB) goa.Middleware {
 				goa.LogInfo(ctx, "failed api token auth")
 				return errors.Unauthenticated("missing auth")
 			}
-			utility.SetUserID(ctx, userID)
-			utility.SetToken(ctx, token)
+			ctx = utility.SetUserID(ctx, userID)
+			ctx = utility.SetToken(ctx, token)
 			// Proceed.
 			goa.LogInfo(ctx, "auth", "apikey", "token", token)
 			return h(ctx, rw, req)
