@@ -21,7 +21,7 @@ var _ = API("eventory", func() {
 	BasePath("/api/v2")
 
 	Origin("*", func() {
-		Methods("GET", "POST", "PUT")
+		Methods("GET", "POST", "PUT", "DELETE")
 		MaxAge(600)
 		Credentials()
 	})
